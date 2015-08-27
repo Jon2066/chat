@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="MIMMessageTextView">
+            <rect key="frame" x="0.0" y="0.0" width="162" height="80"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chatto_bg_normal.png" translatesAutoresizingMaskIntoConstraints="NO" id="ogr-4I-RaB">
+                    <rect key="frame" x="0.0" y="0.0" width="162" height="80"/>
+                </imageView>
+                <textView clipsSubviews="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="text" translatesAutoresizingMaskIntoConstraints="NO" id="TIG-St-VgJ">
+                    <rect key="frame" x="0.0" y="24" width="162" height="32"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="uKu-nX-2Ta"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                </textView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="ogr-4I-RaB" secondAttribute="trailing" id="As9-Da-tMV"/>
+                <constraint firstItem="ogr-4I-RaB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="GcL-ad-hdN"/>
+                <constraint firstItem="ogr-4I-RaB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="IRZ-CK-jl9"/>
+                <constraint firstAttribute="trailing" secondItem="TIG-St-VgJ" secondAttribute="trailing" id="dZt-1I-Hjd"/>
+                <constraint firstItem="TIG-St-VgJ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fEo-PV-7yP"/>
+                <constraint firstAttribute="bottom" secondItem="ogr-4I-RaB" secondAttribute="bottom" id="fRC-o7-HdU"/>
+                <constraint firstAttribute="centerY" secondItem="TIG-St-VgJ" secondAttribute="centerY" id="tdY-X4-wM2"/>
+                <constraint firstAttribute="trailing" secondItem="TIG-St-VgJ" secondAttribute="trailing" id="uwg-YE-jSz"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="uwg-YE-jSz"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="backgroudImageView" destination="ogr-4I-RaB" id="asL-yG-tNh"/>
+                <outlet property="textView" destination="TIG-St-VgJ" id="yyA-Ox-L17"/>
+                <outlet property="textViewHeightConstraint" destination="uKu-nX-2Ta" id="pmK-Je-aQe"/>
+                <outlet property="textViewLeadingConstaint" destination="fEo-PV-7yP" id="PjL-hD-n5B"/>
+                <outlet property="textViewTrailingConstraint" destination="dZt-1I-Hjd" id="B34-rj-7kc"/>
+            </connections>
+            <point key="canvasLocation" x="341" y="110"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="chatto_bg_normal.png" width="133" height="40"/>
+    </resources>
+</document>
