@@ -10,16 +10,23 @@
 
 #import "MIMVoiceRecorder.h"
 
+#import "MIMShareMoreView.h"
+
 #define kMIMMaxRecorderTime  60   //最长录音时间 60秒
 
+#define ShareMoreViewHeight  172.0f
 
-@interface MIMChatMediaController ()
+@interface MIMChatMediaController ()<MIMChatViewDelegate>
 
 @property (strong, nonatomic) UIButton *voiceSwitchButton;  //语音和文本切换button
 
 @property (strong, nonatomic) UIButton *voiceInputButton;  //语音输入按钮
 
 @property (strong, nonatomic) UIButton *addItemButton;  //添加按钮
+
+@property (strong, nonatomic) MIMShareMoreView   *shareMoreView;
+
+@property (strong, nonatomic) NSLayoutConstraint *shareMoreViewBottomConstraint;//shareMoreView距离底部的高度
 
 @property (assign, nonatomic) CGFloat  textToolbarHeight;
 
@@ -38,6 +45,7 @@
     if (self) {
         self.inputType = MIMIuputTypeText;
         self.isRecordCancel = NO;
+        self.delegate = self;
     }
     return self;
 }
@@ -45,15 +53,41 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    //添加shareMoreView
+    [self addShareMoreView];
+    
     //加载工具栏 左右按钮
     MIMInputItemModel *leftModel = [[MIMInputItemModel alloc] initWithButtons:@[self.voiceSwitchButton] itemWidth:35.0];
     [self.inputToolbar setLeftItems:leftModel];
+    
+    MIMInputItemModel *rightModel = [[MIMInputItemModel alloc] initWithButtons:@[self.addItemButton] itemWidth:35.0];
+    [self.inputToolbar setRightItems:rightModel];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 
+}
+
+- (void)addShareMoreView
+{
+    [self.view addSubview:self.shareMoreView];
+    [self.view sendSubviewToBack:self.shareMoreView];
+    
+    [self.shareMoreView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    NSLayoutConstraint *mHC = [NSLayoutConstraint constraintWithItem:_shareMoreView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:ShareMoreViewHeight];
+    
+    NSLayoutConstraint *leadingCt = [NSLayoutConstraint constraintWithItem:_shareMoreView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0];
+    
+    NSLayoutConstraint *trailingCt = [NSLayoutConstraint constraintWithItem:_shareMoreView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0];
+    
+    self.shareMoreViewBottomConstraint = [NSLayoutConstraint constraintWithItem:_shareMoreView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-ShareMoreViewHeight];
+    
+    [self.view addConstraints:@[mHC, leadingCt, trailingCt, self.shareMoreViewBottomConstraint]];
+    
+    [self.view updateConstraintsIfNeeded];
 }
 
 #pragma mark - getter -
@@ -88,6 +122,18 @@
         [_voiceInputButton addTarget:self action:@selector(voiceInputButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
     }
     return _voiceInputButton;
+}
+
+- (UIButton *)addItemButton
+{
+    if (!_addItemButton) {
+        _addItemButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _addItemButton.frame = CGRectMake(0, 0, 35, 50);
+        _addItemButton.imageEdgeInsets = UIEdgeInsetsMake(7.5, 0, 7.5, 0);
+        [_addItemButton setImage:[UIImage imageNamed:@"TypeSelectorBtn_Black"] forState:UIControlStateNormal];
+        [_addItemButton addTarget:self action:@selector(addItemButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _addItemButton;
 }
 
 - (MIMVoiceRecorder *)recorder
@@ -181,6 +227,36 @@
     self.isRecordCancel = YES;
     [self.recorder finishRecord];
 
+}
+
+- (MIMShareMoreView *)shareMoreView
+{
+    if (!_shareMoreView) {
+        
+        __weak typeof(self) weakSelf = self;
+        _shareMoreView = [[MIMShareMoreView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, ShareMoreViewHeight) itemClick:^(MIMShareMoreItemView *itemView) {
+            [weakSelf handleShareMoreItemClick:itemView];
+        }];
+    }
+    return _shareMoreView;
+}
+
+- (void)addItemButtonClick
+{
+    if ([self.textView isFirstResponder]) {
+        [self.textView resignFirstResponder];
+    }
+    
+    [self updateToolbarBottomDistance:ShareMoreViewHeight];
+    [UIView animateWithDuration:2.0f delay:1.0 options:UIViewAnimationOptionLayoutSubviews animations:^{
+        self.shareMoreViewBottomConstraint.constant = 0;
+    } completion:nil];
+    
+}
+
+- (void)handleShareMoreItemClick:(MIMShareMoreItemView *)itemView
+{
+    
 }
 
 

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="MIMShareMoreItemView">
+            <rect key="frame" x="0.0" y="0.0" width="59" height="80"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ulk-hc-uKi">
+                    <rect key="frame" x="0.0" y="0.0" width="59" height="59"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="59" id="E5L-ld-ofc"/>
+                        <constraint firstAttribute="height" constant="59" id="Hi6-UZ-gH0"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="sharemore_pic.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="imageButtonClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="CtG-LX-prc"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="照片" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pR0-bl-NWt">
+                    <rect key="frame" x="0.0" y="59" width="60" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="pR0-bl-NWt" secondAttribute="trailing" constant="-1" id="7Cu-tG-7im"/>
+                <constraint firstItem="Ulk-hc-uKi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="811-yP-M25"/>
+                <constraint firstAttribute="centerX" secondItem="Ulk-hc-uKi" secondAttribute="centerX" id="Q2o-xu-Gmr"/>
+                <constraint firstAttribute="bottom" secondItem="pR0-bl-NWt" secondAttribute="bottom" id="WSd-og-2X7"/>
+                <constraint firstItem="pR0-bl-NWt" firstAttribute="top" secondItem="Ulk-hc-uKi" secondAttribute="bottom" id="pqP-O7-D7L"/>
+                <constraint firstItem="pR0-bl-NWt" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="tdB-WM-afw"/>
+                <constraint firstItem="Ulk-hc-uKi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="wIR-jR-viL"/>
+                <constraint firstAttribute="trailing" secondItem="Ulk-hc-uKi" secondAttribute="trailing" id="xNQ-ps-hQn"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="811-yP-M25"/>
+                    <exclude reference="xNQ-ps-hQn"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="imageButton" destination="Ulk-hc-uKi" id="Lrn-3M-XMg"/>
+                <outlet property="titleLabel" destination="pR0-bl-NWt" id="hSt-0K-wQe"/>
+            </connections>
+            <point key="canvasLocation" x="299.5" y="120"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="sharemore_pic.png" width="59" height="59"/>
+    </resources>
+</document>

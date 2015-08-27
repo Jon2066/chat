@@ -74,6 +74,13 @@
 		ABC52ADF1B7C9118009A5F55 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC52ACD1B7C9118009A5F55 /* UIImageView+HighlightedWebCache.m */; };
 		ABC52AE01B7C9118009A5F55 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC52ACF1B7C9118009A5F55 /* UIImageView+WebCache.m */; };
 		ABC52AE11B7C9118009A5F55 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC52AD11B7C9118009A5F55 /* UIView+WebCacheOperation.m */; };
+		ABF0509D1B8ECDCD008AFB01 /* TypeSelectorBtn_Black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF0509C1B8ECDCD008AFB01 /* TypeSelectorBtn_Black@2x.png */; };
+		ABF050A01B8EDADB008AFB01 /* MIMShareMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF0509F1B8EDADB008AFB01 /* MIMShareMoreView.m */; };
+		ABF050A61B8EE0F8008AFB01 /* sharemore_location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF050A31B8EE0F8008AFB01 /* sharemore_location@2x.png */; };
+		ABF050A71B8EE0F8008AFB01 /* sharemore_pic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF050A41B8EE0F8008AFB01 /* sharemore_pic@2x.png */; };
+		ABF050A81B8EE0F8008AFB01 /* sharemore_video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF050A51B8EE0F8008AFB01 /* sharemore_video@2x.png */; };
+		ABF050AB1B8EEE5A008AFB01 /* MIMShareMoreItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF050AA1B8EEE5A008AFB01 /* MIMShareMoreItemView.m */; };
+		ABF050AF1B8EF522008AFB01 /* MIMShareMoreItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF050AE1B8EF522008AFB01 /* MIMShareMoreItemView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -205,6 +212,15 @@
 		ABC52ACF1B7C9118009A5F55 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		ABC52AD01B7C9118009A5F55 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		ABC52AD11B7C9118009A5F55 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		ABF0509C1B8ECDCD008AFB01 /* TypeSelectorBtn_Black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TypeSelectorBtn_Black@2x.png"; sourceTree = "<group>"; };
+		ABF0509E1B8EDADB008AFB01 /* MIMShareMoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMShareMoreView.h; sourceTree = "<group>"; };
+		ABF0509F1B8EDADB008AFB01 /* MIMShareMoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMShareMoreView.m; sourceTree = "<group>"; };
+		ABF050A31B8EE0F8008AFB01 /* sharemore_location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharemore_location@2x.png"; sourceTree = "<group>"; };
+		ABF050A41B8EE0F8008AFB01 /* sharemore_pic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharemore_pic@2x.png"; sourceTree = "<group>"; };
+		ABF050A51B8EE0F8008AFB01 /* sharemore_video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharemore_video@2x.png"; sourceTree = "<group>"; };
+		ABF050A91B8EEE5A008AFB01 /* MIMShareMoreItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMShareMoreItemView.h; sourceTree = "<group>"; };
+		ABF050AA1B8EEE5A008AFB01 /* MIMShareMoreItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMShareMoreItemView.m; sourceTree = "<group>"; };
+		ABF050AE1B8EF522008AFB01 /* MIMShareMoreItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MIMShareMoreItemView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,6 +285,11 @@
 			children = (
 				AB7101571B8ABDF600E72FE8 /* MIMVoiceView.h */,
 				AB7101581B8ABDF600E72FE8 /* MIMVoiceView.m */,
+				ABF0509E1B8EDADB008AFB01 /* MIMShareMoreView.h */,
+				ABF0509F1B8EDADB008AFB01 /* MIMShareMoreView.m */,
+				ABF050A91B8EEE5A008AFB01 /* MIMShareMoreItemView.h */,
+				ABF050AA1B8EEE5A008AFB01 /* MIMShareMoreItemView.m */,
+				ABF050AE1B8EF522008AFB01 /* MIMShareMoreItemView.xib */,
 			);
 			name = MessageInputViews;
 			sourceTree = "<group>";
@@ -353,6 +374,10 @@
 		AB8145961B81CBEF00BFB1F8 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				ABF050A31B8EE0F8008AFB01 /* sharemore_location@2x.png */,
+				ABF050A41B8EE0F8008AFB01 /* sharemore_pic@2x.png */,
+				ABF050A51B8EE0F8008AFB01 /* sharemore_video@2x.png */,
+				ABF0509C1B8ECDCD008AFB01 /* TypeSelectorBtn_Black@2x.png */,
 				AB7DC2911B872EC9007FF257 /* chat_send_message@2x.png */,
 				AB7DC28D1B870945007FF257 /* ToolViewInputVoice@2x.png */,
 				AB7DC28E1B870945007FF257 /* ToolViewKeyboard@2x.png */,
@@ -630,13 +655,18 @@
 				AB8A4EAE1B78A98600809B94 /* Main.storyboard in Resources */,
 				AB8A4ED11B78AEB500809B94 /* MIMChatController.xib in Resources */,
 				AB81459A1B81CC0A00BFB1F8 /* chatto_bg_normal@2x.png in Resources */,
+				ABF050A71B8EE0F8008AFB01 /* sharemore_pic@2x.png in Resources */,
 				AB865D461B7B47A600898C91 /* MIMMessageOutCell.xib in Resources */,
 				ABC52AD21B7C9118009A5F55 /* LICENSE in Resources */,
+				ABF0509D1B8ECDCD008AFB01 /* TypeSelectorBtn_Black@2x.png in Resources */,
 				AB7DC2901B870945007FF257 /* ToolViewKeyboard@2x.png in Resources */,
 				AB875D991B84912200C4ABA1 /* chatfrom_voice1@2x.png in Resources */,
 				AB8A4EB31B78A98600809B94 /* LaunchScreen.xib in Resources */,
 				AB7DC2921B872EC9007FF257 /* chat_send_message@2x.png in Resources */,
+				ABF050A61B8EE0F8008AFB01 /* sharemore_location@2x.png in Resources */,
 				AB875D9D1B84912200C4ABA1 /* chatto_voice2@2x.png in Resources */,
+				ABF050A81B8EE0F8008AFB01 /* sharemore_video@2x.png in Resources */,
+				ABF050AF1B8EF522008AFB01 /* MIMShareMoreItemView.xib in Resources */,
 				AB8A4EB01B78A98600809B94 /* Images.xcassets in Resources */,
 				AB865D441B7B479500898C91 /* MIMMessageInCell.xib in Resources */,
 				AB875D9B1B84912200C4ABA1 /* chatfrom_voice3@2x.png in Resources */,
@@ -666,6 +696,7 @@
 			files = (
 				ABC52AE01B7C9118009A5F55 /* UIImageView+WebCache.m in Sources */,
 				AB5EB20F1B7D871600639F5C /* MIMImageModel.m in Sources */,
+				ABF050A01B8EDADB008AFB01 /* MIMShareMoreView.m in Sources */,
 				AB729EC71B8D815600B08394 /* MIMVoiceFileConvert.mm in Sources */,
 				ABC52AD71B7C9118009A5F55 /* SDWebImageDecoder.m in Sources */,
 				ABC52ADA1B7C9118009A5F55 /* SDWebImageManager.m in Sources */,
@@ -673,6 +704,7 @@
 				AB8E86D11B85A19900168439 /* MIMMessageCommonCell.m in Sources */,
 				ABC52AD41B7C9118009A5F55 /* NSData+ImageContentType.m in Sources */,
 				AB71015C1B8AD08A00E72FE8 /* MIMVoiceRecorder.m in Sources */,
+				ABF050AB1B8EEE5A008AFB01 /* MIMShareMoreItemView.m in Sources */,
 				ABC52AD61B7C9118009A5F55 /* SDWebImageCompat.m in Sources */,
 				AB865D421B7B44AC00898C91 /* MIMMessageTableCell.m in Sources */,
 				AB8A4EAB1B78A98600809B94 /* ViewController.m in Sources */,
