@@ -11,7 +11,7 @@
 		AB5429231B7F22B400032980 /* MIMMessageTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5429221B7F22B400032980 /* MIMMessageTextView.xib */; };
 		AB5EB20F1B7D871600639F5C /* MIMImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB20E1B7D871600639F5C /* MIMImageModel.m */; };
 		AB5EB2191B7DD60800639F5C /* MIMMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB2181B7DD60800639F5C /* MIMMessage.m */; };
-		AB7101591B8ABDF600E72FE8 /* MIMVoiceView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7101581B8ABDF600E72FE8 /* MIMVoiceView.m */; };
+		AB7101591B8ABDF600E72FE8 /* MIMVoiceAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7101581B8ABDF600E72FE8 /* MIMVoiceAnimationView.m */; };
 		AB71015C1B8AD08A00E72FE8 /* MIMVoiceRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB71015B1B8AD08A00E72FE8 /* MIMVoiceRecorder.m */; };
 		AB7101611B8AD3E700E72FE8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB7101601B8AD3E700E72FE8 /* AVFoundation.framework */; };
 		AB7101631B8AD3EF00E72FE8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB7101621B8AD3EF00E72FE8 /* AudioToolbox.framework */; };
@@ -58,6 +58,7 @@
 		AB8A4ED11B78AEB500809B94 /* MIMChatController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB8A4ECF1B78AEB500809B94 /* MIMChatController.xib */; };
 		AB8E86D11B85A19900168439 /* MIMMessageCommonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8E86D01B85A19900168439 /* MIMMessageCommonCell.m */; };
 		AB8E86D41B85BB9D00168439 /* NSDate+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8E86D31B85BB9D00168439 /* NSDate+Utils.m */; };
+		AB9C99081B901E2100FCC182 /* MIMImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9C99071B901E2100FCC182 /* MIMImagePicker.m */; };
 		ABC52AD21B7C9118009A5F55 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = ABC52AB21B7C9118009A5F55 /* LICENSE */; };
 		ABC52AD31B7C9118009A5F55 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = ABC52AB31B7C9118009A5F55 /* README.md */; };
 		ABC52AD41B7C9118009A5F55 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC52AB61B7C9118009A5F55 /* NSData+ImageContentType.m */; };
@@ -102,8 +103,8 @@
 		AB5EB2151B7DCC5A00639F5C /* MIMDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMDefine.h; sourceTree = "<group>"; };
 		AB5EB2171B7DD60800639F5C /* MIMMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMMessage.h; sourceTree = "<group>"; };
 		AB5EB2181B7DD60800639F5C /* MIMMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMMessage.m; sourceTree = "<group>"; };
-		AB7101571B8ABDF600E72FE8 /* MIMVoiceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMVoiceView.h; sourceTree = "<group>"; };
-		AB7101581B8ABDF600E72FE8 /* MIMVoiceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMVoiceView.m; sourceTree = "<group>"; };
+		AB7101571B8ABDF600E72FE8 /* MIMVoiceAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMVoiceAnimationView.h; sourceTree = "<group>"; };
+		AB7101581B8ABDF600E72FE8 /* MIMVoiceAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMVoiceAnimationView.m; sourceTree = "<group>"; };
 		AB71015A1B8AD08A00E72FE8 /* MIMVoiceRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMVoiceRecorder.h; sourceTree = "<group>"; };
 		AB71015B1B8AD08A00E72FE8 /* MIMVoiceRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMVoiceRecorder.m; sourceTree = "<group>"; };
 		AB7101601B8AD3E700E72FE8 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -181,6 +182,8 @@
 		AB8E86D01B85A19900168439 /* MIMMessageCommonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMMessageCommonCell.m; sourceTree = "<group>"; };
 		AB8E86D21B85BB9D00168439 /* NSDate+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utils.h"; sourceTree = "<group>"; };
 		AB8E86D31B85BB9D00168439 /* NSDate+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utils.m"; sourceTree = "<group>"; };
+		AB9C99061B901E2100FCC182 /* MIMImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMImagePicker.h; sourceTree = "<group>"; };
+		AB9C99071B901E2100FCC182 /* MIMImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMImagePicker.m; sourceTree = "<group>"; };
 		ABC52AB21B7C9118009A5F55 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		ABC52AB31B7C9118009A5F55 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		ABC52AB51B7C9118009A5F55 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -283,8 +286,10 @@
 		AB7101561B8AB5AB00E72FE8 /* MessageInputViews */ = {
 			isa = PBXGroup;
 			children = (
-				AB7101571B8ABDF600E72FE8 /* MIMVoiceView.h */,
-				AB7101581B8ABDF600E72FE8 /* MIMVoiceView.m */,
+				AB9C99061B901E2100FCC182 /* MIMImagePicker.h */,
+				AB9C99071B901E2100FCC182 /* MIMImagePicker.m */,
+				AB7101571B8ABDF600E72FE8 /* MIMVoiceAnimationView.h */,
+				AB7101581B8ABDF600E72FE8 /* MIMVoiceAnimationView.m */,
 				ABF0509E1B8EDADB008AFB01 /* MIMShareMoreView.h */,
 				ABF0509F1B8EDADB008AFB01 /* MIMShareMoreView.m */,
 				ABF050A91B8EEE5A008AFB01 /* MIMShareMoreItemView.h */,
@@ -705,6 +710,7 @@
 				ABC52AD41B7C9118009A5F55 /* NSData+ImageContentType.m in Sources */,
 				AB71015C1B8AD08A00E72FE8 /* MIMVoiceRecorder.m in Sources */,
 				ABF050AB1B8EEE5A008AFB01 /* MIMShareMoreItemView.m in Sources */,
+				AB9C99081B901E2100FCC182 /* MIMImagePicker.m in Sources */,
 				ABC52AD61B7C9118009A5F55 /* SDWebImageCompat.m in Sources */,
 				AB865D421B7B44AC00898C91 /* MIMMessageTableCell.m in Sources */,
 				AB8A4EAB1B78A98600809B94 /* ViewController.m in Sources */,
@@ -734,7 +740,7 @@
 				AB5EB2191B7DD60800639F5C /* MIMMessage.m in Sources */,
 				ABC52AD81B7C9118009A5F55 /* SDWebImageDownloader.m in Sources */,
 				AB729EBC1B8D718F00B08394 /* amrFileCodec.mm in Sources */,
-				AB7101591B8ABDF600E72FE8 /* MIMVoiceView.m in Sources */,
+				AB7101591B8ABDF600E72FE8 /* MIMVoiceAnimationView.m in Sources */,
 				AB87D1711B79C77D00650C5E /* MIMInputItemModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

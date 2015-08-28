@@ -131,8 +131,15 @@
         else{
             imageView = (MIMMessageImageView *)messageContent.contentView;
         }
-        [imageView loadViewWithImageUrl:[NSURL URLWithString:@"http://b.hiphotos.baidu.com/image/pic/item/fc1f4134970a304e5c52aefdd3c8a786c9175c40.jpg"] messageCellStyle:style atIndex:index];
-        messageContent.contentSize = [imageView getImageViewSizeWithImageSize:CGSizeMake(150, 150)];
+        if (message.imageModel.thumbUrl) {
+            [imageView loadViewWithImageUrl:[NSURL URLWithString:@"http://b.hiphotos.baidu.com/image/pic/item/fc1f4134970a304e5c52aefdd3c8a786c9175c40.jpg"] messageCellStyle:style atIndex:index];
+            messageContent.contentSize = [imageView getImageViewSizeWithImageSize:CGSizeMake(150, 150)];
+        }
+        else{
+            [imageView loadViewWithImage:message.imageModel.placeHolderImage messageCellStyle:style atIndex:index];
+            messageContent.contentSize = [imageView getImageViewSizeWithImageSize:message.imageModel.imageSize];
+        }
+
         
     }
     else if (message.messageType == MIMMessageTypeVoice){
@@ -243,6 +250,23 @@
     message.mediaFileName = filename;
     message.messageText = nil;;
     message.date = [NSDate date];
+    [self.messageArray addObject:message];
+    [self finishReceiveNewMessageWithCount:1 animated:YES];
+}
+
+- (void)chatViewFinishSelectWithImage:(UIImage *)image
+{
+    //缩略图 用于显示
+    UIImage *thumbImage = [UIImage imageWithData:UIImageJPEGRepresentation(image, 0.1)];
+    
+    MIMMessage *message = [[MIMMessage alloc] init];
+    message.senderId = @"1";
+    message.senderNickname = @"me";
+    message.messageType = MIMMessageTypeImage;
+    message.imageModel = [[MIMImageModel alloc] initWithThumbUrl:nil imageUrl:nil size:thumbImage.size placeHolderImage:thumbImage];
+    message.mediaFileName = nil;
+    message.date = [NSDate date];
+    
     [self.messageArray addObject:message];
     [self finishReceiveNewMessageWithCount:1 animated:YES];
 }

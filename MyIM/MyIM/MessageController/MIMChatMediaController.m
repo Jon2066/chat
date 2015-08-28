@@ -12,6 +12,8 @@
 
 #import "MIMShareMoreView.h"
 
+#import "MIMImagePicker.h"
+
 #define kMIMMaxRecorderTime  60   //最长录音时间 60秒
 
 #define ShareMoreViewHeight  205.0f
@@ -25,6 +27,8 @@
 @property (strong, nonatomic) UIButton *addItemButton;  //添加按钮
 
 @property (strong, nonatomic) MIMShareMoreView   *shareMoreView;
+
+@property (strong, nonatomic) MIMImagePicker *imagePicker; //图片选择
 
 @property (strong, nonatomic) NSLayoutConstraint *shareMoreViewBottomConstraint;//shareMoreView距离底部的高度
 
@@ -180,11 +184,18 @@
     return _shareMoreView;
 }
 
+- (MIMImagePicker *)imagePicker
+{
+    if (!_imagePicker) {
+        _imagePicker= [[MIMImagePicker alloc] initWithRootViewController:self];
+    }
+    return _imagePicker;
+}
+
 #pragma mark - control event -
 
 - (void)voiceSwitchButtonClick:(UIButton *)button
 {
-
     if (self.inputType != MIMIuputTypeVoice) {
         if (self.inputType == MIMIuputTypeMediaItems) {
             [self setShareMoreViewShow:NO];
@@ -214,7 +225,6 @@
     
 }
 
-
 - (void)voiceInputButtonTouchUpInside:(UIButton *)button
 {
     self.touchDown = NO;
@@ -231,8 +241,6 @@
     [self.recorder finishRecord];
 
 }
-
-
 
 - (void)addItemButtonClick
 {
@@ -274,7 +282,12 @@
 //处理其他媒体输入
 - (void)handleShareMoreItemClick:(MIMShareMoreItemView *)itemView
 {
-    
+    if (itemView.itemType == MIMItemTypePicture) {
+        [self showImagePickerWithType:MIMImagePickerTypePhotoAlbum];
+    }
+    else if (itemView.itemType == MIMItemTypeTakePhoto){
+        [self showImagePickerWithType:MIMImagePickerTypeCamera];
+    }
 }
 
 //处理语音输入
@@ -304,6 +317,20 @@
     }
 }
 
+
+/**
+ *  选择图片
+ */
+- (void)showImagePickerWithType:(MIMImagePickerType)type
+{
+    [self.imagePicker showImagePickerWithType:type completionBlock:^(UIImage *image) {
+        if (image) {
+            if ([self.mediaDelagate respondsToSelector:@selector(chatViewFinishSelectWithImage:)]) {
+                [self.mediaDelagate chatViewFinishSelectWithImage:image];
+            }
+        }
+    }];
+}
 /*
 #pragma mark - Navigation
 

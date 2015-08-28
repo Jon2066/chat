@@ -37,9 +37,9 @@ typedef enum{
 
 //图片消息
 #define MIM_MESSAGE_MAX_IMAGE_WIDTH      [UIScreen mainScreen].bounds.size.width * 0.4   //图片最宽为屏幕0.4
-#define MIM_MESSAGE_MAX_IMAGE_HEIGHT     [UIScreen mainScreen].bounds.size.width * 0.618  //图片最宽为屏幕0.618
-#define MIM_MESSAGE_MIN_IMAGE_WIDTH      [UIScreen mainScreen].bounds.size.width * 0.2   //图片最小宽度
-#define MIM_MESSAGE_MIN_IMAGE_HEIGHT     [UIScreen mainScreen].bounds.size.width * 0.38  //图片最小宽为屏幕
+#define MIM_MESSAGE_MAX_IMAGE_HEIGHT     [UIScreen mainScreen].bounds.size.width * 0.4  //图片最宽为屏幕0.618
+#define MIM_MESSAGE_MIN_IMAGE_WIDTH      [UIScreen mainScreen].bounds.size.width * 0.1   //图片最小宽度
+#define MIM_MESSAGE_MIN_IMAGE_HEIGHT     [UIScreen mainScreen].bounds.size.width * 0.1  //图片最小高度
 
 //语音消息
 #define MIM_MESSAGE_MAX_VOICE_WIDTH      [UIScreen mainScreen].bounds.size.width * 0.55

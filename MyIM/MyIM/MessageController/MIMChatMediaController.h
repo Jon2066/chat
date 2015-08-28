@@ -21,11 +21,13 @@ typedef enum {
     MIMIuputTypeMediaItems = 2, //其他媒体输入
 }MIMIuputType;
 
-@protocol MIMChatMediaDelegate <NSObject,MIMChatViewDelegate>
+
+
+@protocol MIMChatMediaDelegate <NSObject>
 
 @optional
 - (void)chatViewFinishRecordWithFileName:(NSString *)filename;
-
+- (void)chatViewFinishSelectWithImage:(UIImage *)image;
 @end
 
 

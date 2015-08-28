@@ -96,7 +96,43 @@ typedef void(^MIMMessageImageTap)(MIMMessageImageView *messsageImageView);
 
 - (CGSize)getImageViewSizeWithImageSize:(CGSize )imageSize
 {
-    //TODO::处理 图片显示大小
+ //  处理 图片显示大小
+    CGFloat ratio           = imageSize.height / imageSize.width; //高宽比
+    CGFloat maxWidth        = MIM_MESSAGE_MAX_IMAGE_WIDTH;
+    CGFloat minWidth        = MIM_MESSAGE_MIN_IMAGE_WIDTH;
+    CGFloat maxHeight       = MIM_MESSAGE_MAX_IMAGE_HEIGHT;
+    CGFloat minHeight       = MIM_MESSAGE_MIN_IMAGE_HEIGHT;
+    CGFloat minHeightRatio  = minHeight / maxWidth; //最小高度 高宽比
+    CGFloat minWidthRatio   = maxHeight / minWidth; //最小宽度 高宽比
+    if (ratio <= 1) {//宽大于高
+        if (ratio <= minHeightRatio) { //比例小于minHeightRatio 则使用minHeightRatio
+            if(imageSize.width < maxWidth){ //图片宽小于最大宽
+                return CGSizeMake(imageSize.width, imageSize.width *minHeightRatio);
+            }
+            return CGSizeMake(maxWidth, minHeight);
+        }
+        else{
+            if(imageSize.width < maxWidth){ //图片宽小于最大宽
+                return CGSizeMake(imageSize.width, imageSize.height);
+            }
+            return CGSizeMake(maxWidth, maxWidth * ratio);
+        }
+    }
+    else{ //高大于宽
+        if (ratio >= minWidthRatio) { //比例大于 minWidthRatio
+            if(imageSize.height < maxHeight){ //图片高小于最大高
+                return CGSizeMake(imageSize.height / minWidthRatio, imageSize.height);
+            }
+            return CGSizeMake(minWidth, minHeight);
+        }
+        else{
+            if(imageSize.height < maxHeight){ //图片高小于最大高
+                return CGSizeMake(imageSize.width, imageSize.height);
+            }
+            return CGSizeMake(maxHeight / ratio, maxHeight);
+        }
+    }
+    
     return CGSizeMake(150, 150);
 }
 

@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 Jonathan. All rights reserved.
 //
 
-#import "MIMVoiceView.h"
+#import "MIMVoiceAnimationView.h"
 
-@implementation MIMVoiceView
+@implementation MIMVoiceAnimationView
 
 /*
 // Only override drawRect: if you perform custom drawing.

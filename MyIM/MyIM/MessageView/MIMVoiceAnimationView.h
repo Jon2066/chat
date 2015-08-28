@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MIMVoiceView : UIView
+@interface MIMVoiceAnimationView : UIView
 
 @end

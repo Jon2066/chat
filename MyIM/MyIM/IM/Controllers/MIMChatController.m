@@ -306,6 +306,7 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     if(!animated){
         self.toolbarButtomConstraint.constant = height;
         [self.view layoutSubviews];
+        [self scrollToBottomAnimated:NO];
         return;
     }
     
