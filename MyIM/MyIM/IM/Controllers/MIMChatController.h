@@ -92,7 +92,7 @@
 /**
  *  更新toolbar距离底部的高度
  */
-- (void)updateToolbarBottomDistance:(CGFloat )height;
+- (void)updateToolbarBottomDistance:(CGFloat )height animated:(BOOL)animated;
 
 //完成接收新消息 调用
 - (void)finishReceiveNewMessageWithCount:(NSInteger)count animated:(BOOL)animated;

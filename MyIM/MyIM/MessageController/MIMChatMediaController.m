@@ -14,7 +14,7 @@
 
 #define kMIMMaxRecorderTime  60   //最长录音时间 60秒
 
-#define ShareMoreViewHeight  172.0f
+#define ShareMoreViewHeight  205.0f
 
 @interface MIMChatMediaController ()<MIMChatViewDelegate>
 
@@ -71,10 +71,11 @@
 
 }
 
+
 - (void)addShareMoreView
 {
     [self.view addSubview:self.shareMoreView];
-    [self.view sendSubviewToBack:self.shareMoreView];
+//    [self.view sendSubviewToBack:self.shareMoreView];
     
     [self.shareMoreView setTranslatesAutoresizingMaskIntoConstraints:NO];
     NSLayoutConstraint *mHC = [NSLayoutConstraint constraintWithItem:_shareMoreView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:ShareMoreViewHeight];
@@ -83,11 +84,30 @@
     
     NSLayoutConstraint *trailingCt = [NSLayoutConstraint constraintWithItem:_shareMoreView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0];
     
-    self.shareMoreViewBottomConstraint = [NSLayoutConstraint constraintWithItem:_shareMoreView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-ShareMoreViewHeight];
+    self.shareMoreViewBottomConstraint = [NSLayoutConstraint constraintWithItem:_shareMoreView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:ShareMoreViewHeight];
     
     [self.view addConstraints:@[mHC, leadingCt, trailingCt, self.shareMoreViewBottomConstraint]];
     
     [self.view updateConstraintsIfNeeded];
+}
+
+
+- (void)setShareMoreViewShow:(BOOL)show
+{
+    if (show) {
+        [UIView animateWithDuration:0.35f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            [self updateToolbarBottomDistance:ShareMoreViewHeight animated:NO];
+            self.shareMoreViewBottomConstraint.constant = 0;
+            [self.view layoutSubviews];
+        } completion:nil];
+    }
+    else{
+        [UIView animateWithDuration:0.35f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            [self updateToolbarBottomDistance:0 animated:NO];
+            self.shareMoreViewBottomConstraint.constant = ShareMoreViewHeight;
+            [self.view layoutSubviews];
+        } completion:nil];
+    }
 }
 
 #pragma mark - getter -
@@ -148,38 +168,27 @@
 }
 
 
-- (void)handleRecorder:(MIMVoiceRecorder *)recorder feedbackFinished:(BOOL)finished
+- (MIMShareMoreView *)shareMoreView
 {
-    if (finished) {
-        if (self.isRecordCancel) {
-            //取消录音
-            
-            self.isRecordCancel = NO;
-        }
-        else{
-            if (recorder.recordCurrentTime < 0.5) { //录音小于0.5秒
-//                NSLog(@"< 0.5");
-            }
-            else{
-                if ([self.mediaDelagate respondsToSelector:@selector(chatViewFinishRecordWithFileName:)]) {
-                    [self.mediaDelagate chatViewFinishRecordWithFileName:recorder.voiceFileName];
-                }
-            }
-        }
-    }
-    else{
+    if (!_shareMoreView) {
         
-        //处理时间 
-        
+        __weak typeof(self) weakSelf = self;
+        _shareMoreView = [[MIMShareMoreView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, ShareMoreViewHeight) itemClick:^(MIMShareMoreItemView *itemView) {
+            [weakSelf handleShareMoreItemClick:itemView];
+        }];
     }
+    return _shareMoreView;
 }
-
 
 #pragma mark - control event -
 
 - (void)voiceSwitchButtonClick:(UIButton *)button
 {
+
     if (self.inputType != MIMIuputTypeVoice) {
+        if (self.inputType == MIMIuputTypeMediaItems) {
+            [self setShareMoreViewShow:NO];
+        }
         self.inputType = MIMIuputTypeVoice;
         [self.voiceSwitchButton setImage:[UIImage imageNamed:@"ToolViewInputVoice"] forState:UIControlStateNormal];
         self.textToolbarHeight = self.inputToolBarHeight;
@@ -205,12 +214,6 @@
     
 }
 
-- (void)startRecord
-{
-    if (self.touchDown) {
-        [self.recorder startRecordWithMaxRecordTime:kMIMMaxRecorderTime];
-    }
-}
 
 - (void)voiceInputButtonTouchUpInside:(UIButton *)button
 {
@@ -229,36 +232,77 @@
 
 }
 
-- (MIMShareMoreView *)shareMoreView
-{
-    if (!_shareMoreView) {
-        
-        __weak typeof(self) weakSelf = self;
-        _shareMoreView = [[MIMShareMoreView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, ShareMoreViewHeight) itemClick:^(MIMShareMoreItemView *itemView) {
-            [weakSelf handleShareMoreItemClick:itemView];
-        }];
-    }
-    return _shareMoreView;
-}
+
 
 - (void)addItemButtonClick
 {
+    if (self.inputType == MIMIuputTypeMediaItems) {
+        return;
+    }
+    self.inputType = MIMIuputTypeMediaItems;
+    
     if ([self.textView isFirstResponder]) {
         [self.textView resignFirstResponder];
     }
-    
-    [self updateToolbarBottomDistance:ShareMoreViewHeight];
-    [UIView animateWithDuration:2.0f delay:1.0 options:UIViewAnimationOptionLayoutSubviews animations:^{
-        self.shareMoreViewBottomConstraint.constant = 0;
-    } completion:nil];
+    [self setShareMoreViewShow:YES];
+
     
 }
 
+#pragma mark - chatView deleagate -
+- (void)chatViewShouldFinishEditing
+{
+    //收起shareMoreView
+    if (self.inputType == MIMIuputTypeMediaItems) {
+        self.inputType = MIMIuputTypeText;
+        [self setShareMoreViewShow:NO];
+    }
+}
+
+
+
+#pragma mark - handle media input -
+
+//开始录音
+- (void)startRecord
+{
+    if (self.touchDown) {
+        [self.recorder startRecordWithMaxRecordTime:kMIMMaxRecorderTime];
+    }
+}
+
+//处理其他媒体输入
 - (void)handleShareMoreItemClick:(MIMShareMoreItemView *)itemView
 {
     
 }
 
+//处理语音输入
+- (void)handleRecorder:(MIMVoiceRecorder *)recorder feedbackFinished:(BOOL)finished
+{
+    if (finished) {
+        if (self.isRecordCancel) {
+            //取消录音
+            
+            self.isRecordCancel = NO;
+        }
+        else{
+            if (recorder.recordCurrentTime < 0.5) { //录音小于0.5秒
+                //                NSLog(@"< 0.5");
+            }
+            else{
+                if ([self.mediaDelagate respondsToSelector:@selector(chatViewFinishRecordWithFileName:)]) {
+                    [self.mediaDelagate chatViewFinishRecordWithFileName:recorder.voiceFileName];
+                }
+            }
+        }
+    }
+    else{
+        
+        //处理时间
+        
+    }
+}
 
 /*
 #pragma mark - Navigation

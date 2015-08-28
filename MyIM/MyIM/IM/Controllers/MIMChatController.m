@@ -301,15 +301,23 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 }
 
 #pragma mark - toolbar layout reset -
-- (void)updateToolbarBottomDistance:(CGFloat )height
+- (void)updateToolbarBottomDistance:(CGFloat )height animated:(BOOL)animated
 {
-    [UIView animateWithDuration:0.35f delay:0.0f options:UIViewAnimationOptionLayoutSubviews animations:^{
+    if(!animated){
         self.toolbarButtomConstraint.constant = height;
+        [self.view layoutSubviews];
+        return;
+    }
+    
+    [UIView animateWithDuration:height?0.35f:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.toolbarButtomConstraint.constant = height;
+        [self.view layoutSubviews];
+        [self scrollToBottomAnimated:NO];
+
     } completion:^(BOOL finished) {
         if (height) {
-            [UIView animateWithDuration:0.25 animations:^{
-                [self scrollToBottomAnimated:NO];
-            }];
+//            [UIView animateWithDuration:0.25 animations:^{
+//            }];
         }
     }];
 }
@@ -346,7 +354,7 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 }
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
-    [self updateToolbarBottomDistance:0.0f];
+    [self updateToolbarBottomDistance:0.0f animated:YES];
 }
 
 #pragma mark - observe -
@@ -383,7 +391,7 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     NSDictionary *info = [noti userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     if ([self.textView isFirstResponder]) {
-        [self updateToolbarBottomDistance:kbSize.height];
+        [self updateToolbarBottomDistance:kbSize.height animated:YES];
     }
 }
 
