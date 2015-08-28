@@ -1,6 +1,18 @@
 # chat
 IM聊天
 
+1.1 
+
+（1）键盘收起优化
+（2）图片输入实现   
+
+下一步：
+1.文本消息  拦截url
+2.语音听筒扬声器切换
+3.正在播放语音时  按录制语音则停止播放语音
+4.点击查看大图
+6.长按message 工具条
+
 1.0
 
 （1）IM文件下为基础实现
@@ -10,17 +22,6 @@ IM聊天
 （3）实现语音等多媒体输入则需继承MIMChatMediaController
     目前只有语音输入  其他媒体形式请在MIMChatMediaController中自定义实现
  
-    
-下一步：
-1.文本消息  拦截url
-2.语音听筒扬声器切换
-3.正在播放语音时  按录制语音则停止播放语音
-4.点击查看大图
-5.键盘收起 优化（键盘监听）
-6.长按message 工具条
-7.图片等其他媒体输入实现
-
-
 
 
 代码：
@@ -36,6 +37,7 @@ IM聊天
     [self.inputToolbar setMiddelView:self.textView];
     
     
+代码:
 
 #pragma mark - chatView dataSource and dalegate -
 
