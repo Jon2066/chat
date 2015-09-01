@@ -323,10 +323,11 @@
  */
 - (void)showImagePickerWithType:(MIMImagePickerType)type
 {
+    __weak typeof(self) weakSelf = self;
     [self.imagePicker showImagePickerWithType:type completionBlock:^(UIImage *image) {
         if (image) {
-            if ([self.mediaDelagate respondsToSelector:@selector(chatViewFinishSelectWithImage:)]) {
-                [self.mediaDelagate chatViewFinishSelectWithImage:image];
+            if ([weakSelf.mediaDelagate respondsToSelector:@selector(chatViewFinishSelectWithImage:)]) {
+                [weakSelf.mediaDelagate chatViewFinishSelectWithImage:image];
             }
         }
     }];
