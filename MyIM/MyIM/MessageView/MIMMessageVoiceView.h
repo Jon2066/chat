@@ -17,9 +17,10 @@
 
 - (void)loadViewWithVoiceFileName:(NSString *)fileName messageCellStyle:(MIMMessageCellStyle)style;
 
-- (CGSize)getViewSize;
-
 - (void)play;
 
 - (void)stopPlay;
+
+
++ (CGSize)getViewSizeWithDuration:(CGFloat)duration;
 @end

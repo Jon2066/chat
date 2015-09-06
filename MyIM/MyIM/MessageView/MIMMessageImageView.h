@@ -16,7 +16,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
-@property (strong, nonatomic, readonly) UIImage *messageImage;
+//@property (strong, nonatomic, readonly) UIImage *messageImage;
 
 @property (assign, nonatomic, readonly) NSInteger index;
 - (instancetype)initFromNib;
@@ -29,7 +29,7 @@
 /**
  *  通过url加载view
  */
-- (void)loadViewWithImageUrl:(NSURL *)url messageCellStyle:(MIMMessageCellStyle)style atIndex:(NSInteger)index;;
+- (void)loadViewWithImageUrl:(NSString *)url messageCellStyle:(MIMMessageCellStyle)style atIndex:(NSInteger)index;;
 
 /**
  *  接收image点击操作
@@ -40,7 +40,7 @@
 /**
  *  通过图片大小计算显示大小
  */
-- (CGSize)getImageViewSizeWithImageSize:(CGSize )imageSize;
++ (CGSize)getImageViewSizeWithImageSize:(CGSize )imageSize;
 
 
 @end

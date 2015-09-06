@@ -1,17 +1,18 @@
 # chat
 IM聊天
-
-1.1 
-
-（1）键盘收起优化
-（2）图片输入实现   
-
+1.2
+  修改了cell的实现方式 修复一些严重问题 现在应该可以用了 
 下一步：
 1.文本消息  拦截url
 2.语音听筒扬声器切换
 3.正在播放语音时  按录制语音则停止播放语音
 4.点击查看大图
 6.长按message 工具条
+
+1.1 
+
+（1）键盘收起优化
+（2）图片输入实现   
 
 1.0
 
@@ -41,18 +42,37 @@ IM聊天
 
 #pragma mark - chatView dataSource and dalegate -
 
-具体代码请参照MyChatViewController  在其中实现自己的代码
-
-通过messageContent来复用
-如果传回messageContent为nil 则需要创建一个实例
-若messageContent不为nil 则复用即可
-另外 messageContent支持完全自定义（没有时间、头像和昵称等不必赋值） 消息类型使用MIMMessageCellStyleOthers  显示完全是messageContent.contentView
+/**
+*  获取cell消息内容 
+*  contentView可复用  nil时创建
+*  若消息类型为完全自定义(MIMMessageCellStyleOthers) 则显示完全为contentView
+*/
+- (UIView *)chatViewMessageContentView:(UIView *)contentView cellStyle:(MIMMessageCellStyle)style forCellAtIndex:(NSInteger)index;
 
 /**
-*  自定义实现cell消息内容
-*  messageContent可复用  传入为nil时创建  非nil时修改model即可
+*  获得消息内容的显示大小  MIMMessageCellStyleOthers 只参考高度 宽度为屏宽 
 */
-- (MIMMessageContent *)chatViewMessageContentView:(MIMMessageContent *)messageContent cellStyle:(MIMMessageCellStyle)style forCellAtIndex:(NSInteger)index;
+-  (CGSize )chatViewMessageContentViewSizeForCellAtIndex:(NSInteger)index;
+
+/**
+*  昵称  nil则不显示
+*/
+- (NSString *)chatViewNicknameForCellAtIndex:(NSInteger)index;
+
+/**
+*  消息时间 nil则不显示
+*/
+- (NSString *)chatViewMessageTimeForCellAtIndex:(NSInteger)index;
+
+/**
+*  头像
+*/
+- (MIMImageModel *)chatViewAvatarWithCellStyle:(MIMMessageCellStyle)style forCellAtIndex:(NSInteger)index;
+
+/**
+*  是否显示发送错误提示
+*/
+- (BOOL)chatViewShowErrorForCellAtIndex:(NSInteger)index;
 
 /**
 *  对话cell 头像左、右或其他类型 自定义的其他类型则不必传入（头像、昵称、时间）这些参数
@@ -70,10 +90,11 @@ IM聊天
 - (NSInteger)chatViewNumberOfRows;
 
 
-//目前只实现了文本和语音代理
+//目前只实现了文本、图片和语音代理
 
 - (void)chatViewWillSendMessageText:(NSString *)text;
 
 - (void)chatViewFinishRecordWithFileName:(NSString *)filename;
 
-    
+- (void)chatViewFinishSelectWithImage:(UIImage *)image;
+

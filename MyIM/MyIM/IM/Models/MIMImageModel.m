@@ -7,9 +7,10 @@
 //
 
 #import "MIMImageModel.h"
+#import "MIMDefine.h"
 
 @implementation MIMImageModel
-- (instancetype)initWithThumbUrl:(NSURL *)tbUrl imageUrl:(NSURL *)imUrl placeHolderImage:(UIImage *)image
+- (instancetype)initWithThumbUrl:(NSString *)tbUrl imageUrl:(NSString *)imUrl placeHolderImage:(UIImage *)image
 {
     self = [super init];
     if (self) {
@@ -20,7 +21,7 @@
     return self;
 }
 
-- (instancetype)initWithThumbUrl:(NSURL *)tbUrl imageUrl:(NSURL *)imUrl size:(CGSize)imageSize placeHolderImage:(UIImage *)image
+- (instancetype)initWithThumbUrl:(NSString *)tbUrl imageUrl:(NSString *)imUrl size:(CGSize)imageSize placeHolderImage:(UIImage *)image
 {
     self = [super init];
     if (self) {
@@ -31,5 +32,27 @@
     }
     return self;
 }
+
++ (CGSize)getUploadSizeWithOriginSize:(CGSize)imageSize
+{
+    //  处理 图片显示大小
+    CGFloat ratio           = imageSize.height / imageSize.width; //高宽比
+    CGFloat maxWidth        = 640;
+    CGFloat maxHeight       = 960;
+    if (ratio <= 1) {//宽大于高
+        if(imageSize.width < maxWidth){ //图片宽小于最大宽
+            return CGSizeMake(imageSize.width, imageSize.height);
+        }
+        return CGSizeMake(maxWidth, maxWidth * ratio);
+    }
+    else{ //高大于宽
+        if(imageSize.height < maxHeight){ //图片高小于最大高
+            return CGSizeMake(imageSize.width, imageSize.height);
+        }
+        return CGSizeMake(maxHeight / ratio, maxHeight);
+    }
+    return CGSizeMake(150, 150);
+}
+
 
 @end

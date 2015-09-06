@@ -22,7 +22,7 @@
  *
  *  @param minHeight 给出最小高度
  */
-- (CGSize)getTextViewSizeWithMinHeight:(CGFloat)minHeight;
++ (CGSize)getTextViewSizeWithText:(NSString *)messagetext minHeight:(CGFloat)minHeight;
 
 
 @end

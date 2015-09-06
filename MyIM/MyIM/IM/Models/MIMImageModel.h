@@ -12,14 +12,16 @@
 
 @interface MIMImageModel : NSObject
 
-@property (strong, nonatomic) NSURL   *thumbUrl; //缩略图 （优先使用）
-@property (strong, nonatomic) NSURL   *imageUrl; //图片地址
+@property (strong, nonatomic) NSString   *thumbUrl; //缩略图 （优先使用）
+@property (strong, nonatomic) NSString   *imageUrl; //图片地址
 @property (strong, nonatomic) UIImage *placeHolderImage;//占位图
 
 @property (assign, nonatomic) CGSize   imageSize; //图片消息 用于布局
 
-- (instancetype)initWithThumbUrl:(NSURL *)tbUrl imageUrl:(NSURL *)imUrl placeHolderImage:(UIImage *)image;
+- (instancetype)initWithThumbUrl:(NSString *)tbUrl imageUrl:(NSString *)imUrl placeHolderImage:(UIImage *)image;
 
-- (instancetype)initWithThumbUrl:(NSURL *)tbUrl imageUrl:(NSURL *)imUrl size:(CGSize)imageSize placeHolderImage:(UIImage *)image;
+- (instancetype)initWithThumbUrl:(NSString *)tbUrl imageUrl:(NSString *)imUrl size:(CGSize)imageSize placeHolderImage:(UIImage *)image;
 
+
++ (CGSize)getUploadSizeWithOriginSize:(CGSize)imageSize;
 @end

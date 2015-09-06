@@ -15,8 +15,6 @@
 static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 
 @interface MIMChatController ()<UITableViewDataSource, UITableViewDelegate>
-//view
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 /**
  *  toolbar layout 高度和距离底部高度
@@ -24,7 +22,6 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolbarHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolbarButtomConstraint;
 
-@property (strong, nonatomic) NSMutableDictionary *cellDictionary;
 @end
 
 @implementation MIMChatController
@@ -75,25 +72,41 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     }
 }
 
-- (void)finishReceiveNewMessageWithCount:(NSInteger)count animated:(BOOL)animated
+- (void)deleteMessageFromIndex:(NSInteger)index
 {
+    [self.tableView beginUpdates];
     
-    NSInteger number = [self.tableView numberOfRowsInSection:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    
+    [self.tableView endUpdates];
+}
+
+- (void)insertMessagesFromIndex:(NSInteger)index count:(NSInteger)count
+{
     [self.tableView beginUpdates];
     
     NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
     
-    for (NSInteger i = number ; i < number + count; i++) {
+    for (NSInteger i = index ; i < index + count; i++) {
         
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
         
         [indexPaths addObject: indexPath];
-        
     }
     
     [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
     
     [self.tableView endUpdates];
+}
+
+- (void)finishReceiveNewMessageWithCount:(NSInteger)count animated:(BOOL)animated
+{
+    
+    NSInteger number = [self.tableView numberOfRowsInSection:0];
+    
+    [self insertMessagesFromIndex:number count:count];
     
     [self scrollToBottomAnimated:animated];
 }
@@ -111,11 +124,20 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     if (itemsNumber == 0) {
         return;
     }
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:itemsNumber - 1 inSection:0];
-    
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:animated];
+    [self scrollToIndex:itemsNumber - 1 animated:animated];
 
 }
+
+/**
+ *  滚动到指定位置
+ */
+- (void)scrollToIndex:(NSInteger)index animated:(BOOL)animated
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:animated];
+}
+
 
 
 #pragma mark - table cell method -
@@ -123,23 +145,23 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 /**
  *  计算cell的高度
  */
-- (CGFloat)getCellHeightWithMessageContent:(MIMMessageContent *)content style:(MIMMessageCellStyle)style
+- (CGFloat)getCellHeightWithTableView:(UITableView *)tableView atIndex:(NSInteger)index
 {
-    //完全自定义 即是contentView的高度
-    if (style == MIMMessageCellStyleOthers) {
-        return content.contentSize.height;
+    MIMMessageCellStyle style = [self.dataSource chatViewCellStyleAtIndex:index];
+    if (style == MIMMessageCellStyleOthers) {//完全自定义 即contentView.height
+        CGSize contentSize = [self.dataSource chatViewMessageContentViewSizeForCellAtIndex:index];
+        return contentSize.height;
     }
     
     CGFloat height = 0.0;
-    NSString *timeString = content.messageTime;
-    
+    NSString *timeString = [self.dataSource chatViewMessageTimeForCellAtIndex:index];
     
     if (timeString) {
         height += MIM_TIME_LABEL_HEIGHT;
     }
-    NSString *nickname = content.nickName;
+    NSString *nickname = [self.dataSource chatViewNicknameForCellAtIndex:index];
     
-    CGSize contentSize = content.contentSize;
+    CGSize contentSize = [self.dataSource chatViewMessageContentViewSizeForCellAtIndex:index];
     
     CGFloat avatarHeight = MIM_AVATAR_SIZE.height;
 
@@ -147,6 +169,7 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     
     height += contentHeight > avatarHeight?contentHeight:avatarHeight;
     
+    height += MIM_BOTTOM_SPACE;
     return height;
 }
 
@@ -169,8 +192,7 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
             cell = [[MIMMessageCommonCell alloc] init];
         }
         MIMMessageCommonCell *commonCell = (MIMMessageCommonCell *)cell;
-        commonCell.messageContent = [self.dataSource chatViewMessageContentView:commonCell.messageContent cellStyle:cellStyle forCellAtIndex:indexPath.row];
-        
+        commonCell.messageContentView = [self.dataSource chatViewMessageContentView:commonCell.messageContentView cellStyle:cellStyle forCellAtIndex:indexPath.row];
         return cell;
     }
     
@@ -178,7 +200,8 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     NSString *reusableId = [NSString stringWithFormat:@"%@_%@", messageId, contentId];
     cell = [tableView dequeueReusableCellWithIdentifier:reusableId];
     if (cell == nil) {
-        cell = [[MIMMessageTableCell alloc] initWithCellStyle:cellStyle];
+        NSLog(@"cell == nil\n id = %ld", indexPath.row);
+        cell = [[MIMMessageTableCell alloc] initWithCellStyle:cellStyle reuseIdentifier:reusableId];
     }
     
     MIMMessageTableCell *messageCell = (MIMMessageTableCell *)cell;
@@ -189,8 +212,12 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
             [weakSelf.delegate chatViewDidSelectAvatarAtIndex:indexPath.row];
         }
     };
-    
-    messageCell.messageContent = [self.dataSource chatViewMessageContentView:messageCell.messageContent cellStyle:cellStyle forCellAtIndex:indexPath.row];
+    messageCell.messageContentView = [self.dataSource chatViewMessageContentView:messageCell.messageContentView cellStyle:cellStyle forCellAtIndex:indexPath.row];
+    messageCell.messageContentSize = [self.dataSource chatViewMessageContentViewSizeForCellAtIndex:indexPath.row];
+    messageCell.nickName    = [self.dataSource chatViewNicknameForCellAtIndex:indexPath.row];
+    messageCell.avatar      = [self.dataSource chatViewAvatarWithCellStyle:cellStyle forCellAtIndex:indexPath.row];
+    messageCell.messageTime = [self.dataSource chatViewMessageTimeForCellAtIndex:indexPath.row];
+    messageCell.showError   = [self.dataSource chatViewShowErrorForCellAtIndex:indexPath.row];
     
     return cell;
 }
@@ -198,7 +225,8 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 #pragma mark - tableView Delegate and dataSource -
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self.cellDictionary objectForKey:@(indexPath.row)];
+    NSLog(@"loadCell row = %ld", indexPath.row);
+    return [self getCellWithTableView:tableView indexPath:indexPath];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -208,27 +236,8 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [self getCellWithTableView:tableView indexPath:indexPath];
-    
-    [self.cellDictionary setObject:cell forKey:@(indexPath.row)];
-    
-    MIMMessageContent *content = nil;
-    MIMMessageCellStyle style = MIMMessageCellStyleIncoming;
-    
-    if ([cell isKindOfClass:[MIMMessageCommonCell class]]) {
-        content = [(MIMMessageCommonCell *)cell messageContent];
-        style = MIMMessageCellStyleOthers;
-    }
-    else if ([cell isKindOfClass:[MIMMessageTableCell class]]){
-        content = [(MIMMessageTableCell *)cell messageContent];
-        style = [(MIMMessageTableCell *)cell style];
-    }
-    
-    if (content) {
-        return [self getCellHeightWithMessageContent:content style:style];
-    }
-    
-    return 0.0;
+    NSLog(@"loadHeight row = %ld",indexPath.row);
+    return [self getCellHeightWithTableView:tableView atIndex:indexPath.row];
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -272,14 +281,6 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     }
     return _textView;
 }
-            
-- (NSMutableDictionary *)cellDictionary
-{
-    if (!_cellDictionary) {
-        _cellDictionary = [[NSMutableDictionary alloc] init];
-    }
-    return _cellDictionary;
-}
 
 
 #pragma mark - setter -
@@ -315,12 +316,7 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
         [self.view layoutSubviews];
         [self scrollToBottomAnimated:NO];
 
-    } completion:^(BOOL finished) {
-        if (height) {
-//            [UIView animateWithDuration:0.25 animations:^{
-//            }];
-        }
-    }];
+    } completion:nil];
 }
 
 - (void)updateToolbarTextViewHeight:(CGFloat)height
@@ -404,7 +400,6 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 #pragma mark - dealloc -
 - (void)dealloc
 {
-    self.cellDictionary = nil;
     [self removeKeyboardNotifications];
     @try {
         [self.textView removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentSize)) context:kMIMTextViewContentSizeContext];

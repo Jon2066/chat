@@ -17,7 +17,9 @@
 
 #import "NSDate+Utils.h"
 
-@interface MyChatViewController ()<MIMChatViewDataSource, MIMChatMediaDelegate>
+#import "MIMAudioPlayer.h"
+
+@interface MyChatViewController ()<MIMChatViewDataSource, MIMChatMediaDelegate, MIMChatViewDelegate>
 
 //聊天双方头像 //多人可用字典 key为userId
 @property (strong, nonatomic) MIMImageModel *incomingAvatarImage;
@@ -26,6 +28,7 @@
 @property (strong, nonatomic) NSMutableArray *messageArray;
 
 @property (strong, nonatomic) MIMMessageVoiceView *playingVoiceView;
+
 @end
 
 @implementation MyChatViewController
@@ -65,14 +68,14 @@
 - (MIMImageModel *)incomingAvatarImage
 {
     if (!_incomingAvatarImage) {
-        _incomingAvatarImage = [[MIMImageModel alloc] initWithThumbUrl:nil imageUrl:[NSURL URLWithString:@"http://img.hb.aicdn.com/66f4edb88dd568bf042436c1eeafe8fab5859aee1c4e2-BoNr5g_fw658"] placeHolderImage:nil];
+        _incomingAvatarImage = [[MIMImageModel alloc] initWithThumbUrl:@"http://img.hb.aicdn.com/66f4edb88dd568bf042436c1eeafe8fab5859aee1c4e2-BoNr5g_fw658" imageUrl:nil placeHolderImage:nil];
     }
     return _incomingAvatarImage;
 }
 - (MIMImageModel *)outgoingAvatarImage
 {
     if (!_outgoingAvatarImage) {
-        _outgoingAvatarImage = [[MIMImageModel alloc] initWithThumbUrl:nil imageUrl:[NSURL URLWithString:@"http://b.hiphotos.baidu.com/image/pic/item/fc1f4134970a304e5c52aefdd3c8a786c9175c40.jpg"] placeHolderImage:nil];
+        _outgoingAvatarImage = [[MIMImageModel alloc] initWithThumbUrl:@"http://b.hiphotos.baidu.com/image/pic/item/fc1f4134970a304e5c52aefdd3c8a786c9175c40.jpg" imageUrl:nil placeHolderImage:nil];
     }
     return _outgoingAvatarImage;
 }
@@ -88,107 +91,145 @@
 
 #pragma mark - chatView DataSource -
 
-/**
- *  设置 一个 cell中显示消息内容的view
- */
-- (MIMMessageContent *)chatViewMessageContentView:(MIMMessageContent *)messageContent cellStyle:(MIMMessageCellStyle)style forCellAtIndex:(NSInteger)index
-{
-    //没有content 则创建
-    if(!messageContent){
-        messageContent = [[MIMMessageContent alloc] init];
-    }
-    
-    MIMMessage *message = [self.messageArray objectAtIndex:index];
+#pragma mark - messageContentView -
 
+- (UIView *)loadMessageTextContentView:(UIView *)messageContentView style:(MIMMessageCellStyle)style message:(MIMMessage *)message
+{
+    MIMMessageTextView *textView = nil;
+    //没有contentView则创建
+    if (!messageContentView) {
+        textView = [[MIMMessageTextView alloc] initFromNib];
+        messageContentView = textView;
+    }
+    else{
+        textView = (MIMMessageTextView *)messageContentView;
+    }
+    [textView loadViewWithMessageText:message.messageText messageCellStyle:style];
+    
+    return messageContentView;
+}
+
+- (UIView *)loadMessageImageContentView:(UIView *)messageContentView style:(MIMMessageCellStyle)style message:(MIMMessage *)message atIndex:(NSInteger)index
+{
+    MIMMessageImageView *imageView = nil;
+    if (!messageContentView) {
+        imageView = [[MIMMessageImageView alloc] initFromNib];
+        //接收image点击操作
+        [imageView receiveImageTapWithBlock:^(MIMMessageImageView *messageImageView) {
+            //TODO:: 点击后操作
+        }];
+        messageContentView = imageView;
+    }
+    else{
+        imageView = (MIMMessageImageView *)messageContentView;
+    }
+    if (message.imageModel.thumbUrl) {
+        [imageView loadViewWithImageUrl:message.imageModel.thumbUrl messageCellStyle:style atIndex:index];
+    }
+    else{
+        [imageView loadViewWithImage:message.imageModel.placeHolderImage messageCellStyle:style atIndex:index];
+    }
+    return messageContentView;
+}
+
+- (UIView *)loadMessageVoiceContentView:(UIView *)messageContentView style:(MIMMessageCellStyle)style message:(MIMMessage *)message
+{
+    MIMMessageVoiceView *voiceView = nil;
+    if (!messageContentView) {
+        __weak typeof(self) weakSelf = self;
+        voiceView = [[MIMMessageVoiceView alloc] initFromNibWithStartPlay:^(MIMMessageVoiceView *playView) {
+            if (weakSelf.playingVoiceView) {
+                [weakSelf.playingVoiceView stopPlay];
+            }
+            weakSelf.playingVoiceView = playView;
+        } endPlay:^(MIMMessageVoiceView *playView) {
+            weakSelf.playingVoiceView = nil;
+        }];
+        
+        messageContentView = voiceView;
+    }
+    else{
+        voiceView = (MIMMessageVoiceView *)messageContentView;
+    }
+    [voiceView loadViewWithVoiceFileName:message.mediaFileName messageCellStyle:style];
+    return messageContentView;
+}
+
+
+#pragma mark - chatView DataSource -
+
+- (UIView *)chatViewMessageContentView:(UIView *)contentView cellStyle:(MIMMessageCellStyle)style forCellAtIndex:(NSInteger)index
+{
+    MIMMessage *message = [self.messageArray objectAtIndex:index];
+    
     if (message.messageType == MIMMessageTypeText) {//文本消息创建
-        
-        MIMMessageTextView *textView = nil;
-        //没有contentView则创建
-        if (!messageContent.contentView) {
-            textView = [[MIMMessageTextView alloc] initFromNib];
-            messageContent.contentView = textView;
-        }
-        else{
-                
-            textView = (MIMMessageTextView *)messageContent.contentView;
-        }
-        [textView loadViewWithMessageText:message.messageText messageCellStyle:style];
-        
-        messageContent.contentSize = [textView getTextViewSizeWithMinHeight:MIM_AVATAR_SIZE.height];
-        
+        return [self loadMessageTextContentView:contentView style:style message:message];
     }
     else if (message.messageType == MIMMessageTypeImage){ //图片视图创建
-        
-        MIMMessageImageView *imageView = nil;
-        if (!messageContent.contentView) {
-            imageView = [[MIMMessageImageView alloc] initFromNib];
-            //接收image点击操作
-            [imageView receiveImageTapWithBlock:^(MIMMessageImageView *messageImageView) {
-                //TODO:: 点击后操作
-            }];
-            messageContent.contentView = imageView;
-        }
-        else{
-            imageView = (MIMMessageImageView *)messageContent.contentView;
-        }
-        if (message.imageModel.thumbUrl) {
-            [imageView loadViewWithImageUrl:[NSURL URLWithString:@"http://b.hiphotos.baidu.com/image/pic/item/fc1f4134970a304e5c52aefdd3c8a786c9175c40.jpg"] messageCellStyle:style atIndex:index];
-            messageContent.contentSize = [imageView getImageViewSizeWithImageSize:CGSizeMake(150, 150)];
-        }
-        else{
-            [imageView loadViewWithImage:message.imageModel.placeHolderImage messageCellStyle:style atIndex:index];
-            messageContent.contentSize = [imageView getImageViewSizeWithImageSize:message.imageModel.imageSize];
-        }
-
-        
+        return  [self loadMessageImageContentView:contentView style:style message:message atIndex:index];
     }
     else if (message.messageType == MIMMessageTypeVoice){
-        
-        MIMMessageVoiceView *voiceView = nil;
-        if (!messageContent.contentView) {
-            __weak typeof(self) weakSelf = self;
-            voiceView = [[MIMMessageVoiceView alloc] initFromNibWithStartPlay:^(MIMMessageVoiceView *playView) {
-                if (weakSelf.playingVoiceView) {
-                    [weakSelf.playingVoiceView stopPlay];
-                }
-                weakSelf.playingVoiceView = playView;
-            } endPlay:^(MIMMessageVoiceView *playView) {
-                weakSelf.playingVoiceView = nil;
-            }];
-            
-            messageContent.contentView = voiceView;
+        return  [self loadMessageVoiceContentView:contentView style:style message:message];
+    }
+    return contentView;
+}
+
+
+- (CGSize)chatViewMessageContentViewSizeForCellAtIndex:(NSInteger)index
+{
+    MIMMessage *message = [self.messageArray objectAtIndex:index];
+    
+    if (message.messageType == MIMMessageTypeText) {//文本消息创建
+        return [MIMMessageTextView getTextViewSizeWithText:message.messageText minHeight:MIM_AVATAR_SIZE.height];
+    }
+    else if (message.messageType == MIMMessageTypeImage){ //图片视图创建
+        return [MIMMessageImageView getImageViewSizeWithImageSize:message.imageModel.imageSize];
+    }
+    else if (message.messageType == MIMIuputTypeVoice){
+        CGFloat duration = [MIMAudioPlayer getAudioDurationWithFileName:message.mediaFileName];
+        return [MIMMessageVoiceView getViewSizeWithDuration:duration];
+    }
+    return CGSizeZero;
+}
+
+- (MIMImageModel *)chatViewAvatarWithCellStyle:(MIMMessageCellStyle)style forCellAtIndex:(NSInteger)index
+{
+    if (style == MIMMessageCellStyleOutgoing) {
+        return self.outgoingAvatarImage;
+    }
+    else if (style == MIMMessageCellStyleIncoming){
+        return self.incomingAvatarImage;
+    }
+    return nil;
+}
+
+- (NSString *)chatViewNicknameForCellAtIndex:(NSInteger)index
+{
+    return nil;
+}
+
+- (NSString *)chatViewMessageTimeForCellAtIndex:(NSInteger)index
+{
+    MIMMessage *message = [self.messageArray objectAtIndex:index];
+    
+    //比较上一个时间  没有上一个或者与上一个时间相差两分钟以上 显示这条的时间
+    if (index > 0) {
+        MIMMessage *previousMessage = [self.messageArray objectAtIndex:index - 1];
+        if (([message.date timeIntervalSince1970] - 120.0) > [previousMessage.date timeIntervalSince1970] ) {
+            return [message.date convertToString];
         }
-        else{
-            voiceView = (MIMMessageVoiceView *)messageContent.contentView;
-        }
-        [voiceView loadViewWithVoiceFileName:message.mediaFileName messageCellStyle:style];
-        
-        messageContent.contentSize = [voiceView getViewSize];
-        
+    }
+    else{
+        return [message.date convertToString];
     }
     
-    // --- 通用设置 ------
-    messageContent.avatar = ({
-        
-        MIMImageModel *model = nil;
-        
-        if (style == MIMMessageCellStyleOutgoing) {
-           model = self.outgoingAvatarImage;
-        }
-        else if (style == MIMMessageCellStyleIncoming){
-            model = self.incomingAvatarImage;
-        }
-        
-        model;
-    });
-    
-    messageContent.nickName = nil; //不显示昵称
-    messageContent.messageTime = [message.date convertToString];
-    
-   //-----
-    
-    return messageContent;
+    return nil;
+}
 
+- (BOOL)chatViewShowErrorForCellAtIndex:(NSInteger)index
+{
+    MIMMessage *message = [self.messageArray objectAtIndex:index];
+    return NO;
 }
 
 
@@ -198,9 +239,10 @@
 - (MIMMessageCellStyle)chatViewCellStyleAtIndex:(NSInteger)index
 {
     //是自己发的还是别人发的  或者是 自定义类型
-    if(index % 3){
-        return MIMMessageCellStyleOutgoing;
-    }
+    MIMMessage *message = [self.messageArray objectAtIndex:index];
+//    if(message.isMySend){
+//        return MIMMessageCellStyleOutgoing;
+//    }
     return MIMMessageCellStyleIncoming;
 }
 
@@ -211,10 +253,10 @@
 - (NSString *)chatViewessageTypeReusableIdentifierAtIndex:(NSInteger)index
 {
     MIMMessage *message = [self.messageArray objectAtIndex:index];
-    if (message.messageType == MIMMessageTypeVoice) {
+    if (message.messageType == MIMIuputTypeVoice) {
         return @"kMIMMessageVoice";
     }
-    else if(message.messageType == MIMMessageTypeText){
+    else if(message.messageType == MIMIuputTypeText){
         return @"kMIMMessageText";
     }
     return @"kMIMMessageImage";
@@ -225,6 +267,7 @@
 {
     return self.messageArray.count;
 }
+
 
 #pragma mark - chatView dalegate -
 - (void)chatViewWillSendMessageText:(NSString *)text

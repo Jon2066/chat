@@ -9,7 +9,7 @@
 #import "MIMMessageCommonCell.h"
 
 @interface MIMMessageCommonCell ()
-@property (strong, nonatomic) UIView *messageView;
+
 @end
 
 @implementation MIMMessageCommonCell
@@ -33,23 +33,29 @@
     // Configure the view for the selected state
 }
 
-- (void)setMessageContent:(MIMMessageContent *)messageContent
+- (void)setMessageContentView:(UIView *)messageContentView
 {
-    _messageContent = messageContent;
+    if (_messageContentView == messageContentView) {
+        return;
+    }
+    else{
+        if (_messageContentView) {
+            [_messageContentView removeFromSuperview];
+        }
+    }
+    _messageContentView = messageContentView;
     
-    self.messageView = messageContent.contentView;
-    
-    [self.contentView addSubview:self.messageView];
+    [self.contentView addSubview:messageContentView];
 
-    [self.messageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [messageContentView setTranslatesAutoresizingMaskIntoConstraints:NO];
 
     //创建约束
-    NSLayoutConstraint *leadingCt = [NSLayoutConstraint constraintWithItem:self.messageView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0];
+    NSLayoutConstraint *leadingCt = [NSLayoutConstraint constraintWithItem:messageContentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0];
 
-    NSLayoutConstraint *trailingCt = [NSLayoutConstraint constraintWithItem:self.messageView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0];
+    NSLayoutConstraint *trailingCt = [NSLayoutConstraint constraintWithItem:messageContentView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0];
 
-    NSLayoutConstraint *topCt = [NSLayoutConstraint constraintWithItem:self.messageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0];
-    NSLayoutConstraint *bottomCt = [NSLayoutConstraint constraintWithItem:self.messageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
+    NSLayoutConstraint *topCt = [NSLayoutConstraint constraintWithItem:messageContentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0];
+    NSLayoutConstraint *bottomCt = [NSLayoutConstraint constraintWithItem:messageContentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
 
 
     [self.contentView addConstraints:@[leadingCt, trailingCt, topCt, bottomCt]];

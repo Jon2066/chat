@@ -12,13 +12,6 @@
 
 @interface MIMMessageTableCell ()
 
-@property (strong, nonatomic) UIView         *messageContentView;
-@property (assign, nonatomic) CGSize          messageContentSize;
-@property (strong, nonatomic) MIMImageModel  *avatar;
-@property (strong, nonatomic) NSString       *nickName;
-@property (strong, nonatomic) NSString       *messageTime; //消息时间
-@property (assign, nonatomic) BOOL            showError;
-
 @property (assign, nonatomic) CGSize          avatarSize;
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
@@ -31,19 +24,22 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *timeHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *nicknameHeightConstraint;
 
+@property (strong, nonatomic) NSLayoutConstraint *contentMHC;
+@property (strong, nonatomic) NSLayoutConstraint *contentMVC;
 
 @property (strong, nonatomic) UIButton      *errorButton;
 
 @end
 
 @implementation MIMMessageTableCell
-
-- (instancetype)initWithCellStyle:(MIMMessageCellStyle)style
+@synthesize reuseIdentifier = _reuseIdentifier;
+- (instancetype)initWithCellStyle:(MIMMessageCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     NSString *nibName = style == MIMMessageCellStyleIncoming?@"MIMMessageInCell":@"MIMMessageOutCell";
     self = [[[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil] lastObject];
     if (self) {
         _style = style;
+        _reuseIdentifier = reuseIdentifier;
     }
     return self;
 }
@@ -67,17 +63,6 @@
 
 #pragma mark - setter -
 
-- (void)setMessageContent:(MIMMessageContent *)messageContent
-{
-    _messageContent = messageContent;
-    
-    self.messageContentView = messageContent.contentView;
-    self.messageContentSize = messageContent.contentSize;
-    self.avatar             = messageContent.avatar;
-    self.nickName           = messageContent.nickName;
-    self.messageTime        = messageContent.messageTime;
-}
-
 - (void)setMessageContentView:(UIView *)messageContentView
 {
     if (_messageContentView) {
@@ -86,13 +71,18 @@
             [self.contentView addSubview:messageContentView];
             _messageContentView = messageContentView;
         }
-        //存在 并且和之前的是同一个view 不做操作
-        return;
+        else{
+            //存在 并且和之前的是同一个view 不做操作
+            return;
+        }
 
     }
-    //不存在
-    _messageContentView = messageContentView;
-    [self.contentView addSubview:_messageContentView];
+    else{
+        //不存在
+        _messageContentView = messageContentView;
+        [self.contentView addSubview:_messageContentView];
+    }
+
     
     [_messageContentView setTranslatesAutoresizingMaskIntoConstraints:NO];
     
@@ -108,7 +98,11 @@
     
     NSLayoutConstraint *topCt = [NSLayoutConstraint constraintWithItem:self.nicknameLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_messageContentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:MIM_SPACE_BETWEEN_NICKNAME];
     
-    [self.contentView addConstraints:@[leadingCt, topCt]];
+    self.contentMHC = [NSLayoutConstraint constraintWithItem:self.messageContentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:0];
+    
+    self.contentMVC = [NSLayoutConstraint constraintWithItem:self.messageContentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:0];
+    
+    [self.contentView addConstraints:@[leadingCt, topCt, self.contentMHC, self.contentMVC]];
     [self updateConstraints];
 
 }
@@ -121,11 +115,8 @@
     }
     _messageContentSize = messageContentSize;
     
-    NSLayoutConstraint *mHC = [NSLayoutConstraint constraintWithItem:self.messageContentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:_messageContentSize.height];
-    
-    NSLayoutConstraint *mVC = [NSLayoutConstraint constraintWithItem:self.messageContentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:_messageContentSize.width];
-    
-    [self.contentView addConstraints:@[mHC, mVC]];
+    self.contentMHC.constant = messageContentSize.height;
+    self.contentMVC.constant = messageContentSize.width;
     
     [self updateConstraintsIfNeeded];
     
@@ -164,15 +155,15 @@
     }
     
     if (avatar) {
-        NSURL * previousAvatarUrl = _avatar.thumbUrl?_avatar.thumbUrl:_avatar.imageUrl;
-        NSURL * avatarUrl = avatar?(avatar.thumbUrl?avatar.thumbUrl:avatar.imageUrl):nil;
+        NSString * previousAvatarUrl = _avatar.thumbUrl?_avatar.thumbUrl:_avatar.imageUrl;
+        NSString * avatarUrl = avatar?(avatar.thumbUrl?avatar.thumbUrl:avatar.imageUrl):nil;
         //如果存在新url 并且存在前url 并且地址相同 则不做操作，否则重新设置
         if (avatarUrl && previousAvatarUrl
-            && [[NSString stringWithFormat:@"%@",previousAvatarUrl] isEqualToString:[NSString stringWithFormat:@"%@",avatarUrl]]) {
+            && [previousAvatarUrl isEqualToString:avatarUrl]) {
         }
         else{
             _avatar = avatar;
-            [self.avatarButton sd_setImageWithURL:avatarUrl forState:UIControlStateNormal placeholderImage:self.avatar.placeHolderImage];
+            [self.avatarButton sd_setImageWithURL:[NSURL URLWithString:avatarUrl] forState:UIControlStateNormal placeholderImage:self.avatar.placeHolderImage];
         }
         
     }

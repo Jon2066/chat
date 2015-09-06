@@ -26,7 +26,7 @@ typedef void(^MIMImagePickerCompletion)(UIImage *image);
 {
     self = [super init];
     if (self) {
-        _rootViewController = controller;
+        self.rootViewController = controller;
     }
     return self;
 }

@@ -24,7 +24,6 @@
 		AB729EC71B8D815600B08394 /* MIMVoiceFileConvert.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB729EC61B8D815600B08394 /* MIMVoiceFileConvert.mm */; };
 		AB729ECA1B8D81A700B08394 /* MIMVoiceDataConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = AB729EC91B8D81A700B08394 /* MIMVoiceDataConvert.m */; };
 		AB7896411B8C0BA700EF38D3 /* MIMAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7896401B8C0BA700EF38D3 /* MIMAudioPlayer.m */; };
-		AB7DC2841B86BC5C007FF257 /* MIMMessageContent.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7DC2831B86BC5C007FF257 /* MIMMessageContent.m */; };
 		AB7DC28C1B86FFFB007FF257 /* MIMChatMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7DC28B1B86FFFB007FF257 /* MIMChatMediaController.m */; };
 		AB7DC28F1B870945007FF257 /* ToolViewInputVoice@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AB7DC28D1B870945007FF257 /* ToolViewInputVoice@2x.png */; };
 		AB7DC2901B870945007FF257 /* ToolViewKeyboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AB7DC28E1B870945007FF257 /* ToolViewKeyboard@2x.png */; };
@@ -129,8 +128,6 @@
 		AB729EC91B8D81A700B08394 /* MIMVoiceDataConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMVoiceDataConvert.m; sourceTree = "<group>"; };
 		AB78963F1B8C0BA700EF38D3 /* MIMAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMAudioPlayer.h; sourceTree = "<group>"; };
 		AB7896401B8C0BA700EF38D3 /* MIMAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMAudioPlayer.m; sourceTree = "<group>"; };
-		AB7DC2821B86BC5C007FF257 /* MIMMessageContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMMessageContent.h; sourceTree = "<group>"; };
-		AB7DC2831B86BC5C007FF257 /* MIMMessageContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMMessageContent.m; sourceTree = "<group>"; };
 		AB7DC2871B86DFC4007FF257 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		AB7DC2881B86DFC4007FF257 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		AB7DC28A1B86FFFB007FF257 /* MIMChatMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMChatMediaController.h; sourceTree = "<group>"; };
@@ -428,8 +425,6 @@
 				AB87D1701B79C77D00650C5E /* MIMInputItemModel.m */,
 				AB5EB20D1B7D871600639F5C /* MIMImageModel.h */,
 				AB5EB20E1B7D871600639F5C /* MIMImageModel.m */,
-				AB7DC2821B86BC5C007FF257 /* MIMMessageContent.h */,
-				AB7DC2831B86BC5C007FF257 /* MIMMessageContent.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -717,7 +712,6 @@
 				AB7896411B8C0BA700EF38D3 /* MIMAudioPlayer.m in Sources */,
 				ABC52AE11B7C9118009A5F55 /* UIView+WebCacheOperation.m in Sources */,
 				AB8A4ED01B78AEB500809B94 /* MIMChatController.m in Sources */,
-				AB7DC2841B86BC5C007FF257 /* MIMMessageContent.m in Sources */,
 				ABC52ADC1B7C9118009A5F55 /* UIButton+WebCache.m in Sources */,
 				AB5429211B7F228F00032980 /* MIMMessageTextView.m in Sources */,
 				ABC52ADB1B7C9118009A5F55 /* SDWebImagePrefetcher.m in Sources */,

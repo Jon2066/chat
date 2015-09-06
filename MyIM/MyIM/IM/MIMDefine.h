@@ -24,6 +24,7 @@ typedef enum{
 #define MIM_SPACE_BETWEEN_AVATAR     10.0f  //头像与内容的距离
 #define MIM_SPACE_BETWEEN_NICKNAME   0.0f  //昵称与内容的距离
 #define MIM_AVATAR_SIZE              CGSizeMake(45, 45) //头像大小
+#define MIM_BOTTOM_SPACE             15.0f //内容与cell下边间距
 
 //toolbar 定义
 #define MIM_INPUT_TOOLBAR_HEIGHT     50.0f   //输入toolb默认高度 也是两边按钮的高度

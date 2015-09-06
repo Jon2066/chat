@@ -84,7 +84,7 @@ typedef void(^PlayStateFeedbockBlock)(MIMMessageVoiceView *playView);
 
     [self.timeLabel setText:[NSString stringWithFormat:@"%ld's",self.voiceDuration]];
     
-    CGSize size = [self getViewSize];
+    CGSize size = [MIMMessageVoiceView getViewSizeWithDuration:self.voiceDuration];
 
 //    self.voiceButton.bounds = CGRectMake(0, 0, size.width, size.height);
     
@@ -137,10 +137,10 @@ typedef void(^PlayStateFeedbockBlock)(MIMMessageVoiceView *playView);
     }
 }
 
-- (CGSize)getViewSize
++ (CGSize)getViewSizeWithDuration:(CGFloat)duration
 {
     //TODO:: 处理语音视图 长度 self.voiceDuration
-    return CGSizeMake(MIM_MESSAGE_MIN_VOICE_WIDTH + (MIM_MESSAGE_MAX_VOICE_WIDTH - MIM_MESSAGE_MIN_VOICE_WIDTH) / 60.0 * self.voiceDuration, 45.0f);
+    return CGSizeMake(MIM_MESSAGE_MIN_VOICE_WIDTH + (MIM_MESSAGE_MAX_VOICE_WIDTH - MIM_MESSAGE_MIN_VOICE_WIDTH) / 60.0 * duration, 45.0f);
 }
 /*
 // Only override drawRect: if you perform custom drawing.

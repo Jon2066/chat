@@ -13,9 +13,10 @@
             <subviews>
                 <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ihb-wK-aB5">
                     <rect key="frame" x="0.0" y="0.0" width="368" height="178"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </imageView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="ihb-wK-aB5" secondAttribute="bottom" id="2N9-A5-60K"/>
                 <constraint firstItem="ihb-wK-aB5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="7Fo-30-jYN"/>

@@ -10,18 +10,25 @@
 
 #import "MIMDefine.h"
 
-#import "MIMMessageContent.h"
+#import "MIMImageModel.h"
 
 typedef void(^messageAvatarClick)(void);
 
 @interface MIMMessageTableCell : UITableViewCell
 
+@property (nonatomic, copy, readonly) NSString  *reuseIdentifier;
+
 @property (assign, nonatomic,readonly) MIMMessageCellStyle style;
 
-@property (strong, nonatomic) MIMMessageContent *messageContent;
+@property (strong, nonatomic) UIView         *messageContentView;
+@property (assign, nonatomic) CGSize          messageContentSize;
+@property (strong, nonatomic) MIMImageModel  *avatar;
+@property (strong, nonatomic) NSString       *nickName;
+@property (strong, nonatomic) NSString       *messageTime; //消息时间
+@property (assign, nonatomic) BOOL            showError;
 
 @property (strong, nonatomic) messageAvatarClick avatarClick;
 
-- (instancetype)initWithCellStyle:(MIMMessageCellStyle )style;
+- (instancetype)initWithCellStyle:(MIMMessageCellStyle )style reuseIdentifier:(NSString *)reuseIdentifier;
 
 @end

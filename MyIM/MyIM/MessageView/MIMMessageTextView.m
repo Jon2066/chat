@@ -20,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewTrailingConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewLeadingConstaint;
 
-@property (assign, nonatomic) CGSize textSize;
+//@property (assign, nonatomic) CGSize textSize;
 
 @end
 
@@ -46,13 +46,16 @@
     if (self.messageCellStyle == style) {
         return;
     }
+    
+    self.messageCellStyle = style;
+    
     if (style == MIMMessageCellStyleOutgoing) {
         UIImage *bgImage = [[UIImage imageNamed:@"chatto_bg_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(35, 10, 10, 22)];
         [self.backgroudImageView setImage:bgImage];
         
     }
     else {
-         UIImage *bgImage = [[UIImage imageNamed:@"chatfrom_bg_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(35, 22, 10, 10)];
+        UIImage *bgImage = [[UIImage imageNamed:@"chatfrom_bg_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(35, 22, 10, 10)];
         [self.backgroudImageView setImage:bgImage];
     }
     
@@ -66,30 +69,30 @@
     }
     [self updateConstraintsIfNeeded];
 
+
 }
 
 - (void)setMessageText:(NSString *)messageText
 {
-    _textView.text = messageText;
+    _textView.attributedText = [[NSAttributedString alloc] initWithString:messageText attributes:@{NSFontAttributeName:MIM_MESSAGE_TEXT_FONT}];
     
-    CGFloat width = [self getTextWidth:messageText];
+    CGFloat width = [MIMMessageTextView getTextWidth:messageText];
     if(width >= MIM_MESSAGE_MAX_TEXT_WIDTH){
         width = MIM_MESSAGE_MAX_TEXT_WIDTH;
     }
     
-    CGFloat height = [self getTextHeight:messageText withWidth:width];
+    CGFloat height = [MIMMessageTextView getTextHeight:messageText withWidth:width];
     self.textViewHeightConstraint.constant = height;
     [self updateConstraintsIfNeeded];
     
     
-    self.textSize = CGSizeMake(width, height);
+//    self.textSize = CGSizeMake(width, height);
     
 }
 
 
 - (void)awakeFromNib
 {
-    self.textView.font = MIM_MESSAGE_TEXT_FONT;
     
     self.textView.delegate = self;
     
@@ -108,13 +111,13 @@
 }
 
 
-- (CGFloat)getTextHeight:(NSString *)text withWidth:(CGFloat)width
++ (CGFloat)getTextHeight:(NSString *)text withWidth:(CGFloat)width
 {
     UIFont *textFont = MIM_MESSAGE_TEXT_FONT;
     return  [text boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:textFont} context:nil].size.height + 1.0;
 }
 
-- (CGFloat)getTextWidth:(NSString *)text
++ (CGFloat)getTextWidth:(NSString *)text
 {
     UIFont *textFont = MIM_MESSAGE_TEXT_FONT;
 
@@ -122,21 +125,27 @@
     return size.width + 0.5;
 }
 
-- (CGSize)getTextViewSizeWithMinHeight:(CGFloat)minHeight
++ (CGSize)getTextViewSizeWithText:(NSString *)messagetext minHeight:(CGFloat)minHeight;
 {
     UIEdgeInsets contentInset = MIM_MESSAGE_TEXT_EDGE;
     
-    CGFloat textWidth = self.textSize.width;
+    CGFloat textWidth = [self getTextWidth:messagetext];
     
-    if (textWidth + contentInset.left + contentInset.right < MIM_MESSAGE_MAX_TEXT_WIDTH) {
+    if (textWidth < MIM_MESSAGE_MAX_TEXT_WIDTH) {
         if (textWidth < 25) {
             textWidth = 25;
         }
         return CGSizeMake(textWidth + contentInset.left + contentInset.right, minHeight);
     }
+    else{
+        textWidth = MIM_MESSAGE_MAX_TEXT_WIDTH;
+    }
     
-    CGFloat textHeight = self.textSize.height;
-    
-    return CGSizeMake(MIM_MESSAGE_MAX_TEXT_WIDTH + contentInset.left + contentInset.right , textHeight + contentInset.top + contentInset.bottom );
+    CGFloat textHeight = [self getTextHeight:messagetext withWidth:textWidth];
+    CGFloat viewHeight = textHeight + contentInset.top + contentInset.bottom;
+    if (viewHeight < minHeight) {
+        viewHeight = minHeight;
+    }
+    return CGSizeMake(MIM_MESSAGE_MAX_TEXT_WIDTH + contentInset.left + contentInset.right , viewHeight);
 }
 @end
