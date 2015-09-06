@@ -127,12 +127,13 @@
     _messageTime = messageTime;
     if (_messageTime) {
         self.timeHeightConstraint.constant = MIM_TIME_LABEL_HEIGHT;
-        self.timeLabel.text = self.messageTime;
     }
     else{
         self.timeHeightConstraint.constant = 0.0f;
     }
     [self updateConstraintsIfNeeded];
+    
+    self.timeLabel.text = self.messageTime;
 }
 
 - (void)setNickName:(NSString *)nickName
@@ -140,12 +141,13 @@
     _nickName = nickName;
     if (_nickName) {
         self.nicknameHeightConstraint.constant = MIM_NICKNAME_LABEL_HEIGHT;
-        self.nicknameLabel.text = self.nickName;
     }
     else{
         self.nicknameHeightConstraint.constant = 0.0f;
     }
     [self updateConstraintsIfNeeded];
+    
+    self.nicknameLabel.text = self.nickName;
 }
 
 - (void)setAvatar:(MIMImageModel *)avatar
