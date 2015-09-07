@@ -113,7 +113,7 @@
 {
     MIMMessageImageView *imageView = nil;
     if (!messageContentView) {
-        imageView = [[MIMMessageImageView alloc] initFromNib];
+        imageView = [[MIMMessageImageView alloc] initFromNibWithCellStyle:style];
         //接收image点击操作
         [imageView receiveImageTapWithBlock:^(MIMMessageImageView *messageImageView) {
             //TODO:: 点击后操作
@@ -124,10 +124,10 @@
         imageView = (MIMMessageImageView *)messageContentView;
     }
     if (message.imageModel.thumbUrl) {
-        [imageView loadViewWithImageUrl:message.imageModel.thumbUrl messageCellStyle:style atIndex:index];
+        [imageView loadViewWithImageUrl:message.imageModel.thumbUrl atIndex:index];
     }
     else{
-        [imageView loadViewWithImage:message.imageModel.placeHolderImage messageCellStyle:style atIndex:index];
+        [imageView loadViewWithImage:message.imageModel.placeHolderImage atIndex:index];
     }
     return messageContentView;
 }

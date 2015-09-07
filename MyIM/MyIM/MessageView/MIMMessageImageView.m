@@ -10,7 +10,7 @@
 
 #import "SDWebImageManager.h"
 
-#import <SDWebImageDownloaderOperation.h>
+#import "SDWebImageDownloaderOperation.h"
 
 typedef void(^MIMMessageImageTap)(MIMMessageImageView *messsageImageView);
 

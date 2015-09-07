@@ -45,4 +45,9 @@ typedef enum{
 //语音消息
 #define MIM_MESSAGE_MAX_VOICE_WIDTH      [UIScreen mainScreen].bounds.size.width * 0.55
 #define MIM_MESSAGE_MIN_VOICE_WIDTH      75.0f
+
+#define MIMMessageMaxRecorderTime        60   //最长录音时间 60秒
+
+
+
 #endif
