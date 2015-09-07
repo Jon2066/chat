@@ -10,7 +10,7 @@
 
 #import "SDWebImageManager.h"
 
-#import "SDWebImageDownloaderOperation.h"
+#import <SDWebImageDownloaderOperation.h>
 
 typedef void(^MIMMessageImageTap)(MIMMessageImageView *messsageImageView);
 
@@ -29,37 +29,28 @@ typedef void(^MIMMessageImageTap)(MIMMessageImageView *messsageImageView);
 
 @implementation MIMMessageImageView
 
-- (instancetype)initFromNib
+- (instancetype)initFromNibWithCellStyle:(MIMMessageCellStyle)style
 {
     self = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MIMMessageImageView class]) owner:nil options:nil] lastObject];
     if (self) {
-        _style = -100;
-//        self.clipsToBounds = YES;
-//        self.contentMode = UIViewContentModeScaleAspectFill;
-//        self.layer.masksToBounds = YES;
-//        self.layer.cornerRadius = 5.0f;
+        _style = style;
+        
+        _maskLayer = [CAShapeLayer layer];
+        _maskLayer.fillColor = [UIColor clearColor].CGColor;
+        _maskLayer.strokeColor = [UIColor clearColor].CGColor;
+        _maskLayer.contents = (id)[UIImage imageNamed:self.style == MIMMessageCellStyleOutgoing?@"chatto_bg_normal":@"chatfrom_bg_normal"] .CGImage;
+        _maskLayer.frame = CGRectMake(0, 0, 200, 200);
+        _maskLayer.contentsCenter = CGRectMake(0.5, 0.5, 0.1, 0.1);
+        _maskLayer.contentsScale = [UIScreen mainScreen].scale;
+        
+        self.layer.mask = _maskLayer;
+        
     }
     return self;
 }
 
 - (void)awakeFromNib
 {
-    
-    [_maskLayer removeFromSuperlayer];
-    _maskLayer = [CAShapeLayer layer];
-    _maskLayer.fillColor = [UIColor clearColor].CGColor;
-    _maskLayer.strokeColor = [UIColor clearColor].CGColor;
-//    CGSize size = [self getImageViewSizeWithImageSize:image.size];
-//    _maskLayer.frame = CGRectMake(0, 0, size.width, size.height);
-    
-    _maskLayer.contents = (id)[UIImage imageNamed:@"chatfrom_bg_normal"] .CGImage;
-    
-    _maskLayer.contentsCenter = CGRectMake(0.5, 0.5, 0.1, 0.1);
-    _maskLayer.contentsScale = [UIScreen mainScreen].scale;
-    
-    
-    self.layer.mask = _maskLayer;
-    
     UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageClick)];
     [self.imageView addGestureRecognizer:gesture];
 }
@@ -76,14 +67,14 @@ typedef void(^MIMMessageImageTap)(MIMMessageImageView *messsageImageView);
     self.imageTapBlock = block;
 }
 
-- (void)loadViewWithImageUrl:(NSString *)url messageCellStyle:(MIMMessageCellStyle)style atIndex:(NSInteger)index;
+- (void)loadViewWithImageUrl:(NSString *)url atIndex:(NSInteger)index;
 {
     if ([_url isEqualToString:url]) {
         return;
     }
     self.url = url;
     _index = index;
-    self.style = style;
+
     __weak typeof(self) weakSelf = self;
     if (self.currentOperation) {
         [self.currentOperation cancel];
@@ -92,43 +83,22 @@ typedef void(^MIMMessageImageTap)(MIMMessageImageView *messsageImageView);
         
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
         if (image) {
-            [weakSelf setContentImage:image style:weakSelf.style];
+            [weakSelf setContentImage:image];
         }
     }];
 }
 
-- (void)loadViewWithImage:(UIImage *)image messageCellStyle:(MIMMessageCellStyle)style atIndex:(NSInteger)index;
+- (void)loadViewWithImage:(UIImage *)image atIndex:(NSInteger)index;
 {
     _index = index;
-    self.style = style;
-    [self setContentImage:image style:style];
-
+    [self setContentImage:image];
 }
 
-- (void)setContentImage:(UIImage *)image style:(MIMMessageCellStyle)style
+- (void)setContentImage:(UIImage *)image
 {
+    [self.imageView setImage:image];
     CGSize size = [MIMMessageImageView getImageViewSizeWithImageSize:image.size];
     _maskLayer.frame = CGRectMake(0, 0, size.width, size.height);
-    
-    [self.imageView setImage:image];
-//
-////    _messageImage = image;
-//    [_maskLayer removeFromSuperlayer];
-//    _maskLayer = [CAShapeLayer layer];
-//    _maskLayer.fillColor = [UIColor clearColor].CGColor;
-//    _maskLayer.strokeColor = [UIColor clearColor].CGColor;
-
-    
-//    _maskLayer.contents = (id)[UIImage imageNamed:style == MIMMessageCellStyleOutgoing?@"chatto_bg_normal":@"chatfrom_bg_normal"] .CGImage;
-//    
-//    _maskLayer.contentsCenter = CGRectMake(0.5, 0.5, 0.1, 0.1);
-//    _maskLayer.contentsScale = [UIScreen mainScreen].scale;
-//    
-//    
-//    self.layer.mask = _maskLayer;
-    
-//    self.layer.contents = (id)_messageImage.CGImage;
-
 }
 
 

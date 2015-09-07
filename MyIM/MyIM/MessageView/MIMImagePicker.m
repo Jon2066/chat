@@ -59,17 +59,20 @@ typedef void(^MIMImagePickerCompletion)(UIImage *image);
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         UIImageWriteToSavedPhotosAlbum(originImage, nil, nil, NULL);
     }
-    if (self.pickerCompletion) {
-        self.pickerCompletion(originImage);
-    }
-    [self.rootViewController dismissViewControllerAnimated:YES completion:nil];
+
+    __weak typeof(self) weakSelf = self;
+    [self.rootViewController dismissViewControllerAnimated:YES completion:^{
+        if (weakSelf.pickerCompletion) {
+            weakSelf.pickerCompletion(originImage);
+        }
+    }];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    if (self.pickerCompletion) {
-        self.pickerCompletion(nil);
-    }
+//    if (self.pickerCompletion) {
+//        self.pickerCompletion(nil);
+//    }
     [self.rootViewController dismissViewControllerAnimated:YES completion:nil];
 }
 

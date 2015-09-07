@@ -20,14 +20,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="32" id="uKu-nX-2Ta"/>
                     </constraints>
-                    <attributedString key="attributedText">
-                        <fragment content="text">
-                            <attributes>
-                                <font key="NSFont" size="15" name="HelveticaNeue"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                            </attributes>
-                        </fragment>
-                    </attributedString>
+                    <attributedString key="attributedText"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                 </textView>

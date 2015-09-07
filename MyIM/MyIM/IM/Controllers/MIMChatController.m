@@ -107,7 +107,7 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     NSInteger number = [self.tableView numberOfRowsInSection:0];
     
     [self insertMessagesFromIndex:number count:count];
-    
+//    [self.tableView reloadData];
     [self scrollToBottomAnimated:animated];
 }
 
@@ -167,9 +167,10 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 
     CGFloat contentHeight = nickname?contentSize.height + MIM_NICKNAME_LABEL_HEIGHT:contentSize.height;
     
-    height += contentHeight > avatarHeight?contentHeight:avatarHeight;
+    height += (contentHeight > avatarHeight?contentHeight:avatarHeight);
     
     height += MIM_BOTTOM_SPACE;
+    
     return height;
 }
 
@@ -200,23 +201,23 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     NSString *reusableId = [NSString stringWithFormat:@"%@_%@", messageId, contentId];
     cell = [tableView dequeueReusableCellWithIdentifier:reusableId];
     if (cell == nil) {
-        NSLog(@"cell == nil\n id = %ld", indexPath.row);
         cell = [[MIMMessageTableCell alloc] initWithCellStyle:cellStyle reuseIdentifier:reusableId];
+        __weak typeof(self) weakSelf = self;
+        ((MIMMessageTableCell *)cell).avatarClick = ^{
+            if ([weakSelf.delegate respondsToSelector:@selector(chatViewDidSelectAvatarAtIndex:)]) {
+                [weakSelf.delegate chatViewDidSelectAvatarAtIndex:indexPath.row];
+            }
+        };
     }
     
     MIMMessageTableCell *messageCell = (MIMMessageTableCell *)cell;
-    __weak typeof(self) weakSelf = self;
-    
-    messageCell.avatarClick = ^{
-        if ([weakSelf.delegate respondsToSelector:@selector(chatViewDidSelectAvatarAtIndex:)]) {
-            [weakSelf.delegate chatViewDidSelectAvatarAtIndex:indexPath.row];
-        }
-    };
+
+    messageCell.messageTime = [self.dataSource chatViewMessageTimeForCellAtIndex:indexPath.row];
+
     messageCell.messageContentView = [self.dataSource chatViewMessageContentView:messageCell.messageContentView cellStyle:cellStyle forCellAtIndex:indexPath.row];
     messageCell.messageContentSize = [self.dataSource chatViewMessageContentViewSizeForCellAtIndex:indexPath.row];
     messageCell.nickName    = [self.dataSource chatViewNicknameForCellAtIndex:indexPath.row];
     messageCell.avatar      = [self.dataSource chatViewAvatarWithCellStyle:cellStyle forCellAtIndex:indexPath.row];
-    messageCell.messageTime = [self.dataSource chatViewMessageTimeForCellAtIndex:indexPath.row];
     messageCell.showError   = [self.dataSource chatViewShowErrorForCellAtIndex:indexPath.row];
     
     return cell;
@@ -225,7 +226,6 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 #pragma mark - tableView Delegate and dataSource -
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"loadCell row = %ld", indexPath.row);
     return [self getCellWithTableView:tableView indexPath:indexPath];
 }
 
@@ -236,7 +236,6 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"loadHeight row = %ld",indexPath.row);
     return [self getCellHeightWithTableView:tableView atIndex:indexPath.row];
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

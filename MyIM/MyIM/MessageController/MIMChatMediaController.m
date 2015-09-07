@@ -16,7 +16,7 @@
 
 #define kMIMMaxRecorderTime  60   //最长录音时间 60秒
 
-#define ShareMoreViewHeight  205.0f
+#define ShareMoreViewHeight  235.0f
 
 @interface MIMChatMediaController ()<MIMChatViewDelegate>
 
@@ -187,7 +187,7 @@
 - (MIMImagePicker *)imagePicker
 {
     if (!_imagePicker) {
-        _imagePicker= [[MIMImagePicker alloc] initWithRootViewController:self];
+        _imagePicker= [[MIMImagePicker alloc] initWithRootViewController:self.navigationController];
     }
     return _imagePicker;
 }

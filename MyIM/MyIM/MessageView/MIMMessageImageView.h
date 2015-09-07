@@ -16,20 +16,19 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
-//@property (strong, nonatomic, readonly) UIImage *messageImage;
-
 @property (assign, nonatomic, readonly) NSInteger index;
-- (instancetype)initFromNib;
+
+- (instancetype)initFromNibWithCellStyle:(MIMMessageCellStyle)style;
 
 /**
  *  通过image加载view //用于自己发送的image先添加在view中
  */
-- (void)loadViewWithImage:(UIImage *)image messageCellStyle:(MIMMessageCellStyle)style atIndex:(NSInteger)index;
+- (void)loadViewWithImage:(UIImage *)image atIndex:(NSInteger)index;
 
 /**
  *  通过url加载view
  */
-- (void)loadViewWithImageUrl:(NSString *)url messageCellStyle:(MIMMessageCellStyle)style atIndex:(NSInteger)index;;
+- (void)loadViewWithImageUrl:(NSString *)url atIndex:(NSInteger)index;;
 
 /**
  *  接收image点击操作

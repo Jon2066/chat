@@ -49,7 +49,7 @@
     CGFloat   itemHeight   = 80.0f;
     NSInteger itemsInLine  = 4;
     CGFloat   itemVSpace   = (self.frame.size.width - itemWidth * itemsInLine) / (itemsInLine + 1.0);
-    CGFloat   itemHSpace   = 15.0f;
+    CGFloat   itemHSpace   = 25.0f;
     for (NSInteger i = 0; i < self.imageNames.count; i++) {
         UIImage *image  = [UIImage imageNamed:self.imageNames[i]];
         NSString *title = self.titles[i];

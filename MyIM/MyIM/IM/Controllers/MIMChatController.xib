@@ -21,7 +21,7 @@
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="JFQ-cC-4LA">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="550"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="16S-9H-s5j"/>
                         <outlet property="delegate" destination="-1" id="f6u-Q1-dgZ"/>
@@ -90,6 +90,7 @@
                 <constraint firstAttribute="bottom" secondItem="gAD-pN-Nhk" secondAttribute="bottom" id="mRT-2U-HmV"/>
                 <constraint firstItem="gAD-pN-Nhk" firstAttribute="top" secondItem="JFQ-cC-4LA" secondAttribute="bottom" id="pDm-Cc-hPD"/>
             </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
             <point key="canvasLocation" x="278" y="331"/>
         </view>
     </objects>

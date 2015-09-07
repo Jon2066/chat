@@ -74,6 +74,7 @@
 
 - (void)setMessageText:(NSString *)messageText
 {
+    _textView.attributedText = nil;
     _textView.attributedText = [[NSAttributedString alloc] initWithString:messageText attributes:@{NSFontAttributeName:MIM_MESSAGE_TEXT_FONT}];
     
     CGFloat width = [MIMMessageTextView getTextWidth:messageText];
