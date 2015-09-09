@@ -183,7 +183,7 @@ typedef void(^MIMRecordBlock)(MIMVoiceRecorder *recorder, BOOL finished);
     NSString *oldPath = [self voicePathWithFileName:oldName];
     if ([[NSFileManager defaultManager] fileExistsAtPath:oldPath]) {
         NSString *newPath = [self voicePathWithFileName:newName];
-        [[NSFileManager defaultManager] moveItemAtPath:oldName toPath:newPath error:nil];
+        [[NSFileManager defaultManager] moveItemAtPath:oldPath toPath:newPath error:nil];
     }
 }
 
