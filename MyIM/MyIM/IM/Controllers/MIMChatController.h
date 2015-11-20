@@ -77,9 +77,11 @@
 @optional
 - (void)chatViewWillSendMessageText:(NSString *)text;
 - (void)chatViewDidSelectAvatarAtIndex:(NSInteger)index;
+- (void)chatViewShouldCheckErrorAtIndex:(NSInteger)index;
 - (void)chatViewDidSelectCellAtIndex:(NSInteger)index;
 - (void)chatViewShouldFinishEditing; //点击view或者开始滚动 用来停止编辑
-
+- (void)chatViewBeginTextEditing;
+- (void)chatViewWillDisplayCellWithContentView:(UIView *)contentView atIndex:(NSInteger)index;
 @end
 
 
@@ -128,6 +130,9 @@
  */
 - (void)scrollToIndex:(NSInteger)index animated:(BOOL)animated;
 
+
+- (void)scrollToIndex:(NSInteger)index asScrollPosition:(UITableViewScrollPosition)position animated:(BOOL)animated;
+
 /**
  *  滚动到底部
  */
@@ -147,6 +152,8 @@
 - (void)insertMessagesFromIndex:(NSInteger)index count:(NSInteger)count;
 
 
+- (void)reloadMessageCellAtIndex:(NSInteger)index;
+
 /**
  *  完成接收新消息 调用
  *
@@ -154,4 +161,7 @@
  *  @param animated 是否动画
  */
 - (void)finishReceiveNewMessageWithCount:(NSInteger)count animated:(BOOL)animated;
+
+- (void)finishReceiveWithoutScrollWithNewMessageCount:(NSInteger)count;
+
 @end

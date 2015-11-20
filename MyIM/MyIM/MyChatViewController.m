@@ -124,7 +124,7 @@
         imageView = (MIMMessageImageView *)messageContentView;
     }
     if (message.imageModel.thumbUrl) {
-        [imageView loadViewWithImageUrl:message.imageModel.thumbUrl atIndex:index];
+        [imageView loadViewWithImageUrl:message.imageModel.thumbUrl imageSize:message.imageModel.imageSize atIndex:index];
     }
     else{
         [imageView loadViewWithImage:message.imageModel.placeHolderImage atIndex:index];
@@ -137,7 +137,7 @@
     MIMMessageVoiceView *voiceView = nil;
     if (!messageContentView) {
         __weak typeof(self) weakSelf = self;
-        voiceView = [[MIMMessageVoiceView alloc] initFromNibWithStartPlay:^(MIMMessageVoiceView *playView) {
+        voiceView = [[MIMMessageVoiceView alloc] initFromNibWithStyle:style startPlay:^(MIMMessageVoiceView *playView) {
             if (weakSelf.playingVoiceView) {
                 [weakSelf.playingVoiceView stopPlay];
             }
@@ -151,7 +151,7 @@
     else{
         voiceView = (MIMMessageVoiceView *)messageContentView;
     }
-    [voiceView loadViewWithVoiceFileName:message.mediaFileName messageCellStyle:style];
+    [voiceView loadViewWithMessage:message];
     return messageContentView;
 }
 
@@ -186,8 +186,7 @@
         return [MIMMessageImageView getImageViewSizeWithImageSize:message.imageModel.imageSize];
     }
     else if (message.messageType == MIMIuputTypeVoice){
-        CGFloat duration = [MIMAudioPlayer getAudioDurationWithFileName:message.mediaFileName];
-        return [MIMMessageVoiceView getViewSizeWithDuration:duration];
+        return [MIMMessageVoiceView getViewSizeWithDuration:message.media.duration];
     }
     return CGSizeZero;
 }
@@ -277,7 +276,7 @@
     message.senderNickname = @"me";
     message.messageType = random() % 2 + 1;
     message.messageText = text;
-    message.mediaFileName = nil;
+    message.media = nil;
     message.date = [NSDate date];
     [self.messageArray addObject:message];
     [self finishReceiveNewMessageWithCount:1 animated:YES];
@@ -290,7 +289,8 @@
     message.senderId = @"1";
     message.senderNickname = @"me";
     message.messageType = MIMMessageTypeVoice;
-    message.mediaFileName = filename;
+    CGFloat duration = [MIMAudioPlayer getAudioDurationWithFileName:filename];
+    message.media= [[MIMMediaModel alloc] initWithLocalFileName:filename duration:duration];;
     message.messageText = nil;;
     message.date = [NSDate date];
     [self.messageArray addObject:message];
@@ -307,7 +307,7 @@
     message.senderNickname = @"me";
     message.messageType = MIMMessageTypeImage;
     message.imageModel = [[MIMImageModel alloc] initWithThumbUrl:nil imageUrl:nil size:thumbImage.size placeHolderImage:thumbImage];
-    message.mediaFileName = nil;
+    message.media = nil;
     message.date = [NSDate date];
     
     [self.messageArray addObject:message];

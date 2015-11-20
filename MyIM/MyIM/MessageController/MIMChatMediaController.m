@@ -14,15 +14,19 @@
 
 #import "MIMImagePicker.h"
 
+#import "MIMButton.h"
+
+#import <AVFoundation/AVFoundation.h>
+
 #define ShareMoreViewHeight  235.0f
 
 @interface MIMChatMediaController ()<MIMChatViewDelegate>
 
-@property (strong, nonatomic) UIButton *voiceSwitchButton;  //语音和文本切换button
+@property (strong, nonatomic) UIButton  *voiceSwitchButton;  //语音和文本切换button
 
-@property (strong, nonatomic) UIButton *voiceInputButton;  //语音输入按钮
+@property (strong, nonatomic) MIMButton *voiceInputButton;  //语音输入按钮
 
-@property (strong, nonatomic) UIButton *addItemButton;  //添加按钮
+@property (strong, nonatomic) UIButton  *addItemButton;  //添加按钮
 
 @property (strong, nonatomic) MIMShareMoreView   *shareMoreView;
 
@@ -60,10 +64,10 @@
     [self addShareMoreView];
     
     //加载工具栏 左右按钮
-    MIMInputItemModel *leftModel = [[MIMInputItemModel alloc] initWithButtons:@[self.voiceSwitchButton] itemWidth:35.0];
+    MIMInputItemModel *leftModel = [[MIMInputItemModel alloc] initWithButtons:@[self.voiceSwitchButton] itemWidth:40.0];
     [self.inputToolbar setLeftItems:leftModel];
     
-    MIMInputItemModel *rightModel = [[MIMInputItemModel alloc] initWithButtons:@[self.addItemButton] itemWidth:35.0];
+    MIMInputItemModel *rightModel = [[MIMInputItemModel alloc] initWithButtons:@[self.addItemButton] itemWidth:40.0];
     [self.inputToolbar setRightItems:rightModel];
 }
 
@@ -96,20 +100,27 @@
 
 - (void)setShareMoreViewShow:(BOOL)show
 {
+    __weak typeof(self) weakSelf = self;
     if (show) {
         [UIView animateWithDuration:0.35f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            [self updateToolbarBottomDistance:ShareMoreViewHeight animated:NO];
-            self.shareMoreViewBottomConstraint.constant = 0;
-            [self.view layoutSubviews];
+            [weakSelf updateToolbarBottomDistance:ShareMoreViewHeight animated:NO];
+            weakSelf.shareMoreViewBottomConstraint.constant = 0;
+            [weakSelf.view layoutSubviews];
         } completion:nil];
     }
     else{
         [UIView animateWithDuration:0.35f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            [self updateToolbarBottomDistance:0 animated:NO];
-            self.shareMoreViewBottomConstraint.constant = ShareMoreViewHeight;
-            [self.view layoutSubviews];
+            [weakSelf updateToolbarBottomDistance:0 animated:NO];
+            weakSelf.shareMoreViewBottomConstraint.constant = ShareMoreViewHeight;
+            [weakSelf.view layoutSubviews];
         } completion:nil];
     }
+}
+
+- (void)hiddenShareMoreView
+{
+    self.shareMoreViewBottomConstraint.constant = ShareMoreViewHeight;
+    [self.view layoutSubviews];
 }
 
 #pragma mark - getter -
@@ -128,12 +139,12 @@
 - (UIButton *)voiceInputButton
 {
     if (!_voiceInputButton) {
-        _voiceInputButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _voiceInputButton = [MIMButton buttonWithType:UIButtonTypeCustom];
         
-        _voiceInputButton.frame = CGRectMake(5, 5, 1, 1);
-        _voiceInputButton.layer.cornerRadius  = 5.0f;
-        _voiceInputButton.layer.borderWidth   = 0.5f;
-        _voiceInputButton.layer.borderColor   = [UIColor blackColor].CGColor;
+        _voiceInputButton.frame = CGRectMake(5, 5, 200, 50);
+//        _voiceInputButton.layer.cornerRadius  = 5.0f;
+//        _voiceInputButton.layer.borderWidth   = 0.5f;
+//        _voiceInputButton.layer.borderColor   = [UIColor blackColor].CGColor;
         _voiceInputButton.layer.masksToBounds = YES;
         
         [_voiceInputButton setTitle:@"按住 说话" forState:UIControlStateNormal];
@@ -141,7 +152,7 @@
         [_voiceInputButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_voiceInputButton addTarget:self action:@selector(voiceInputButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
         [_voiceInputButton addTarget:self action:@selector(voiceInputButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
-        [_voiceInputButton addTarget:self action:@selector(voiceInputButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
+        [_voiceInputButton addTarget:self action:@selector(voiceInputButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside | UIControlEventTouchCancel];
     }
     return _voiceInputButton;
 }
@@ -150,7 +161,7 @@
 {
     if (!_addItemButton) {
         _addItemButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _addItemButton.frame = CGRectMake(0, 0, 35, 50);
+        _addItemButton.frame = CGRectMake(5, 0, 35, 50);
         _addItemButton.imageEdgeInsets = UIEdgeInsetsMake(7.5, 0, 7.5, 0);
         [_addItemButton setImage:[UIImage imageNamed:@"TypeSelectorBtn_Black"] forState:UIControlStateNormal];
         [_addItemButton addTarget:self action:@selector(addItemButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -194,23 +205,35 @@
 
 - (void)voiceSwitchButtonClick:(UIButton *)button
 {
-    if (self.inputType != MIMIuputTypeVoice) {
-        if (self.inputType == MIMIuputTypeMediaItems) {
-            [self setShareMoreViewShow:NO];
-        }
+    if (self.inputType == MIMIuputTypeMediaItems) {
+        [self setShareMoreViewShow:NO];
+    }
+    
+    if (self.inputType != MIMIuputTypeVoice && self.inputToolbar.middleItemView == self.textView) {
+        [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
+            if (!granted) {
+                [[[UIAlertView alloc] initWithTitle:nil
+                                            message:@"需要访问您的麦克风。\n请启用麦克风-设置/隐私/麦克风"
+                                           delegate:nil
+                                  cancelButtonTitle:@"好"
+                                  otherButtonTitles:nil] show];
+            }
+        }];
+        
         self.inputType = MIMIuputTypeVoice;
         [self.voiceSwitchButton setImage:[UIImage imageNamed:@"ToolViewInputVoice"] forState:UIControlStateNormal];
         self.textToolbarHeight = self.inputToolBarHeight;
         [self.textView resignFirstResponder];
         self.inputToolBarHeight = MIM_INPUT_TOOLBAR_HEIGHT;
-        [self.inputToolbar setMiddelView:self.voiceInputButton];
+        [self.inputToolbar setMiddleItemView:self.voiceInputButton];
         
     }
     else{
+
         self.inputType = MIMIuputTypeText;
         [self.voiceSwitchButton setImage:[UIImage imageNamed:@"ToolViewKeyboard"] forState:UIControlStateNormal];
         self.inputToolBarHeight = self.textToolbarHeight;
-        [self.inputToolbar setMiddelView:self.textView];
+        [self.inputToolbar setMiddleItemView:self.textView];
         [self.textView becomeFirstResponder];
     }
 }
@@ -219,8 +242,7 @@
 {
     self.touchDown = YES;
     [button setTitle:@"松开 结束" forState:UIControlStateNormal];
-    [self performSelector:@selector(startRecord) withObject:nil afterDelay:0.3f];
-    
+    [self startRecord];
 }
 
 - (void)voiceInputButtonTouchUpInside:(UIButton *)button
@@ -265,6 +287,14 @@
     }
 }
 
+- (void)chatViewBeginTextEditing
+{
+    if (self.inputType == MIMIuputTypeMediaItems) {
+        [self hiddenShareMoreView];
+    }
+    self.inputType = MIMIuputTypeText;
+}
+
 
 
 #pragma mark - handle media input -
@@ -273,6 +303,9 @@
 - (void)startRecord
 {
     if (self.touchDown) {
+        if ([self.mediaDelagate respondsToSelector:@selector(chatViewStartVoiceInput)]) {
+            [self.mediaDelagate chatViewStartVoiceInput];
+        }
         [self.recorder startRecordWithMaxRecordTime:MIMMessageMaxRecorderTime];
     }
 }
@@ -339,5 +372,10 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void)dealloc
+{
+    
+}
 
 @end

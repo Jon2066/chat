@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "MIMDefine.h"
 
+#import "MIMMessage.h"
 @interface MIMMessageVoiceView : UIView
 
 @property (assign, nonatomic, readonly) BOOL  isPlaying;
 
-- (instancetype)initFromNibWithStartPlay:(void(^)(MIMMessageVoiceView *playView))startPlay endPlay:(void(^)(MIMMessageVoiceView *playView))endPlay;
+- (instancetype)initFromNibWithStyle:(MIMMessageCellStyle)style startPlay:(void(^)(MIMMessageVoiceView *playView))startPlay endPlay:(void(^)(MIMMessageVoiceView *playView))endPlay;
 
-- (void)loadViewWithVoiceFileName:(NSString *)fileName messageCellStyle:(MIMMessageCellStyle)style;
+- (void)loadViewWithMessage:(MIMMessage *)message;
 
 - (void)play;
 

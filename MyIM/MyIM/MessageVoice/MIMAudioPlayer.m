@@ -12,7 +12,7 @@
 #import "MIMVoiceRecorder.h"
 #import "MIMVoiceDataConvert.h"
 
-typedef void(^playFinishBlock)(void);
+typedef void(^playFinishBlock)(BOOL complete);
 
 @interface MIMAudioPlayer ()<AVAudioPlayerDelegate>
 
@@ -31,10 +31,23 @@ typedef void(^playFinishBlock)(void);
     });
     return shareAudioPlayer;
 }
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        //红外线感应监听
+//        [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                 selector:@selector(sensorStateChange:)
+//                                                     name:UIDeviceProximityStateDidChangeNotification
+//                                                   object:nil];
+    }
+    return self;
+}
 
-- (void)playVoiceMessageWithFileName:(NSString *)fileName playFinishBlock:(void(^)(void))finish
+- (void)playVoiceMessageWithFileName:(NSString *)fileName playFinishBlock:(void(^)(BOOL))finish
 {
     self.finishBlock = finish;
+    
     dispatch_async(dispatch_queue_create("kMIMAudioLoadData", NULL), ^{
         NSData *data = [MIMVoiceDataConvert wavDataFromAmrFile:[MIMVoiceRecorder voicePathWithFileName:fileName]];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -43,12 +56,26 @@ typedef void(^playFinishBlock)(void);
     });
 }
 
+//处理监听触发事件
+-(void)sensorStateChange:(NSNotificationCenter *)notification;
+{
+//    if ([[UIDevice currentDevice] proximityState] == YES){
+////        NSLog(@"Device is close to user");
+//        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+//    }
+//    else{
+////        NSLog(@"Device is not close to user");
+//        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+//    }
+}
+
 - (void)playWithData:(NSData *)data
 {
 //    UIApplication *app = [UIApplication sharedApplication];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:app];
     
-    [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: nil];
+    
+    [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayAndRecord error: nil];
     
     if (self.audioPlayer) {
         [self.audioPlayer stop];
@@ -60,6 +87,8 @@ typedef void(^playFinishBlock)(void);
     self.audioPlayer.delegate = self;
     [self.audioPlayer play];
     
+    //开启红外线感应
+    [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];
 }
 
 - (void)stopPlay
@@ -67,15 +96,20 @@ typedef void(^playFinishBlock)(void);
     if (self.audioPlayer && [self.audioPlayer isPlaying]) {
         [self.audioPlayer stop];
         if (self.finishBlock) {
-            self.finishBlock();
+            self.finishBlock(NO);
         }
+        //关闭红外线感应
+        [[UIDevice currentDevice] setProximityMonitoringEnabled:NO];
     }
 }
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
+    //关闭红外线感应
+    [[UIDevice currentDevice] setProximityMonitoringEnabled:NO];
+    
     if (self.finishBlock) {
-        self.finishBlock();
+        self.finishBlock(YES);
     }
 }
 
@@ -111,4 +145,9 @@ typedef void(^playFinishBlock)(void);
     return (NSInteger)tempPlayer.duration + 1;
 }
 
+
+- (void)dealloc
+{
+//    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:UIDeviceProximityStateDidChangeNotification];
+}
 @end

@@ -38,23 +38,43 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    self.inputToolBarHeight = MIM_INPUT_TOOLBAR_HEIGHT;
+
     [self registerForKeyboardNotifications];
     
-    self.inputToolBarHeight = MIM_INPUT_TOOLBAR_HEIGHT;
-    [self.view updateConstraintsIfNeeded];
-    [self.inputToolbar setMiddelView:self.textView];
+    self.textView.delegate = self;
+    //捕捉textView contentSize改变
+    [self.textView addObserver:self forKeyPath:NSStringFromSelector(@selector(contentSize)) options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:kMIMTextViewContentSizeContext];
+    
+    [self.inputToolbar setMiddleItemView:self.textView];
     [self.inputToolbar setLeftItems:nil];
     [self.inputToolbar setRightItems:nil];
     
     UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewTap)];
     [self.tableView addGestureRecognizer:gesture];
     
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 10)];
-    [self.tableView setTableFooterView:footerView];
+//    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 10)];
+//    [self.tableView setTableFooterView:footerView];
     
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
+}
+
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self removeKeyboardNotifications];
+    @try {
+        [self.textView removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentSize)) context:kMIMTextViewContentSizeContext];
+    }
+    @catch (NSException *exception){
+//        NSLog(@"%@", exception);
+    }
+    @finally {
+        
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,6 +92,12 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     }
 }
 
+- (void)reloadMessageCellAtIndex:(NSInteger)index
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
 - (void)deleteMessageFromIndex:(NSInteger)index
 {
     [self.tableView beginUpdates];
@@ -81,6 +107,9 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     
     [self.tableView endUpdates];
+    
+    NSArray *visibleIndexPaths = [self.tableView indexPathsForVisibleRows];
+    [self.tableView reloadRowsAtIndexPaths:visibleIndexPaths withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)insertMessagesFromIndex:(NSInteger)index count:(NSInteger)count
@@ -111,6 +140,13 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     [self scrollToBottomAnimated:animated];
 }
 
+- (void)finishReceiveWithoutScrollWithNewMessageCount:(NSInteger)count
+{
+    NSInteger number = [self.tableView numberOfRowsInSection:0];
+    [self insertMessagesFromIndex:number count:count];
+}
+
+
 /**
  *tableview滚动到底部
  */
@@ -138,6 +174,12 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:animated];
 }
 
+
+- (void)scrollToIndex:(NSInteger)index asScrollPosition:(UITableViewScrollPosition)position animated:(BOOL)animated
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:position animated:animated];
+}
 
 
 #pragma mark - table cell method -
@@ -203,15 +245,22 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     if (cell == nil) {
         cell = [[MIMMessageTableCell alloc] initWithCellStyle:cellStyle reuseIdentifier:reusableId];
         __weak typeof(self) weakSelf = self;
-        ((MIMMessageTableCell *)cell).avatarClick = ^{
+        ((MIMMessageTableCell *)cell).avatarClick = ^(NSInteger index){
             if ([weakSelf.delegate respondsToSelector:@selector(chatViewDidSelectAvatarAtIndex:)]) {
-                [weakSelf.delegate chatViewDidSelectAvatarAtIndex:indexPath.row];
+                [weakSelf.delegate chatViewDidSelectAvatarAtIndex:index];
+            }
+        };
+        ((MIMMessageTableCell *)cell).errorClick = ^(NSInteger index){
+            if ([weakSelf.delegate respondsToSelector:@selector(chatViewShouldCheckErrorAtIndex:)]) {
+                [weakSelf.delegate chatViewShouldCheckErrorAtIndex:index];
             }
         };
     }
     
     MIMMessageTableCell *messageCell = (MIMMessageTableCell *)cell;
 
+    messageCell.atIndex     = indexPath.row;
+    
     messageCell.messageTime = [self.dataSource chatViewMessageTimeForCellAtIndex:indexPath.row];
 
     messageCell.messageContentView = [self.dataSource chatViewMessageContentView:messageCell.messageContentView cellStyle:cellStyle forCellAtIndex:indexPath.row];
@@ -244,6 +293,21 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
         [self.delegate chatViewDidSelectCellAtIndex:indexPath.row];
     }
 }
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell isKindOfClass:[MIMMessageTableCell class]]) {
+        if ([self.delegate respondsToSelector:@selector(chatViewWillDisplayCellWithContentView:atIndex:)]) {
+            [self.delegate chatViewWillDisplayCellWithContentView:((MIMMessageTableCell *)cell).messageContentView atIndex:indexPath.row];
+        }
+    }
+    else if ([cell isKindOfClass:[MIMMessageCommonCell class]]){
+        if ([self.delegate respondsToSelector:@selector(chatViewWillDisplayCellWithContentView:atIndex:)]) {
+            [self.delegate chatViewWillDisplayCellWithContentView:((MIMMessageCommonCell *)cell).messageContentView atIndex:indexPath.row];
+        }
+    }
+}
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [self tableViewTap];
@@ -255,7 +319,6 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 - (UITextView *)textView
 {
     if (!_textView) {
-        [_textView setTranslatesAutoresizingMaskIntoConstraints:NO];
         //坐标用来设置上下左右留出距离  长宽会自适应
         _textView = [[UITextView alloc] initWithFrame:CGRectMake(5, 5, 5, 5)];
 
@@ -272,11 +335,6 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
         [_textView setFont:[UIFont systemFontOfSize:17.0f]];
         
         _textView.enablesReturnKeyAutomatically = YES;
-        //捕捉textView contentSize改变
-        [_textView addObserver:self forKeyPath:NSStringFromSelector(@selector(contentSize)) options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:kMIMTextViewContentSizeContext];
-        
-        _textView.delegate = self;
-
     }
     return _textView;
 }
@@ -310,10 +368,11 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
         return;
     }
     
+    __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:height?0.35f:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.toolbarButtomConstraint.constant = height;
-        [self.view layoutSubviews];
-        [self scrollToBottomAnimated:NO];
+        weakSelf.toolbarButtomConstraint.constant = height;
+        [weakSelf.view layoutSubviews];
+        [weakSelf scrollToBottomAnimated:NO];
 
     } completion:nil];
 }
@@ -325,11 +384,19 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
         height = self.maxInputToolBarHeight;
     }
     
+    __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.01f animations:^{
-        self.toolbarHeightConstraint.constant = height + self.textView.frame.origin.y * 2.0;
-        [self.inputToolbar updateConstraintsIfNeeded];
+        if (height + weakSelf.textView.frame.origin.y * 2.0 < weakSelf.inputToolBarHeight) {
+            weakSelf.toolbarHeightConstraint.constant = weakSelf.inputToolBarHeight;
+        }
+        else{
+            weakSelf.toolbarHeightConstraint.constant = height + weakSelf.textView.frame.origin.y * 2.0;
+        }
+        [weakSelf.inputToolbar updateConstraintsIfNeeded];
         
-        self.textView.contentOffset = textViewLastLinePoint;
+        weakSelf.textView.contentOffset = textViewLastLinePoint;
+    } completion:^(BOOL finished) {
+        [weakSelf scrollToBottomAnimated:YES];
     }];
 }
 
@@ -338,6 +405,11 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     if ([text isEqualToString:@"\n"]) {
+        
+        NSString * textString = [textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        if ([textString isEqualToString:@""]) {//只是空格不允许发送
+            return NO;
+        }
         //发送文字
         if ([self.delegate respondsToSelector:@selector(chatViewWillSendMessageText:)]) {
             [self.delegate chatViewWillSendMessageText:self.textView.text];
@@ -353,6 +425,12 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     [self updateToolbarBottomDistance:0.0f animated:YES];
 }
 
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if ([self.delegate respondsToSelector:@selector(chatViewBeginTextEditing)]) {
+        [self.delegate chatViewBeginTextEditing];
+    }
+}
 #pragma mark - observe -
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -399,14 +477,7 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 #pragma mark - dealloc -
 - (void)dealloc
 {
-    [self removeKeyboardNotifications];
-    @try {
-        [self.textView removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentSize)) context:kMIMTextViewContentSizeContext];
-    }
-    @catch (NSException *exception) {
-    }
-    @finally {
-    }
+    
 }
 
 @end

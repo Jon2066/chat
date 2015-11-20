@@ -9,6 +9,7 @@
 #import "MIMMessageTextView.h"
 #import "MIMDefine.h"
 
+typedef BOOL(^textViewInteractBlock)(NSURL *URL,NSRange characterRange);
 @interface MIMMessageTextView ()<UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroudImageView;
@@ -21,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewLeadingConstaint;
 
 //@property (assign, nonatomic) CGSize textSize;
+@property (strong, nonatomic) textViewInteractBlock interactBlock;
 
 @end
 
@@ -33,6 +35,11 @@
         self.messageCellStyle = -100;
     }
     return self;
+}
+
+- (void)textViewShouldInteractWithBlock:(BOOL (^)(NSURL *, NSRange))block
+{
+    self.interactBlock = block;
 }
 
 - (void)loadViewWithMessageText:(NSString *)messageText messageCellStyle:(MIMMessageCellStyle)style
@@ -108,6 +115,9 @@
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
 {
+    if (self.interactBlock) {
+        return self.interactBlock(URL, characterRange);
+    }
     return YES;
 }
 

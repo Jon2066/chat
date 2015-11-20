@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "23390A35F99C9282FE052A679347AD36AC440D50",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "23390A35F99C9282FE052A679347AD36AC440D50" : 0,
+    "05548B0B1701F61D79F21EBCD719155CD5C5DB00" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "95B374A5-47C9-4305-B543-A7FAA3DF8C15",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "23390A35F99C9282FE052A679347AD36AC440D50" : "MIMChat",
+    "05548B0B1701F61D79F21EBCD719155CD5C5DB00" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "MyIM",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "MyIM\/MyIM.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jonahn\/xmppLearn.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "05548B0B1701F61D79F21EBCD719155CD5C5DB00"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jonahn\/chat.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "23390A35F99C9282FE052A679347AD36AC440D50"
+    }
+  ]
+}

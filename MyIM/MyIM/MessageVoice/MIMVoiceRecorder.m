@@ -141,9 +141,6 @@ typedef void(^MIMRecordBlock)(MIMVoiceRecorder *recorder, BOOL finished);
 }
 
 #pragma mark - 文件处理 -
-
-
-
 /**
  *  录音临时保存路径
  *
@@ -183,7 +180,8 @@ typedef void(^MIMRecordBlock)(MIMVoiceRecorder *recorder, BOOL finished);
     NSString *oldPath = [self voicePathWithFileName:oldName];
     if ([[NSFileManager defaultManager] fileExistsAtPath:oldPath]) {
         NSString *newPath = [self voicePathWithFileName:newName];
-        [[NSFileManager defaultManager] moveItemAtPath:oldPath toPath:newPath error:nil];
+        NSError *error = nil;
+        [[NSFileManager defaultManager] moveItemAtPath:oldPath toPath:newPath error:&error];
     }
 }
 

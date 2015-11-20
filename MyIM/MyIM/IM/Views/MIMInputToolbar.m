@@ -38,7 +38,7 @@
 */
 - (void)awakeFromNib
 {
-    self.clipsToBounds = YES;
+//    self.clipsToBounds = YES;
     self.leftItemHeightConstraint.constant  = MIM_INPUT_TOOLBAR_HEIGHT;
     self.rightItemHeightConstraint.constant = MIM_INPUT_TOOLBAR_HEIGHT;
     [self updateConstraintsIfNeeded];
@@ -69,6 +69,10 @@
             for (UIButton *button in self.leftItem.buttons) {
                 [self.leftView addSubview:button];
             }
+        }
+        if (self.leftItem.buttons.count) {
+            UIView *view = self.leftItem.buttons[0];
+            self.leftItemHeightConstraint.constant  = view.bounds.size.height;
         }
     }
     //更新约束
@@ -106,6 +110,11 @@
                 [self.rightView addSubview:button];
             }
         }
+        
+        if (self.rightItem.buttons.count) {
+            UIView *view = self.rightItem.buttons[0];
+            self.rightItemHeightConstraint.constant = view.bounds.size.height;
+        }
     }
     
     self.rightItemWidthConstraint.constant = rightItemWidth;
@@ -116,7 +125,7 @@
 /**
  *  加载中间 输入控件
  */
-- (void)setMiddelView:(UIView *)view;
+- (void)setMiddleItemView:(UIView *)view;
 {
     if (self.middleView.subviews.count) {
         for (UIView *view in self.middleView.subviews) {
@@ -153,5 +162,10 @@
         [self.middleView updateConstraintsIfNeeded];
         
     }
+}
+
+- (UIView *)middleItemView
+{
+    return self.middleItem;
 }
 @end

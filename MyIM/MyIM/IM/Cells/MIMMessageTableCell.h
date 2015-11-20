@@ -12,13 +12,15 @@
 
 #import "MIMImageModel.h"
 
-typedef void(^messageAvatarClick)(void);
+typedef void(^messageItemClick)(NSInteger index);
 
 @interface MIMMessageTableCell : UITableViewCell
 
 @property (nonatomic, copy, readonly) NSString  *reuseIdentifier;
 
 @property (assign, nonatomic,readonly) MIMMessageCellStyle style;
+
+@property (assign, nonatomic) NSInteger       atIndex; 
 
 @property (strong, nonatomic) UIView         *messageContentView;
 @property (assign, nonatomic) CGSize          messageContentSize;
@@ -27,7 +29,8 @@ typedef void(^messageAvatarClick)(void);
 @property (strong, nonatomic) NSString       *messageTime; //消息时间
 @property (assign, nonatomic) BOOL            showError;
 
-@property (strong, nonatomic) messageAvatarClick avatarClick;
+@property (strong, nonatomic) messageItemClick avatarClick;
+@property (strong, nonatomic) messageItemClick errorClick;
 
 - (instancetype)initWithCellStyle:(MIMMessageCellStyle )style reuseIdentifier:(NSString *)reuseIdentifier;
 

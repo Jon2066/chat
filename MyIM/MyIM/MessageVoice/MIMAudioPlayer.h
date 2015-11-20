@@ -21,7 +21,7 @@
  *  @param fileName 声音文件名称
  *  @param finish   播放完成或者停止播放时调用
  */
-- (void)playVoiceMessageWithFileName:(NSString *)fileName playFinishBlock:(void(^)(void))finish;
+- (void)playVoiceMessageWithFileName:(NSString *)fileName playFinishBlock:(void(^)(BOOL complete))finish;
 
 /**
  *  停止播放

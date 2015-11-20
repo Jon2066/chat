@@ -24,4 +24,6 @@
 
 
 + (CGSize)getUploadSizeWithOriginSize:(CGSize)imageSize;
+
++ (CGSize)getMessageThumbImageSize:(CGSize)imageSize;
 @end

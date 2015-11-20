@@ -24,5 +24,9 @@
  */
 + (CGSize)getTextViewSizeWithText:(NSString *)messagetext minHeight:(CGFloat)minHeight;
 
+/*
+ * 处理textView链接
+ */
+- (void)textViewShouldInteractWithBlock:(BOOL(^)(NSURL *URL,NSRange characterRange))block;
 
 @end

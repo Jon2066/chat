@@ -57,7 +57,7 @@
 }
 - (IBAction)avatarClick:(id)sender {
     if (self.avatarClick) {
-        self.avatarClick();
+        self.avatarClick(self.atIndex);
     }
 }
 
@@ -134,6 +134,7 @@
     [self updateConstraintsIfNeeded];
     
     self.timeLabel.text = self.messageTime;
+
 }
 
 - (void)setNickName:(NSString *)nickName
@@ -148,6 +149,7 @@
     [self updateConstraintsIfNeeded];
     
     self.nicknameLabel.text = self.nickName;
+
 }
 
 - (void)setAvatar:(MIMImageModel *)avatar
@@ -175,16 +177,8 @@
 {
     _showError = showError;
     if (showError) {
+        [self.contentView bringSubviewToFront:self.errorButton];
         self.errorButton.hidden = NO;
-        
-        NSLayoutConstraint *leadingCt = [NSLayoutConstraint constraintWithItem:self.errorButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.messageContentView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:3.0f];
-        if (self.style == MIMMessageCellStyleIncoming) {
-            leadingCt = [NSLayoutConstraint constraintWithItem:self.messageContentView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.errorButton attribute:NSLayoutAttributeLeading multiplier:1.0 constant:3.0f];
-        }
-        
-        NSLayoutConstraint *centerCt = [NSLayoutConstraint constraintWithItem:self.messageContentView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.errorButton attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0f];
-        [self.contentView addConstraints:@[leadingCt, centerCt]];
-        
     }
     else{
         self.errorButton.hidden = YES;
@@ -195,12 +189,36 @@
 {
     if (!_errorButton) {
         _errorButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _errorButton.frame = CGRectMake(0, 0, 30.0, 30.0);
-        [_errorButton setTitle:@"!" forState:UIControlStateNormal];
+//        _errorButton.frame = CGRectMake(0, 0, 20.0, 20.0);
+//        [_errorButton setTitle:@"!" forState:UIControlStateNormal];
+        [_errorButton setImage:[UIImage imageNamed:@"message_fail"] forState:UIControlStateNormal];
+        [_errorButton addTarget:self action:@selector(errorButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_errorButton];
-        [_errorButton setReversesTitleShadowWhenHighlighted:NO];
+        [_errorButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+        
+        NSLayoutConstraint *leadingCt = [NSLayoutConstraint constraintWithItem:self.messageContentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_errorButton attribute:NSLayoutAttributeRight multiplier:1.0 constant:3.0f];
+        if (self.style == MIMMessageCellStyleIncoming) {
+            leadingCt = [NSLayoutConstraint constraintWithItem:self.messageContentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:_errorButton attribute:NSLayoutAttributeLeft multiplier:1.0 constant:3.0f];
+        }
+        
+        NSLayoutConstraint *centerCt = [NSLayoutConstraint constraintWithItem:_errorButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.messageContentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0f];
+        
+        NSLayoutConstraint *widthCt  = [NSLayoutConstraint constraintWithItem:_errorButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:30.0];
+        
+        NSLayoutConstraint *heightCt  = [NSLayoutConstraint constraintWithItem:_errorButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0 constant:30.0];
+
+        
+        [self.contentView addConstraints:@[leadingCt, centerCt, widthCt, heightCt]];
+        
     }
     return _errorButton;
+}
+
+- (void)errorButtonClick
+{
+    if(self.errorClick){
+        self.errorClick(self.atIndex);
+    }
 }
 
 @end

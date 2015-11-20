@@ -36,6 +36,8 @@
 /**
  *  加载中间输入控件
  */
-- (void)setMiddelView:(UIView *)view;
+- (void)setMiddleItemView:(UIView *)view;
 
+
+- (UIView *)middleItemView;
 @end

@@ -26,6 +26,7 @@ typedef enum {
 @protocol MIMChatMediaDelegate <NSObject>
 
 @optional
+- (void)chatViewStartVoiceInput;
 - (void)chatViewFinishRecordWithFileName:(NSString *)filename;
 - (void)chatViewFinishSelectWithImage:(UIImage *)image;
 @end

@@ -28,8 +28,10 @@
 /**
  *  通过url加载view
  */
-- (void)loadViewWithImageUrl:(NSString *)url atIndex:(NSInteger)index;;
+- (void)loadViewWithImageUrl:(NSString *)url imageSize:(CGSize)size atIndex:(NSInteger)index;
 
+
+- (void)resetMaskSizeWithImageSize:(CGSize)size;
 /**
  *  接收image点击操作
  */

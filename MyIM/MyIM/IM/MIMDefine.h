@@ -34,7 +34,7 @@ typedef enum{
 //文本消息
 #define MIM_MESSAGE_MAX_TEXT_WIDTH       [UIScreen mainScreen].bounds.size.width * 0.618  //文本消息最大宽度为屏幕比例的多少
 #define MIM_MESSAGE_TEXT_EDGE             UIEdgeInsetsMake(8.0, 15.0, 8.0, 18.0)             //文本四周边距（按右边给出 左边消息左右调换）
-#define MIM_MESSAGE_TEXT_FONT            [UIFont systemFontOfSize:15.0f]                      //文本消息文字大小
+#define MIM_MESSAGE_TEXT_FONT            [UIFont systemFontOfSize:17.0f]                      //文本消息文字大小
 
 //图片消息
 #define MIM_MESSAGE_MAX_IMAGE_WIDTH      [UIScreen mainScreen].bounds.size.width * 0.4   //图片最宽为屏幕0.4
@@ -47,7 +47,5 @@ typedef enum{
 #define MIM_MESSAGE_MIN_VOICE_WIDTH      75.0f
 
 #define MIMMessageMaxRecorderTime        60   //最长录音时间 60秒
-
-
 
 #endif

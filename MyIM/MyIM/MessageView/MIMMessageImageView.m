@@ -25,6 +25,9 @@ typedef void(^MIMMessageImageTap)(MIMMessageImageView *messsageImageView);
 @property (strong, nonatomic) NSString *url;
 
 @property (strong, nonatomic) SDWebImageDownloaderOperation *currentOperation;
+
+@property (assign, nonatomic) CGSize   imageSize;
+
 @end
 
 @implementation MIMMessageImageView
@@ -35,15 +38,19 @@ typedef void(^MIMMessageImageTap)(MIMMessageImageView *messsageImageView);
     if (self) {
         _style = style;
         
+        _imageSize = CGSizeMake(200, 200);
+
         _maskLayer = [CAShapeLayer layer];
         _maskLayer.fillColor = [UIColor clearColor].CGColor;
         _maskLayer.strokeColor = [UIColor clearColor].CGColor;
         _maskLayer.contents = (id)[UIImage imageNamed:self.style == MIMMessageCellStyleOutgoing?@"chatto_bg_normal":@"chatfrom_bg_normal"] .CGImage;
-        _maskLayer.frame = CGRectMake(0, 0, 200, 200);
+        _maskLayer.frame = CGRectMake(0, 0, _imageSize.width, _imageSize.height);
         _maskLayer.contentsCenter = CGRectMake(0.5, 0.5, 0.1, 0.1);
         _maskLayer.contentsScale = [UIScreen mainScreen].scale;
         
         self.layer.mask = _maskLayer;
+//        self.imageView.layer.mask = _maskLayer;
+
         
     }
     return self;
@@ -67,14 +74,42 @@ typedef void(^MIMMessageImageTap)(MIMMessageImageView *messsageImageView);
     self.imageTapBlock = block;
 }
 
-- (void)loadViewWithImageUrl:(NSString *)url atIndex:(NSInteger)index;
+
+- (void)resetMaskSizeWithImageSize:(CGSize)size
 {
-    if ([_url isEqualToString:url]) {
+    if (CGSizeEqualToSize(self.imageSize, size)) {
         return;
     }
+    self.imageSize = size;
+    
+    CGSize showSize = [MIMMessageImageView getImageViewSizeWithImageSize:size];
+
+    
+    _maskLayer = [CAShapeLayer layer];
+    _maskLayer.fillColor = [UIColor clearColor].CGColor;
+    _maskLayer.strokeColor = [UIColor clearColor].CGColor;
+    _maskLayer.contents = (id)[UIImage imageNamed:self.style == MIMMessageCellStyleOutgoing?@"chatto_bg_normal":@"chatfrom_bg_normal"] .CGImage;
+    _maskLayer.frame = CGRectMake(0, 0, showSize.width, showSize.height);
+    _maskLayer.contentsCenter = CGRectMake(0.5, 0.5, 0.1, 0.1);
+    _maskLayer.contentsScale = [UIScreen mainScreen].scale;
+    
+    self.layer.mask = _maskLayer;
+    
+//    CGSize showSize = [MIMMessageImageView getImageViewSizeWithImageSize:size];
+//    _maskLayer.frame = CGRectMake(0, 0, showSize.width, showSize.height);
+}
+
+- (void)loadViewWithImageUrl:(NSString *)url imageSize:(CGSize)size atIndex:(NSInteger)index
+{
+
+//    if ([_url isEqualToString:url]) {
+//        return;
+//    }
     self.url = url;
     _index = index;
 
+    [self resetMaskSizeWithImageSize:size];
+    
     __weak typeof(self) weakSelf = self;
     if (self.currentOperation) {
         [self.currentOperation cancel];
@@ -90,6 +125,7 @@ typedef void(^MIMMessageImageTap)(MIMMessageImageView *messsageImageView);
 
 - (void)loadViewWithImage:(UIImage *)image atIndex:(NSInteger)index;
 {
+    [self resetMaskSizeWithImageSize:image.size];
     _index = index;
     [self setContentImage:image];
 }
@@ -97,14 +133,12 @@ typedef void(^MIMMessageImageTap)(MIMMessageImageView *messsageImageView);
 - (void)setContentImage:(UIImage *)image
 {
     [self.imageView setImage:image];
-    CGSize size = [MIMMessageImageView getImageViewSizeWithImageSize:image.size];
-    _maskLayer.frame = CGRectMake(0, 0, size.width, size.height);
 }
 
 
 + (CGSize)getImageViewSizeWithImageSize:(CGSize )imageSize
 {
-    return CGSizeMake(150, 150);
+//    return CGSizeMake(150, 150);
 
  //  处理 图片显示大小
     CGFloat ratio           = imageSize.height / imageSize.width; //高宽比
