@@ -1,14 +1,18 @@
 {
   "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "23390A35F99C9282FE052A679347AD36AC440D50",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "eccd39b4-39d4-47ab-bb89-e81f4763b8b8++3220" : {
 
+    }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "eccd39b4-39d4-47ab-bb89-e81f4763b8b8++3220" : 0,
     "23390A35F99C9282FE052A679347AD36AC440D50" : 0,
     "05548B0B1701F61D79F21EBCD719155CD5C5DB00" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "95B374A5-47C9-4305-B543-A7FAA3DF8C15",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "eccd39b4-39d4-47ab-bb89-e81f4763b8b8++3220" : "MIMChat\/MyIM\/MyIM\/MessageVoice\/VoiceConvert\/",
     "23390A35F99C9282FE052A679347AD36AC440D50" : "MIMChat",
     "05548B0B1701F61D79F21EBCD719155CD5C5DB00" : ""
   },
@@ -25,6 +29,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jonahn\/chat.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "23390A35F99C9282FE052A679347AD36AC440D50"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "svn:\/\/192.168.0.240\/repository",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "eccd39b4-39d4-47ab-bb89-e81f4763b8b8++3220"
     }
   ]
 }

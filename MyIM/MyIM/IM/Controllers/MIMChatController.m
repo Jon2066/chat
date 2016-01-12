@@ -377,27 +377,35 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     } completion:nil];
 }
 
-- (void)updateToolbarTextViewHeight:(CGFloat)height
+- (void)updateToolbarTextViewHeightWithContentSizeHeight:(CGFloat)height
 {
     CGPoint textViewLastLinePoint = CGPointMake(0.0f, self.textView.contentSize.height - CGRectGetHeight(self.textView.bounds));
     if (self.maxInputToolBarHeight && self.maxInputToolBarHeight < height) {
         height = self.maxInputToolBarHeight;
     }
     
-    __weak typeof(self) weakSelf = self;
-    [UIView animateWithDuration:0.01f animations:^{
-        if (height + weakSelf.textView.frame.origin.y * 2.0 < weakSelf.inputToolBarHeight) {
-            weakSelf.toolbarHeightConstraint.constant = weakSelf.inputToolBarHeight;
-        }
-        else{
-            weakSelf.toolbarHeightConstraint.constant = height + weakSelf.textView.frame.origin.y * 2.0;
-        }
-        [weakSelf.inputToolbar updateConstraintsIfNeeded];
-        
-        weakSelf.textView.contentOffset = textViewLastLinePoint;
-    } completion:^(BOOL finished) {
-        [weakSelf scrollToBottomAnimated:YES];
-    }];
+    CGFloat previousHeight = self.toolbarHeightConstraint.constant;
+    
+    if (height + self.textView.frame.origin.y * 2.0 < self.inputToolBarHeight) {
+        self.toolbarHeightConstraint.constant = self.inputToolBarHeight;
+    }
+    else{
+        self.toolbarHeightConstraint.constant = height + self.textView.frame.origin.y * 2.0;
+    }
+    [self.inputToolbar updateConstraintsIfNeeded];
+    
+    if (previousHeight < self.toolbarHeightConstraint.constant) {
+        __weak typeof(self) weakSelf = self;
+        [UIView animateWithDuration:0.01f delay:0.01 options:UIViewAnimationOptionCurveLinear animations:^{
+            weakSelf.textView.contentOffset = textViewLastLinePoint;
+            
+        } completion:^(BOOL finished) {
+            [weakSelf scrollToBottomAnimated:NO];
+        }];
+    }
+    else{
+        self.textView.contentOffset = textViewLastLinePoint;
+    }
 }
 
 #pragma mark - textViewDelegate -
@@ -420,6 +428,12 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 
     return YES;
 }
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    [self updateToolbarTextViewHeightWithContentSizeHeight:textView.contentSize.height];
+}
+
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
     [self updateToolbarBottomDistance:0.0f animated:YES];
@@ -440,7 +454,7 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
             CGSize oldContentSize = [[change objectForKey:NSKeyValueChangeOldKey] CGSizeValue];
             CGSize newContentSize = [[change objectForKey:NSKeyValueChangeNewKey] CGSizeValue];
             if (oldContentSize.height != newContentSize.height) {
-                [self updateToolbarTextViewHeight:newContentSize.height];
+                [self updateToolbarTextViewHeightWithContentSizeHeight:newContentSize.height];
             }
         }
     }
