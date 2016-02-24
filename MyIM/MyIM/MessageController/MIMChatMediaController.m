@@ -20,7 +20,7 @@
 
 #define ShareMoreViewHeight  235.0f
 
-@interface MIMChatMediaController ()<MIMChatViewDelegate>
+@interface MIMChatMediaController ()
 
 @property (strong, nonatomic) UIButton  *voiceSwitchButton;  //语音和文本切换button
 
@@ -45,13 +45,14 @@
 
 @implementation MIMChatMediaController
 
+@synthesize delegate;
+
 - (instancetype)initWithNib
 {
     self = [super initWithNib];
     if (self) {
         self.inputType = MIMIuputTypeText;
         self.isRecordCancel = NO;
-        self.delegate = self;
     }
     return self;
 }
@@ -63,9 +64,10 @@
     //添加shareMoreView
     [self addShareMoreView];
     
+    
     //加载工具栏 左右按钮
-    MIMInputItemModel *leftModel = [[MIMInputItemModel alloc] initWithButtons:@[self.voiceSwitchButton] itemWidth:40.0];
-    [self.inputToolbar setLeftItems:leftModel];
+//    MIMInputItemModel *leftModel = [[MIMInputItemModel alloc] initWithButtons:@[self.voiceSwitchButton] itemWidth:40.0];
+//    [self.inputToolbar setLeftItems:leftModel];
     
     MIMInputItemModel *rightModel = [[MIMInputItemModel alloc] initWithButtons:@[self.addItemButton] itemWidth:40.0];
     [self.inputToolbar setRightItems:rightModel];
@@ -277,9 +279,10 @@
     
 }
 
-#pragma mark - chatView deleagate -
+#pragma mark - superview method -
 - (void)chatViewShouldFinishEditing
 {
+    [super chatViewShouldFinishEditing];
     //收起shareMoreView
     if (self.inputType == MIMIuputTypeMediaItems) {
         self.inputType = MIMIuputTypeText;
@@ -289,6 +292,7 @@
 
 - (void)chatViewBeginTextEditing
 {
+    [super chatViewBeginTextEditing];
     if (self.inputType == MIMIuputTypeMediaItems) {
         [self hiddenShareMoreView];
     }
@@ -303,8 +307,8 @@
 - (void)startRecord
 {
     if (self.touchDown) {
-        if ([self.mediaDelagate respondsToSelector:@selector(chatViewStartVoiceInput)]) {
-            [self.mediaDelagate chatViewStartVoiceInput];
+        if ([self.delegate respondsToSelector:@selector(chatViewStartVoiceInput)]) {
+            [self.delegate chatViewStartVoiceInput];
         }
         [self.recorder startRecordWithMaxRecordTime:MIMMessageMaxRecorderTime];
     }
@@ -335,8 +339,8 @@
                 //                NSLog(@"< 0.5");
             }
             else{
-                if ([self.mediaDelagate respondsToSelector:@selector(chatViewFinishRecordWithFileName:)]) {
-                    [self.mediaDelagate chatViewFinishRecordWithFileName:recorder.voiceFileName];
+                if ([self.delegate respondsToSelector:@selector(chatViewFinishRecordWithFileName:)]) {
+                    [self.delegate chatViewFinishRecordWithFileName:recorder.voiceFileName];
                 }
             }
         }
@@ -357,8 +361,8 @@
     __weak typeof(self) weakSelf = self;
     [self.imagePicker showImagePickerWithType:type completionBlock:^(UIImage *image) {
         if (image) {
-            if ([weakSelf.mediaDelagate respondsToSelector:@selector(chatViewFinishSelectWithImage:)]) {
-                [weakSelf.mediaDelagate chatViewFinishSelectWithImage:image];
+            if ([weakSelf.delegate respondsToSelector:@selector(chatViewFinishSelectWithImage:)]) {
+                [weakSelf.delegate chatViewFinishSelectWithImage:image];
             }
         }
     }];

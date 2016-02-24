@@ -19,7 +19,7 @@
 
 #import "MIMAudioPlayer.h"
 
-@interface MyChatViewController ()<MIMChatViewDataSource, MIMChatMediaDelegate, MIMChatViewDelegate>
+@interface MyChatViewController ()<MIMChatViewDataSource, MIMChatMediaDelegate>
 
 //聊天双方头像 //多人可用字典 key为userId
 @property (strong, nonatomic) MIMImageModel *incomingAvatarImage;
@@ -38,7 +38,6 @@
     self = [super initWithNib];
     if (self) {
         self.dataSource = self;
-        self.mediaDelagate = self;
         self.delegate = self;
     }
     return self;

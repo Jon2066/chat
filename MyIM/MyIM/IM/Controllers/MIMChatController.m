@@ -87,9 +87,18 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     if([self.textView isFirstResponder]){
         [self.textView resignFirstResponder];
     }
-    if ([self.delegate respondsToSelector:@selector(chatViewShouldFinishEditing)]) {
-        [self.delegate chatViewShouldFinishEditing];
-    }
+    
+    [self chatViewShouldFinishEditing];
+}
+
+- (void)chatViewShouldFinishEditing
+{
+    
+}
+
+- (void)chatViewBeginTextEditing
+{
+    
 }
 
 - (void)reloadMessageCellAtIndex:(NSInteger)index
@@ -296,6 +305,8 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [cell setBackgroundColor:[UIColor clearColor]];
+    
     if ([cell isKindOfClass:[MIMMessageTableCell class]]) {
         if ([self.delegate respondsToSelector:@selector(chatViewWillDisplayCellWithContentView:atIndex:)]) {
             [self.delegate chatViewWillDisplayCellWithContentView:((MIMMessageTableCell *)cell).messageContentView atIndex:indexPath.row];
@@ -377,7 +388,7 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     } completion:nil];
 }
 
-- (void)updateToolbarTextViewHeightWithContentSizeHeight:(CGFloat)height
+- (void)updateToolbarTextViewHeight:(CGFloat)height
 {
     CGPoint textViewLastLinePoint = CGPointMake(0.0f, self.textView.contentSize.height - CGRectGetHeight(self.textView.bounds));
     if (self.maxInputToolBarHeight && self.maxInputToolBarHeight < height) {
@@ -431,7 +442,7 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    [self updateToolbarTextViewHeightWithContentSizeHeight:textView.contentSize.height];
+    [self updateToolbarTextViewHeight:textView.contentSize.height];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView
@@ -441,9 +452,7 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    if ([self.delegate respondsToSelector:@selector(chatViewBeginTextEditing)]) {
-        [self.delegate chatViewBeginTextEditing];
-    }
+    [self chatViewBeginTextEditing];
 }
 #pragma mark - observe -
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -454,7 +463,7 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
             CGSize oldContentSize = [[change objectForKey:NSKeyValueChangeOldKey] CGSizeValue];
             CGSize newContentSize = [[change objectForKey:NSKeyValueChangeNewKey] CGSizeValue];
             if (oldContentSize.height != newContentSize.height) {
-                [self updateToolbarTextViewHeightWithContentSizeHeight:newContentSize.height];
+                [self updateToolbarTextViewHeight:newContentSize.height];
             }
         }
     }

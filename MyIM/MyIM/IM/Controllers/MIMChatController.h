@@ -18,7 +18,6 @@
 
 #import "MIMInputToolbar.h"
 
-#import "MIMImageModel.h"
 
 @protocol MIMChatViewDataSource <NSObject>
 
@@ -79,8 +78,6 @@
 - (void)chatViewDidSelectAvatarAtIndex:(NSInteger)index;
 - (void)chatViewShouldCheckErrorAtIndex:(NSInteger)index;
 - (void)chatViewDidSelectCellAtIndex:(NSInteger)index;
-- (void)chatViewShouldFinishEditing; //点击view或者开始滚动 用来停止编辑
-- (void)chatViewBeginTextEditing;
 - (void)chatViewWillDisplayCellWithContentView:(UIView *)contentView atIndex:(NSInteger)index;
 @end
 
@@ -164,4 +161,7 @@
 
 - (void)finishReceiveWithoutScrollWithNewMessageCount:(NSInteger)count;
 
+- (void)chatViewShouldFinishEditing; //点击view或者开始滚动 用来停止编辑
+
+- (void)chatViewBeginTextEditing; //文本开始编辑
 @end

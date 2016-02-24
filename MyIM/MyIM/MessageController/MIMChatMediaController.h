@@ -23,7 +23,7 @@ typedef enum {
 
 
 
-@protocol MIMChatMediaDelegate <NSObject>
+@protocol MIMChatMediaDelegate <NSObject, MIMChatViewDelegate>
 
 @optional
 - (void)chatViewStartVoiceInput;
@@ -36,7 +36,7 @@ typedef enum {
 
 @property (assign, nonatomic) MIMIuputType inputType;
 
-@property (assign, nonatomic) id<MIMChatMediaDelegate>mediaDelagate;
+@property (assign, nonatomic) id<MIMChatMediaDelegate>delegate;
 
 - (instancetype)initWithNib;
 
