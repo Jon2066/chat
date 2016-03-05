@@ -39,12 +39,8 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.inputToolBarHeight = MIM_INPUT_TOOLBAR_HEIGHT;
-
-    [self registerForKeyboardNotifications];
     
     self.textView.delegate = self;
-    //捕捉textView contentSize改变
-    [self.textView addObserver:self forKeyPath:NSStringFromSelector(@selector(contentSize)) options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:kMIMTextViewContentSizeContext];
     
     [self.inputToolbar setMiddleItemView:self.textView];
     [self.inputToolbar setLeftItems:nil];
@@ -57,6 +53,16 @@ static void *kMIMTextViewContentSizeContext = &kMIMTextViewContentSizeContext;
 //    [self.tableView setTableFooterView:footerView];
     
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self registerForKeyboardNotifications];
+    //捕捉textView contentSize改变
+    [self.textView addObserver:self forKeyPath:NSStringFromSelector(@selector(contentSize)) options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:kMIMTextViewContentSizeContext];
+    
+    [super viewWillAppear:animated];
     
 }
 
