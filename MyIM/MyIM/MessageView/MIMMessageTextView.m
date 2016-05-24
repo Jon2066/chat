@@ -146,7 +146,7 @@ typedef BOOL(^textViewInteractBlock)(NSURL *URL,NSRange characterRange);
         if (textWidth < 25) {
             textWidth = 25;
         }
-        return CGSizeMake(textWidth + contentInset.left + contentInset.right, minHeight);
+//        return CGSizeMake(textWidth + contentInset.left + contentInset.right, minHeight);
     }
     else{
         textWidth = MIM_MESSAGE_MAX_TEXT_WIDTH;
@@ -157,6 +157,6 @@ typedef BOOL(^textViewInteractBlock)(NSURL *URL,NSRange characterRange);
     if (viewHeight < minHeight) {
         viewHeight = minHeight;
     }
-    return CGSizeMake(MIM_MESSAGE_MAX_TEXT_WIDTH + contentInset.left + contentInset.right , viewHeight);
+    return CGSizeMake(textWidth + contentInset.left + contentInset.right , viewHeight);
 }
 @end
