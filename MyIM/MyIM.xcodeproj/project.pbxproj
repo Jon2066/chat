@@ -60,7 +60,11 @@
 		AB8A4ED11B78AEB500809B94 /* MIMChatController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB8A4ECF1B78AEB500809B94 /* MIMChatController.xib */; };
 		AB8E86D11B85A19900168439 /* MIMMessageCommonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8E86D01B85A19900168439 /* MIMMessageCommonCell.m */; };
 		AB8E86D41B85BB9D00168439 /* NSDate+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8E86D31B85BB9D00168439 /* NSDate+Utils.m */; };
+		AB8FDF341D015A3400DD7168 /* MIMChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8FDF331D015A3400DD7168 /* MIMChatController.swift */; };
+		AB8FDF361D016C3900DD7168 /* MIMInputToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8FDF351D016C3900DD7168 /* MIMInputToolbar.swift */; };
 		AB9C99081B901E2100FCC182 /* MIMImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9C99071B901E2100FCC182 /* MIMImagePicker.m */; };
+		ABA18B521D0028F6001A0CA2 /* MIMMessageCommonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA18B511D0028F6001A0CA2 /* MIMMessageCommonCell.swift */; };
+		ABB630541CFEB4FF00D310B7 /* MIMMessageTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB630521CFEB4FF00D310B7 /* MIMMessageTableCell.swift */; };
 		ABC52AD21B7C9118009A5F55 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = ABC52AB21B7C9118009A5F55 /* LICENSE */; };
 		ABC52AD31B7C9118009A5F55 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = ABC52AB31B7C9118009A5F55 /* README.md */; };
 		ABC52AD41B7C9118009A5F55 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC52AB61B7C9118009A5F55 /* NSData+ImageContentType.m */; };
@@ -77,6 +81,11 @@
 		ABC52ADF1B7C9118009A5F55 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC52ACD1B7C9118009A5F55 /* UIImageView+HighlightedWebCache.m */; };
 		ABC52AE01B7C9118009A5F55 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC52ACF1B7C9118009A5F55 /* UIImageView+WebCache.m */; };
 		ABC52AE11B7C9118009A5F55 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC52AD11B7C9118009A5F55 /* UIView+WebCacheOperation.m */; };
+		ABEBFA6E1CFD663800E67C54 /* MIMDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBFA6D1CFD663800E67C54 /* MIMDefine.swift */; };
+		ABEBFA721CFD7ABA00E67C54 /* MIMMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBFA711CFD7ABA00E67C54 /* MIMMedia.swift */; };
+		ABEBFA771CFD8BB800E67C54 /* MIMStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBFA761CFD8BB800E67C54 /* MIMStringExtension.swift */; };
+		ABEBFA791CFD8EFD00E67C54 /* MIMInputItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBFA781CFD8EFD00E67C54 /* MIMInputItem.swift */; };
+		ABEBFA7B1CFD984F00E67C54 /* MIMImageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBFA7A1CFD984F00E67C54 /* MIMImageItem.swift */; };
 		ABF0509D1B8ECDCD008AFB01 /* TypeSelectorBtn_Black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF0509C1B8ECDCD008AFB01 /* TypeSelectorBtn_Black@2x.png */; };
 		ABF050A01B8EDADB008AFB01 /* MIMShareMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF0509F1B8EDADB008AFB01 /* MIMShareMoreView.m */; };
 		ABF050A61B8EE0F8008AFB01 /* sharemore_location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF050A31B8EE0F8008AFB01 /* sharemore_location@2x.png */; };
@@ -188,8 +197,12 @@
 		AB8E86D01B85A19900168439 /* MIMMessageCommonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMMessageCommonCell.m; sourceTree = "<group>"; };
 		AB8E86D21B85BB9D00168439 /* NSDate+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utils.h"; sourceTree = "<group>"; };
 		AB8E86D31B85BB9D00168439 /* NSDate+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utils.m"; sourceTree = "<group>"; };
+		AB8FDF331D015A3400DD7168 /* MIMChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIMChatController.swift; sourceTree = "<group>"; };
+		AB8FDF351D016C3900DD7168 /* MIMInputToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIMInputToolbar.swift; sourceTree = "<group>"; };
 		AB9C99061B901E2100FCC182 /* MIMImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMImagePicker.h; sourceTree = "<group>"; };
 		AB9C99071B901E2100FCC182 /* MIMImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMImagePicker.m; sourceTree = "<group>"; };
+		ABA18B511D0028F6001A0CA2 /* MIMMessageCommonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIMMessageCommonCell.swift; sourceTree = "<group>"; };
+		ABB630521CFEB4FF00D310B7 /* MIMMessageTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIMMessageTableCell.swift; sourceTree = "<group>"; };
 		ABC52AB21B7C9118009A5F55 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		ABC52AB31B7C9118009A5F55 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		ABC52AB51B7C9118009A5F55 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -221,6 +234,12 @@
 		ABC52ACF1B7C9118009A5F55 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		ABC52AD01B7C9118009A5F55 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		ABC52AD11B7C9118009A5F55 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		ABEBFA6C1CFD663700E67C54 /* MyIM-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MyIM-Bridging-Header.h"; sourceTree = "<group>"; };
+		ABEBFA6D1CFD663800E67C54 /* MIMDefine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIMDefine.swift; sourceTree = "<group>"; };
+		ABEBFA711CFD7ABA00E67C54 /* MIMMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIMMedia.swift; sourceTree = "<group>"; };
+		ABEBFA761CFD8BB800E67C54 /* MIMStringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIMStringExtension.swift; sourceTree = "<group>"; };
+		ABEBFA781CFD8EFD00E67C54 /* MIMInputItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIMInputItem.swift; sourceTree = "<group>"; };
+		ABEBFA7A1CFD984F00E67C54 /* MIMImageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIMImageItem.swift; sourceTree = "<group>"; };
 		ABF0509C1B8ECDCD008AFB01 /* TypeSelectorBtn_Black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TypeSelectorBtn_Black@2x.png"; sourceTree = "<group>"; };
 		ABF0509E1B8EDADB008AFB01 /* MIMShareMoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMShareMoreView.h; sourceTree = "<group>"; };
 		ABF0509F1B8EDADB008AFB01 /* MIMShareMoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMShareMoreView.m; sourceTree = "<group>"; };
@@ -468,6 +487,7 @@
 		AB8A4EA11B78A98600809B94 /* MyIM */ = {
 			isa = PBXGroup;
 			children = (
+				ABEBFA661CFD64D300E67C54 /* Swift */,
 				ABC52AB11B7C9118009A5F55 /* SDWebImage */,
 				AB8A4EC81B78A9EA00809B94 /* IM */,
 				AB8145961B81CBEF00BFB1F8 /* images */,
@@ -586,6 +606,71 @@
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
+		ABEBFA661CFD64D300E67C54 /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				ABEBFA671CFD651D00E67C54 /* IMCore */,
+			);
+			path = Swift;
+			sourceTree = "<group>";
+		};
+		ABEBFA671CFD651D00E67C54 /* IMCore */ = {
+			isa = PBXGroup;
+			children = (
+				ABEBFA6D1CFD663800E67C54 /* MIMDefine.swift */,
+				ABEBFA751CFD8BB800E67C54 /* Extension */,
+				ABEBFA681CFD662000E67C54 /* Cells */,
+				ABEBFA691CFD662000E67C54 /* Controllers */,
+				ABEBFA6A1CFD662000E67C54 /* Models */,
+				ABEBFA6B1CFD662000E67C54 /* Views */,
+				ABEBFA6C1CFD663700E67C54 /* MyIM-Bridging-Header.h */,
+			);
+			path = IMCore;
+			sourceTree = "<group>";
+		};
+		ABEBFA681CFD662000E67C54 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				ABB630521CFEB4FF00D310B7 /* MIMMessageTableCell.swift */,
+				ABA18B511D0028F6001A0CA2 /* MIMMessageCommonCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		ABEBFA691CFD662000E67C54 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AB8FDF331D015A3400DD7168 /* MIMChatController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		ABEBFA6A1CFD662000E67C54 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				ABEBFA711CFD7ABA00E67C54 /* MIMMedia.swift */,
+				ABEBFA7A1CFD984F00E67C54 /* MIMImageItem.swift */,
+				ABEBFA781CFD8EFD00E67C54 /* MIMInputItem.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		ABEBFA6B1CFD662000E67C54 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AB8FDF351D016C3900DD7168 /* MIMInputToolbar.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		ABEBFA751CFD8BB800E67C54 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				ABEBFA761CFD8BB800E67C54 /* MIMStringExtension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -631,6 +716,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = MIM;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = Jonathan;
 				TargetAttributes = {
@@ -711,7 +797,9 @@
 			files = (
 				ABC52AE01B7C9118009A5F55 /* UIImageView+WebCache.m in Sources */,
 				AB5EB20F1B7D871600639F5C /* MIMImageModel.m in Sources */,
+				ABB630541CFEB4FF00D310B7 /* MIMMessageTableCell.swift in Sources */,
 				ABF050A01B8EDADB008AFB01 /* MIMShareMoreView.m in Sources */,
+				ABEBFA791CFD8EFD00E67C54 /* MIMInputItem.swift in Sources */,
 				AB729EC71B8D815600B08394 /* MIMVoiceFileConvert.mm in Sources */,
 				ABC52AD71B7C9118009A5F55 /* SDWebImageDecoder.m in Sources */,
 				ABC52ADA1B7C9118009A5F55 /* SDWebImageManager.m in Sources */,
@@ -721,8 +809,11 @@
 				AB1F307D1BFF19FA005C5A3D /* MIMVoiceView.m in Sources */,
 				AB71015C1B8AD08A00E72FE8 /* MIMVoiceRecorder.m in Sources */,
 				ABF050AB1B8EEE5A008AFB01 /* MIMShareMoreItemView.m in Sources */,
+				ABEBFA6E1CFD663800E67C54 /* MIMDefine.swift in Sources */,
 				AB9C99081B901E2100FCC182 /* MIMImagePicker.m in Sources */,
+				ABEBFA721CFD7ABA00E67C54 /* MIMMedia.swift in Sources */,
 				ABC52AD61B7C9118009A5F55 /* SDWebImageCompat.m in Sources */,
+				ABA18B521D0028F6001A0CA2 /* MIMMessageCommonCell.swift in Sources */,
 				AB865D421B7B44AC00898C91 /* MIMMessageTableCell.m in Sources */,
 				AB8A4EAB1B78A98600809B94 /* ViewController.m in Sources */,
 				AB7896411B8C0BA700EF38D3 /* MIMAudioPlayer.m in Sources */,
@@ -733,6 +824,7 @@
 				ABC52ADB1B7C9118009A5F55 /* SDWebImagePrefetcher.m in Sources */,
 				ABC52AD91B7C9118009A5F55 /* SDWebImageDownloaderOperation.m in Sources */,
 				AB7DC28C1B86FFFB007FF257 /* MIMChatMediaController.m in Sources */,
+				ABEBFA771CFD8BB800E67C54 /* MIMStringExtension.swift in Sources */,
 				AB8A4EA81B78A98600809B94 /* AppDelegate.m in Sources */,
 				AB729ECA1B8D81A700B08394 /* MIMVoiceDataConvert.m in Sources */,
 				AB875DA11B8494DB00C4ABA1 /* MIMMessageVoiceView.m in Sources */,
@@ -748,11 +840,14 @@
 				AB8E86D41B85BB9D00168439 /* NSDate+Utils.m in Sources */,
 				AB87D1741B79E75F00650C5E /* MyChatViewController.m in Sources */,
 				AB875D861B84567800C4ABA1 /* MIMMessageImageView.m in Sources */,
+				AB8FDF341D015A3400DD7168 /* MIMChatController.swift in Sources */,
+				AB8FDF361D016C3900DD7168 /* MIMInputToolbar.swift in Sources */,
 				ABC52ADD1B7C9118009A5F55 /* UIImage+GIF.m in Sources */,
 				AB5EB2191B7DD60800639F5C /* MIMMessage.m in Sources */,
 				ABC52AD81B7C9118009A5F55 /* SDWebImageDownloader.m in Sources */,
 				AB729EBC1B8D718F00B08394 /* amrFileCodec.mm in Sources */,
 				AB7101591B8ABDF600E72FE8 /* MIMVoiceAnimationView.m in Sources */,
+				ABEBFA7B1CFD984F00E67C54 /* MIMImageItem.swift in Sources */,
 				AB87D1711B79C77D00650C5E /* MIMInputItemModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -883,15 +978,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = MyIM/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MyIM/MessageVoice/VoiceConvert/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MyIM/Swift/IMCore/MyIM-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -899,15 +997,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = MyIM/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MyIM/MessageVoice/VoiceConvert/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MyIM/Swift/IMCore/MyIM-Bridging-Header.h";
 			};
 			name = Release;
 		};

@@ -131,9 +131,10 @@
     else{
         self.timeHeightConstraint.constant = 0.0f;
     }
+    self.timeLabel.text = self.messageTime;
+
     [self updateConstraintsIfNeeded];
     
-    self.timeLabel.text = self.messageTime;
 
 }
 
@@ -146,9 +147,9 @@
     else{
         self.nicknameHeightConstraint.constant = 0.0f;
     }
+    self.nicknameLabel.text = self.nickName;
     [self updateConstraintsIfNeeded];
     
-    self.nicknameLabel.text = self.nickName;
 
 }
 

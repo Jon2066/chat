@@ -59,5 +59,6 @@
 
 
     [self.contentView addConstraints:@[leadingCt, trailingCt, topCt, bottomCt]];
+    [self.contentView updateConstraintsIfNeeded];
 }
 @end

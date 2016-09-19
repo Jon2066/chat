@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -35,6 +35,7 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
+                            <action selector="avatarButtonClick:" destination="ksT-kI-CuJ" eventType="touchUpInside" id="erh-kt-dYv"/>
                             <action selector="avatarClick:" destination="ksT-kI-CuJ" eventType="touchUpInside" id="rgT-Dx-qcp"/>
                         </connections>
                     </button>
@@ -70,13 +71,13 @@
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
-                <outlet property="avatarButton" destination="yWz-lf-j3b" id="b7C-Qz-mpu"/>
-                <outlet property="avatarHeightConstraint" destination="FUf-h1-zGx" id="6Cr-dI-0et"/>
-                <outlet property="avatarWidthConstraint" destination="nf2-Uu-lHW" id="Eka-DM-rrt"/>
-                <outlet property="nicknameHeightConstraint" destination="vbO-sa-rCD" id="px9-Jv-fbi"/>
-                <outlet property="nicknameLabel" destination="2fM-zA-Ejs" id="P4s-m8-XTI"/>
-                <outlet property="timeHeightConstraint" destination="w3B-e6-kD5" id="hXq-vo-KIo"/>
-                <outlet property="timeLabel" destination="CQ6-6h-16s" id="Dlo-hm-Qpw"/>
+                <outlet property="avatarButton" destination="yWz-lf-j3b" id="jqg-iV-xJE"/>
+                <outlet property="avatarHeightConstraint" destination="FUf-h1-zGx" id="aor-Ul-jok"/>
+                <outlet property="avatarWidthConstraint" destination="nf2-Uu-lHW" id="iIE-7m-hW8"/>
+                <outlet property="nicknameHeightConstraint" destination="vbO-sa-rCD" id="EQf-Bp-7Xn"/>
+                <outlet property="nicknameLabel" destination="2fM-zA-Ejs" id="gec-Gr-kmv"/>
+                <outlet property="timeHeightConstraint" destination="w3B-e6-kD5" id="tVz-ac-is8"/>
+                <outlet property="timeLabel" destination="CQ6-6h-16s" id="XKB-Ew-aJV"/>
             </connections>
             <point key="canvasLocation" x="264" y="241"/>
         </tableViewCell>

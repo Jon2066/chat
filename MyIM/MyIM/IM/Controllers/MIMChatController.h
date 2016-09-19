@@ -18,7 +18,7 @@
 
 #import "MIMInputToolbar.h"
 
-
+@class MIMImageModel;
 @protocol MIMChatViewDataSource <NSObject>
 
 /**
