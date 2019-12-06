@@ -10,15 +10,40 @@ import UIKit
 
 class JNChatRevokeMessageCell: JNChatBaseMessageCell {
 
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        self.messageContent.addSubview(self.revokeLabel)
+        
+        self.revokeLabel.snp.makeConstraints { (make) in
+            make.top.left.right.bottom.equalToSuperview()
+        }
+    }
+    
+    override func setupCell() {
+        super.setupCell()
     }
 
+    override func updateWithMessgae(message: JNChatBaseMessage) {
+        super.updateWithMessgae(message: message)
+        if message.owns == .owner {
+            self.revokeLabel.text = "你撤回了一条消息"
+        }
+        else{
+            self.revokeLabel.text = "对方撤回了一条消息"
+        }
+    }
+    
+    lazy var revokeLabel: UILabel = {
+        let temp = UILabel()
+        temp.textColor = .gray
+        temp.textAlignment = .center
+        temp.font = UIFont.systemFont(ofSize: 12)
+        return temp
+    }()
 }
