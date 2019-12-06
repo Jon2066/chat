@@ -18,15 +18,15 @@ class JNChatRevokeMessageCell: JNChatBaseMessageCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    override func setupCell() {
+        super.setupCell()
         self.messageContent.addSubview(self.revokeLabel)
         
         self.revokeLabel.snp.makeConstraints { (make) in
             make.top.left.right.bottom.equalToSuperview()
         }
-    }
-    
-    override func setupCell() {
-        super.setupCell()
     }
 
     override func updateWithMessgae(message: JNChatBaseMessage) {

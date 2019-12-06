@@ -21,6 +21,7 @@ class ViewController: UIViewController {
         }
         self.testLoadTextMessage()
         self.testRevokeMessage()
+        self.testUnknowMessage()
     }
     
     lazy var ChatVC:JNChatViewController = {
@@ -86,6 +87,23 @@ class ViewController: UIViewController {
         textMessage1.showTime = true
         textMessage1.showNickname = false
         textMessage1.revoke = true
+        
+        self.ChatVC.appendMessages(messages: [textMessage1])
+    }
+    
+    func testUnknowMessage() {
+        let textMessage1 = JNChatTextMessage()
+        textMessage1.text = "对方发来的文本消息"
+        textMessage1.messageId = JNChatTextMessage.createMessageId()
+        textMessage1.ownerId = "someone"
+        textMessage1.targetId = "1"
+        textMessage1.owns = .others
+        textMessage1.avatarUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576223085&di=7788b63ee76f12210bdb40406c8326fb&imgtype=jpg&er=1&src=http%3A%2F%2Ftupian.qqjay.com%2Ftou2%2F2018%2F1218%2F8d0dea288c054bc2ea2ee509b4c8a4bd.jpg"
+        textMessage1.nickname = "someone"
+        textMessage1.messageType = "JNCHAT_MSG:??????"
+        textMessage1.sendTime = "2019-12-06 08-08-08"
+        textMessage1.showTime = true
+        textMessage1.showNickname = false
         
         self.ChatVC.appendMessages(messages: [textMessage1])
     }

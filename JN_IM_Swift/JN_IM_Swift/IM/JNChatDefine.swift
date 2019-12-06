@@ -9,6 +9,17 @@
 import Foundation
 import UIKit
 
+
+
+//MARK: - message type -
+public typealias JNChatMessageType = String
+public var JNChatMessageTypeUnknow: JNChatMessageType = "JNCHAT_MSG:UNKNOW"
+public var JNChatMessageTypeText:   JNChatMessageType = "JNCHAT_MSG:TEXT"
+public var JNChatMessageTypeImage:  JNChatMessageType = "JNCHAT_MSG:IMAGE"
+public var JNChatMessageTypeAudio:  JNChatMessageType = "JNCHAT_MSG:AUDIO"
+
+
+//MARK: - settings -
 public var JN_CHAT_SETTING: JNChatSetting = JNChatSetting()
 
 
