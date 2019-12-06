@@ -1,0 +1,512 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AB1B8FB0239515AB0012783D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1B8FAF239515AB0012783D /* AppDelegate.swift */; };
+		AB1B8FB4239515AB0012783D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1B8FB3239515AB0012783D /* ViewController.swift */; };
+		AB1B8FB7239515AB0012783D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB1B8FB5239515AB0012783D /* Main.storyboard */; };
+		AB1B8FB9239515AE0012783D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB1B8FB8239515AE0012783D /* Assets.xcassets */; };
+		AB1B8FBC239515AE0012783D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB1B8FBA239515AE0012783D /* LaunchScreen.storyboard */; };
+		AB1B8FC5239517810012783D /* JNChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1B8FC4239517810012783D /* JNChatViewController.swift */; };
+		AB1B8FCB239633BD0012783D /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1B8FCA239633BD0012783D /* SnapKit.framework */; };
+		AB1B8FCC239633BD0012783D /* SnapKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB1B8FCA239633BD0012783D /* SnapKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AB1B8FD2239645890012783D /* JNChatDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1B8FD1239645890012783D /* JNChatDefine.swift */; };
+		AB1B8FDA239646620012783D /* JNChatBaseMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1B8FD9239646620012783D /* JNChatBaseMessageCell.swift */; };
+		AB1B8FDE23964A630012783D /* JNChatUserMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1B8FDD23964A630012783D /* JNChatUserMessageCell.swift */; };
+		ABE30FA22397918100452581 /* JNChatBaseMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE30FA12397918100452581 /* JNChatBaseMessage.swift */; };
+		ABE30FA42397A8AB00452581 /* JNChatTextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE30FA32397A8AB00452581 /* JNChatTextMessageCell.swift */; };
+		ABF1B07D239A03BB00A85A59 /* JNChatRevokeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF1B07C239A03BB00A85A59 /* JNChatRevokeMessageCell.swift */; };
+		ABF6810F2398E5D7009D368E /* JNChatStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF6810E2398E5D7009D368E /* JNChatStringExtension.swift */; };
+		ABF6811223990816009D368E /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = ABF6811123990816009D368E /* SDWebImage */; };
+		ABF6811523990B48009D368E /* JNChatUnknowMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF6811423990B48009D368E /* JNChatUnknowMessageCell.swift */; };
+		ABF6811823990F21009D368E /* JNChatImageMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF6811723990F21009D368E /* JNChatImageMessageCell.swift */; };
+		ABF6811A239913A8009D368E /* JNChatViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF68119239913A8009D368E /* JNChatViewDelegate.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AB1B8FCD239633BD0012783D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AB1B8FCC239633BD0012783D /* SnapKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		AB1B8FAC239515AB0012783D /* JN_IM_Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JN_IM_Swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB1B8FAF239515AB0012783D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AB1B8FB3239515AB0012783D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AB1B8FB6239515AB0012783D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AB1B8FB8239515AE0012783D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AB1B8FBB239515AE0012783D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AB1B8FBD239515AE0012783D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AB1B8FC4239517810012783D /* JNChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatViewController.swift; sourceTree = "<group>"; };
+		AB1B8FCA239633BD0012783D /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = Carthage/Build/iOS/SnapKit.framework; sourceTree = "<group>"; };
+		AB1B8FD1239645890012783D /* JNChatDefine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatDefine.swift; sourceTree = "<group>"; };
+		AB1B8FD9239646620012783D /* JNChatBaseMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatBaseMessageCell.swift; sourceTree = "<group>"; };
+		AB1B8FDD23964A630012783D /* JNChatUserMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatUserMessageCell.swift; sourceTree = "<group>"; };
+		ABE30FA12397918100452581 /* JNChatBaseMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatBaseMessage.swift; sourceTree = "<group>"; };
+		ABE30FA32397A8AB00452581 /* JNChatTextMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatTextMessageCell.swift; sourceTree = "<group>"; };
+		ABF1B07C239A03BB00A85A59 /* JNChatRevokeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatRevokeMessageCell.swift; sourceTree = "<group>"; };
+		ABF6810E2398E5D7009D368E /* JNChatStringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatStringExtension.swift; sourceTree = "<group>"; };
+		ABF6811423990B48009D368E /* JNChatUnknowMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatUnknowMessageCell.swift; sourceTree = "<group>"; };
+		ABF6811723990F21009D368E /* JNChatImageMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatImageMessageCell.swift; sourceTree = "<group>"; };
+		ABF68119239913A8009D368E /* JNChatViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatViewDelegate.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AB1B8FA9239515AB0012783D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABF6811223990816009D368E /* SDWebImage in Frameworks */,
+				AB1B8FCB239633BD0012783D /* SnapKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AB1B8FA3239515AB0012783D = {
+			isa = PBXGroup;
+			children = (
+				AB1B8FAE239515AB0012783D /* JN_IM_Swift */,
+				AB1B8FAD239515AB0012783D /* Products */,
+				AB1B8FC9239633BD0012783D /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		AB1B8FAD239515AB0012783D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB1B8FAC239515AB0012783D /* JN_IM_Swift.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB1B8FAE239515AB0012783D /* JN_IM_Swift */ = {
+			isa = PBXGroup;
+			children = (
+				AB1B8FC3239517620012783D /* IM */,
+				AB1B8FAF239515AB0012783D /* AppDelegate.swift */,
+				AB1B8FB3239515AB0012783D /* ViewController.swift */,
+				AB1B8FB5239515AB0012783D /* Main.storyboard */,
+				AB1B8FB8239515AE0012783D /* Assets.xcassets */,
+				AB1B8FBA239515AE0012783D /* LaunchScreen.storyboard */,
+				AB1B8FBD239515AE0012783D /* Info.plist */,
+			);
+			path = JN_IM_Swift;
+			sourceTree = "<group>";
+		};
+		AB1B8FC3239517620012783D /* IM */ = {
+			isa = PBXGroup;
+			children = (
+				ABF6810D2398E5B2009D368E /* Tools */,
+				ABE30FA0239790DC00452581 /* Models */,
+				AB1B8FCE239638EC0012783D /* TableCells */,
+				AB1B8FD1239645890012783D /* JNChatDefine.swift */,
+				AB1B8FC4239517810012783D /* JNChatViewController.swift */,
+				ABF68119239913A8009D368E /* JNChatViewDelegate.swift */,
+			);
+			path = IM;
+			sourceTree = "<group>";
+		};
+		AB1B8FC9239633BD0012783D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AB1B8FCA239633BD0012783D /* SnapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AB1B8FCE239638EC0012783D /* TableCells */ = {
+			isa = PBXGroup;
+			children = (
+				ABF6811623990F08009D368E /* Image */,
+				AB1B8FDC239648AF0012783D /* Base */,
+				ABF6811323990B13009D368E /* Custom */,
+				AB1B8FDB2396489D0012783D /* Text */,
+			);
+			path = TableCells;
+			sourceTree = "<group>";
+		};
+		AB1B8FDB2396489D0012783D /* Text */ = {
+			isa = PBXGroup;
+			children = (
+				ABE30FA32397A8AB00452581 /* JNChatTextMessageCell.swift */,
+			);
+			path = Text;
+			sourceTree = "<group>";
+		};
+		AB1B8FDC239648AF0012783D /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				AB1B8FD9239646620012783D /* JNChatBaseMessageCell.swift */,
+				AB1B8FDD23964A630012783D /* JNChatUserMessageCell.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		ABE30FA0239790DC00452581 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				ABE30FA12397918100452581 /* JNChatBaseMessage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		ABF6810D2398E5B2009D368E /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				ABF6810E2398E5D7009D368E /* JNChatStringExtension.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		ABF6811323990B13009D368E /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				ABF6811423990B48009D368E /* JNChatUnknowMessageCell.swift */,
+				ABF1B07C239A03BB00A85A59 /* JNChatRevokeMessageCell.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		ABF6811623990F08009D368E /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				ABF6811723990F21009D368E /* JNChatImageMessageCell.swift */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AB1B8FAB239515AB0012783D /* JN_IM_Swift */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB1B8FC0239515AE0012783D /* Build configuration list for PBXNativeTarget "JN_IM_Swift" */;
+			buildPhases = (
+				AB1B8FA8239515AB0012783D /* Sources */,
+				AB1B8FA9239515AB0012783D /* Frameworks */,
+				AB1B8FAA239515AB0012783D /* Resources */,
+				AB1B8FCD239633BD0012783D /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JN_IM_Swift;
+			packageProductDependencies = (
+				ABF6811123990816009D368E /* SDWebImage */,
+			);
+			productName = JN_IM_Swift;
+			productReference = AB1B8FAC239515AB0012783D /* JN_IM_Swift.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AB1B8FA4239515AB0012783D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1110;
+				LastUpgradeCheck = 1110;
+				ORGANIZATIONNAME = Jonathan;
+				TargetAttributes = {
+					AB1B8FAB239515AB0012783D = {
+						CreatedOnToolsVersion = 11.1;
+					};
+				};
+			};
+			buildConfigurationList = AB1B8FA7239515AB0012783D /* Build configuration list for PBXProject "JN_IM_Swift" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AB1B8FA3239515AB0012783D;
+			packageReferences = (
+				ABF6811023990816009D368E /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
+			productRefGroup = AB1B8FAD239515AB0012783D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AB1B8FAB239515AB0012783D /* JN_IM_Swift */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AB1B8FAA239515AB0012783D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB1B8FBC239515AE0012783D /* LaunchScreen.storyboard in Resources */,
+				AB1B8FB9239515AE0012783D /* Assets.xcassets in Resources */,
+				AB1B8FB7239515AB0012783D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AB1B8FA8239515AB0012783D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABF1B07D239A03BB00A85A59 /* JNChatRevokeMessageCell.swift in Sources */,
+				ABF6811823990F21009D368E /* JNChatImageMessageCell.swift in Sources */,
+				ABF6811A239913A8009D368E /* JNChatViewDelegate.swift in Sources */,
+				ABE30FA42397A8AB00452581 /* JNChatTextMessageCell.swift in Sources */,
+				AB1B8FB4239515AB0012783D /* ViewController.swift in Sources */,
+				AB1B8FDA239646620012783D /* JNChatBaseMessageCell.swift in Sources */,
+				AB1B8FC5239517810012783D /* JNChatViewController.swift in Sources */,
+				AB1B8FB0239515AB0012783D /* AppDelegate.swift in Sources */,
+				ABF6811523990B48009D368E /* JNChatUnknowMessageCell.swift in Sources */,
+				AB1B8FD2239645890012783D /* JNChatDefine.swift in Sources */,
+				ABE30FA22397918100452581 /* JNChatBaseMessage.swift in Sources */,
+				AB1B8FDE23964A630012783D /* JNChatUserMessageCell.swift in Sources */,
+				ABF6810F2398E5D7009D368E /* JNChatStringExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		AB1B8FB5239515AB0012783D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AB1B8FB6239515AB0012783D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		AB1B8FBA239515AE0012783D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AB1B8FBB239515AE0012783D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AB1B8FBE239515AE0012783D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AB1B8FBF239515AE0012783D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AB1B8FC1239515AE0012783D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2YDJT4DBSG;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = JN_IM_Swift/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "JN.JN-IM-Swift";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AB1B8FC2239515AE0012783D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2YDJT4DBSG;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = JN_IM_Swift/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "JN.JN-IM-Swift";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AB1B8FA7239515AB0012783D /* Build configuration list for PBXProject "JN_IM_Swift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB1B8FBE239515AE0012783D /* Debug */,
+				AB1B8FBF239515AE0012783D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AB1B8FC0239515AE0012783D /* Build configuration list for PBXNativeTarget "JN_IM_Swift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB1B8FC1239515AE0012783D /* Debug */,
+				AB1B8FC2239515AE0012783D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		ABF6811023990816009D368E /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.3.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		ABF6811123990816009D368E /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ABF6811023990816009D368E /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = AB1B8FA4239515AB0012783D /* Project object */;
+}
