@@ -94,6 +94,7 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
                 cell = tableView.dequeueReusableCell(withIdentifier: JNChatMessageTypeRevoke)
                 if cell == nil {
                     cell = self.revokeCellClass.init(owns: message.owns, reuseIdentifier: JNChatMessageTypeRevoke)
+                    (cell as! JNChatBaseMessageCell).delegate = self.delegate
                 }
             }
             else{
@@ -110,6 +111,7 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
                 if cell == nil {
                     if let cl = self.cellClasses[message.messageType]{
                         cell = cl.init(owns: message.owns , reuseIdentifier: rid)
+                        (cell as! JNChatBaseMessageCell).delegate = self.delegate
                     }
                 }
             }

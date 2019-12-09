@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,JNChatViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,13 +22,23 @@ class ViewController: UIViewController {
         self.testLoadTextMessage()
         self.testRevokeMessage()
         self.testUnknowMessage()
+        self.testImageMessage()
     }
     
     lazy var ChatVC:JNChatViewController = {
         let temp = JNChatViewController.init()
+        temp.delegate = self
         return temp
     }()
 
+    //MARK: - delegate -
+    
+    func jnChatViewDidClickImage(imageView: UIImageView, message: JNChatImageMessage) {
+        
+    }
+    
+    
+    //MARK: - test -
     
     func testLoadTextMessage() {
         let textMessage1 = JNChatTextMessage()
@@ -83,7 +93,7 @@ class ViewController: UIViewController {
         textMessage1.avatarUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576223085&di=7788b63ee76f12210bdb40406c8326fb&imgtype=jpg&er=1&src=http%3A%2F%2Ftupian.qqjay.com%2Ftou2%2F2018%2F1218%2F8d0dea288c054bc2ea2ee509b4c8a4bd.jpg"
         textMessage1.nickname = "someone"
         textMessage1.messageType = JNChatMessageTypeText
-        textMessage1.sendTime = "2019-12-06 08-08-08"
+        textMessage1.sendTime = "2019-12-06 10-08-08"
         textMessage1.showTime = true
         textMessage1.showNickname = false
         textMessage1.revoke = true
@@ -101,11 +111,47 @@ class ViewController: UIViewController {
         textMessage1.avatarUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576223085&di=7788b63ee76f12210bdb40406c8326fb&imgtype=jpg&er=1&src=http%3A%2F%2Ftupian.qqjay.com%2Ftou2%2F2018%2F1218%2F8d0dea288c054bc2ea2ee509b4c8a4bd.jpg"
         textMessage1.nickname = "someone"
         textMessage1.messageType = "JNCHAT_MSG:??????"
-        textMessage1.sendTime = "2019-12-06 08-08-08"
+        textMessage1.sendTime = "2019-12-06 11-08-08"
         textMessage1.showTime = true
         textMessage1.showNickname = false
         
         self.ChatVC.appendMessages(messages: [textMessage1])
+    }
+    
+    func testImageMessage() {
+        let imageMesage = JNChatImageMessage()
+        imageMesage.messageId = JNChatTextMessage.createMessageId()
+        imageMesage.ownerId = "someone"
+        imageMesage.targetId = "1"
+        imageMesage.owns = .others
+        imageMesage.avatarUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576223085&di=7788b63ee76f12210bdb40406c8326fb&imgtype=jpg&er=1&src=http%3A%2F%2Ftupian.qqjay.com%2Ftou2%2F2018%2F1218%2F8d0dea288c054bc2ea2ee509b4c8a4bd.jpg"
+        imageMesage.nickname = "someone"
+        imageMesage.messageType = JNChatMessageTypeImage
+        imageMesage.sendTime = "2019-12-06 12-08-08"
+        imageMesage.showTime = true
+        imageMesage.showNickname = true
+        
+        imageMesage.imageUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575887449027&di=9a8e3f9b192abe96e4f142ed62b17dbf&imgtype=0&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Ff603918fa0ec08fa3139e00153ee3d6d55fbda5f.jpg"
+        imageMesage.imageSize = CGSize(width: 1280.0 / UIScreen.main.scale, height: 1280.0 / UIScreen.main.scale)
+        
+        
+        let imageMesage2 = JNChatImageMessage()
+        imageMesage2.messageId = JNChatTextMessage.createMessageId()
+        imageMesage2.ownerId = "someone"
+        imageMesage2.targetId = "1"
+        imageMesage2.owns = .owner
+        imageMesage2.avatarUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575628674987&di=e97203f07bfb9bf6fa444aa9c9f1cfcc&imgtype=0&src=http%3A%2F%2Fcdn.duitang.com%2Fuploads%2Fitem%2F201605%2F05%2F20160505174655_JZRxC.jpeg"
+        imageMesage2.nickname = "someone"
+        imageMesage2.messageType = JNChatMessageTypeImage
+        imageMesage2.sendTime = "2019-12-06 13-08-08"
+        imageMesage2.showTime = false
+        imageMesage2.showNickname = false
+
+        imageMesage2.imageUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575888775853&di=d393a6ea9810f383c07d2409cf11e3cb&imgtype=0&src=http%3A%2F%2Fattach.bbs.miui.com%2Fforum%2F201302%2F19%2F133254fnqfrrqegrbqgk8z.jpg"
+        imageMesage2.imageSize = CGSize(width: 720.0 / UIScreen.main.scale, height: 1280.0 / UIScreen.main.scale)
+        
+        self.ChatVC.appendMessages(messages: [imageMesage, imageMesage2])
+
     }
 }
 

@@ -9,6 +9,9 @@
 import UIKit
 
 class JNChatBaseMessageCell: UITableViewCell {
+    
+    weak var delegate: JNChatViewDelegate?
+
     var owns: JNChatMessageOwns = .owner
 
     var messageContentSize: CGSize = .zero
@@ -32,6 +35,7 @@ class JNChatBaseMessageCell: UITableViewCell {
     }
     
     func setupCell() {
+        self.selectionStyle = .none
         self.contentView.addSubview(self.timeLabel)
         self.contentView.addSubview(self.messageContent)
 

@@ -81,6 +81,21 @@ class JNChatUserMessageCell: JNChatBaseMessageCell {
         }
     }
     
+    public func updateContentSpaceBaseAvatar(space: CGFloat){
+        weak var weakSelf = self
+        self.messageContent.snp.updateConstraints { (make) in
+            guard (weakSelf != nil) else{
+                return
+            }
+            if weakSelf!.owns == .owner{
+                make.right.equalTo(weakSelf!.avatarButton.snp.left).offset(-space)
+            }
+            else if weakSelf!.owns == .others{
+                make.left.equalTo(weakSelf!.avatarButton.snp.right).offset(space)
+            }
+        }
+    }
+    
 
     override func updateWithMessgae(message: JNChatBaseMessage) {
         weak var weakSelf = self

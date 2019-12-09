@@ -106,3 +106,60 @@ public class JNChatTextMessage: JNChatBaseMessage {
         }
     }
 }
+
+//MARK: - image message -
+public class JNChatImageMessage: JNChatBaseMessage {
+    public var imageUrl:String?
+    public var image:UIImage? //有image的时候展示image（仅自己发送图片时用于上传 发送成功改为url 不能把大量图片放入内存）
+    public var imageSize:CGSize = .zero {
+        willSet{
+            let ratio = newValue.height / newValue.width
+            let maxWidth = JN_CHAT_SETTING.imageMessageMaxWidth
+            let minWidth = JN_CHAT_SETTING.imageMessageMinWidth
+            let maxHeight = JN_CHAT_SETTING.imageMessageMaxHeight
+            let minHeight = JN_CHAT_SETTING.imageMessageMinHeight
+            let minHeightRatio = minHeight / maxWidth
+            let minWidthRatio = maxHeight / minHeight
+            if newValue.equalTo(.zero) {
+                self.messageContentSize = CGSize(width: maxWidth, height: maxHeight)
+            }
+            if ratio <= 1 {
+                if ratio <= minHeightRatio {
+                    if newValue.width < maxWidth{
+                        self.messageContentSize = CGSize(width: newValue.width, height: newValue.width * minHeightRatio)
+                    }
+                    else{
+                        self.messageContentSize = CGSize(width: maxWidth, height: minHeight)
+                    }
+                }
+                else{
+                    if newValue.width < maxWidth{
+                        self.messageContentSize = CGSize(width: newValue.width, height: newValue.height)
+                    }
+                    else{
+                        self.messageContentSize = CGSize(width: maxWidth, height: maxWidth * ratio)
+                    }
+                }
+            }
+            else{
+                if ratio >= minWidthRatio {
+                    if newValue.height < maxHeight {
+                        self.messageContentSize = CGSize(width: newValue.height / minWidthRatio, height: newValue.height)
+                    }
+                    else{
+                        self.messageContentSize = CGSize(width: minWidth, height: minHeight)
+                    }
+                }
+                else{
+                    if newValue.height < maxHeight {
+                        self.messageContentSize = newValue
+                    }
+                    else{
+                        self.messageContentSize = CGSize(width: maxHeight / ratio, height: maxHeight)
+                    }
+                }
+            }
+        }
+        
+    }
+}

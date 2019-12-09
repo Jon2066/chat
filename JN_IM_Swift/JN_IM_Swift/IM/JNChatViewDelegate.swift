@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import UIKit
+
 protocol JNChatViewDelegate: class {
-//    func jnChatNumberOfMessages() -> Int
-//    func jnChatMessageForIndex(index: Int) -> JNChatBaseMessage
+    func jnChatViewDidClickImage(imageView: UIImageView, message: JNChatImageMessage)
 }

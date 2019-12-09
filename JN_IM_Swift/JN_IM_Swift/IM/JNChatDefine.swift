@@ -79,6 +79,16 @@ public class JNChatSetting: NSObject {
     public var textMessageMinHeight: CGFloat = 45
     public var textMessageTextEdge: UIEdgeInsets = UIEdgeInsets(top: 8, left: 18, bottom: 8, right: 15) //按左边给出 右边左右对换
     
+    
+    //image message
+    public var imageMessageMaxWidth: CGFloat = UIScreen.main.bounds.size.width  * 0.4
+    public var imageMessageMaxHeight: CGFloat = UIScreen.main.bounds.size.width  * 0.618
+    public var imageMessageMinWidth: CGFloat = UIScreen.main.bounds.size.width * 0.1
+    public var imageMessageMinHeight: CGFloat = UIScreen.main.bounds.size.width * 0.1
+    public var imageMessageCornerRadius : CGFloat {
+        return self.avatarCornerRadius
+    }
+    
 }
 
 
