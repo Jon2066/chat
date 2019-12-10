@@ -13,33 +13,19 @@ import SnapKit
 private var JNChatMessageTypeRevoke: JNChatMessageType = "JNCHAT_MSG:REVOKE"
 
 class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
-    
-    weak public var delegate: JNChatViewDelegate?
-
-    private var cellClasses:[JNChatMessageType:JNChatBaseMessageCell.Type] = [JNChatMessageTypeText:JNChatTextMessageCell.self,
-                                                                              JNChatMessageTypeImage:JNChatImageMessageCell.self,
-                                                                              JNChatMessageTypeUnknow:JNChatUnknowMessageCell.self]
-    public var messageArray:[JNChatBaseMessage] = []
-    
-    private var revokeCellClass:JNChatBaseMessageCell.Type = JNChatRevokeMessageCell.self
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.setupSubViews()
-        self.addSubConstraints()
-        self.registerRevokeCellClass(cellClass: JNChatRevokeMessageCell.self)
-    }
-    
-    private func setupSubViews(){
-        self.view.backgroundColor = UIColor.white
-        self.view.addSubview(self.tableView)
-    }
-    
-    private func addSubConstraints(){
-        self.tableView.snp.makeConstraints { (make) in
-            make.top.bottom.left.right.equalTo(0)
+    //MARK: - public property
+    weak public var delegate: JNChatViewDelegate? {
+        willSet {
+            self.inputBar.delegate = newValue
+        }
+        didSet{
+            self.tableView.reloadData()
         }
     }
+    
+    public var messageArray:[JNChatBaseMessage] = []
+    
+    //MARK: - public method -
     //注册自定义消息类型
     public func registerCellClass(cellClass:JNChatBaseMessageCell.Type, messageType:JNChatMessageType){
         self.cellClasses[messageType] = cellClass
@@ -52,7 +38,6 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
     public func loadWithMessages(messages:[JNChatBaseMessage]){
         self.messageArray = messages
         self.tableView.reloadData()
-        self.scrollToBottom(animated: false)
     }
     //添加新消息
     public func appendMessages(messages:[JNChatBaseMessage]){
@@ -68,6 +53,44 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
         let indexPath = IndexPath(row: self.messageArray.count - 1, section: 0)
         self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: animated)
     }
+    
+    //MARK: - private -
+    private var cellClasses:[JNChatMessageType:JNChatBaseMessageCell.Type] = [JNChatMessageTypeText:JNChatTextMessageCell.self,
+                                                                              JNChatMessageTypeImage:JNChatImageMessageCell.self,
+                                                                              JNChatMessageTypeUnknow:JNChatUnknowMessageCell.self]
+    
+    private var revokeCellClass:JNChatBaseMessageCell.Type = JNChatRevokeMessageCell.self
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.registerRevokeCellClass(cellClass: JNChatRevokeMessageCell.self)
+        self.setupSubViews()
+        self.addSubConstraints()
+    }
+    
+    private func setupSubViews(){
+        self.view.backgroundColor = UIColor.white
+        self.view.addSubview(self.tableView)
+        self.view.addSubview(self.inputBar)
+        
+        self.inputBar.inputBarHeightChange = {(height: CGFloat) in
+            
+        }
+    }
+    
+    private func addSubConstraints(){
+        self.inputBar.snp.makeConstraints { (make) in
+            make.left.bottom.right.equalToSuperview()
+            make.height.equalTo(self.inputBar.inputBarHeight)
+            make.top.equalTo(self.tableView.snp.bottom)
+        }
+        self.tableView.snp.makeConstraints { (make) in
+            make.top.left.right.equalTo(0)
+        }
+        self.view.updateConstraintsIfNeeded()
+    }
+
     
     private func reloadTable(fromIndex:Int, count:Int){
         self.tableView.beginUpdates()
@@ -94,7 +117,6 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
                 cell = tableView.dequeueReusableCell(withIdentifier: JNChatMessageTypeRevoke)
                 if cell == nil {
                     cell = self.revokeCellClass.init(owns: message.owns, reuseIdentifier: JNChatMessageTypeRevoke)
-                    (cell as! JNChatBaseMessageCell).delegate = self.delegate
                 }
             }
             else{
@@ -111,10 +133,12 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
                 if cell == nil {
                     if let cl = self.cellClasses[message.messageType]{
                         cell = cl.init(owns: message.owns , reuseIdentifier: rid)
-                        (cell as! JNChatBaseMessageCell).delegate = self.delegate
                     }
                 }
             }
+        }
+        if  (cell as! JNChatBaseMessageCell).delegate !== self.delegate {
+            (cell as! JNChatBaseMessageCell).delegate = self.delegate
         }
         return cell!
     }
@@ -146,10 +170,15 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
 //MARK: - lazy load -
     
     lazy var tableView:UITableView = {
-        let tempTable = UITableView(frame:self.view.bounds, style:.plain)
+        let tempTable = UITableView(frame:CGRect.zero, style:.plain)
         tempTable.delegate = self
         tempTable.dataSource = self
         tempTable.separatorStyle = .none
         return tempTable
+    }()
+    
+    lazy var inputBar: JNChatInputBar = {
+        let temp = JNChatInputBar()
+        return temp
     }()
 }

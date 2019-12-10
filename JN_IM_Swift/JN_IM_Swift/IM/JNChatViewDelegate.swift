@@ -11,4 +11,7 @@ import UIKit
 
 protocol JNChatViewDelegate: class {
     func jnChatViewDidClickImage(imageView: UIImageView, message: JNChatImageMessage)
+
+    func jnChatViewSendText(text: String)
+    
 }

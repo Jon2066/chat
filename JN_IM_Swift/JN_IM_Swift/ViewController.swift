@@ -17,13 +17,23 @@ class ViewController: UIViewController,JNChatViewDelegate {
         self.addChild(self.ChatVC)
         self.view.addSubview(self.ChatVC.view)
         self.ChatVC.view.snp.makeConstraints { (make) in
-            make.top.bottom.left.right.equalToSuperview()
+            make.bottom.left.right.equalToSuperview()
+            make.top.equalTo(JN_TOP_SAFE_SPACE)
         }
-        self.testLoadTextMessage()
-        self.testRevokeMessage()
-        self.testUnknowMessage()
-        self.testImageMessage()
+        self.view.updateConstraintsIfNeeded()
+        
+        var msgs: [JNChatBaseMessage] = []
+        msgs.append(contentsOf: self.testLoadTextMessage())
+        msgs.append(contentsOf: self.testRevokeMessage())
+        msgs.append(contentsOf: self.testUnknowMessage())
+        msgs.append(contentsOf: self.testImageMessage())
+        msgs.append(contentsOf: self.testLoadTextMessage())
+
+        self.ChatVC.loadWithMessages(messages: msgs)
+        
+        self.ChatVC.scrollToBottom(animated: false)
     }
+    
     
     lazy var ChatVC:JNChatViewController = {
         let temp = JNChatViewController.init()
@@ -37,10 +47,12 @@ class ViewController: UIViewController,JNChatViewDelegate {
         
     }
     
-    
+    func jnChatViewSendText(text: String) {
+        
+    }
     //MARK: - test -
     
-    func testLoadTextMessage() {
+    func testLoadTextMessage() -> [JNChatBaseMessage]{
         let textMessage1 = JNChatTextMessage()
         textMessage1.text = "对方发来的文本消息"
         textMessage1.messageId = JNChatTextMessage.createMessageId()
@@ -80,10 +92,10 @@ class ViewController: UIViewController,JNChatViewDelegate {
         textMessage3.showTime = true
         textMessage3.showNickname = true
         
-        self.ChatVC.appendMessages(messages: [textMessage1, textMessage2, textMessage3])
+        return [textMessage1, textMessage2, textMessage3]
     }
     
-    func testRevokeMessage() {
+    func testRevokeMessage() -> [JNChatBaseMessage]{
         let textMessage1 = JNChatTextMessage()
         textMessage1.text = "对方发来的文本消息"
         textMessage1.messageId = JNChatTextMessage.createMessageId()
@@ -98,10 +110,10 @@ class ViewController: UIViewController,JNChatViewDelegate {
         textMessage1.showNickname = false
         textMessage1.revoke = true
         
-        self.ChatVC.appendMessages(messages: [textMessage1])
+        return [textMessage1]
     }
     
-    func testUnknowMessage() {
+    func testUnknowMessage() -> [JNChatBaseMessage] {
         let textMessage1 = JNChatTextMessage()
         textMessage1.text = "对方发来的文本消息"
         textMessage1.messageId = JNChatTextMessage.createMessageId()
@@ -115,10 +127,10 @@ class ViewController: UIViewController,JNChatViewDelegate {
         textMessage1.showTime = true
         textMessage1.showNickname = false
         
-        self.ChatVC.appendMessages(messages: [textMessage1])
+       return [textMessage1]
     }
     
-    func testImageMessage() {
+    func testImageMessage() -> [JNChatBaseMessage]{
         let imageMesage = JNChatImageMessage()
         imageMesage.messageId = JNChatTextMessage.createMessageId()
         imageMesage.ownerId = "someone"
@@ -150,7 +162,7 @@ class ViewController: UIViewController,JNChatViewDelegate {
         imageMesage2.imageUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575888775853&di=d393a6ea9810f383c07d2409cf11e3cb&imgtype=0&src=http%3A%2F%2Fattach.bbs.miui.com%2Fforum%2F201302%2F19%2F133254fnqfrrqegrbqgk8z.jpg"
         imageMesage2.imageSize = CGSize(width: 720.0 / UIScreen.main.scale, height: 1280.0 / UIScreen.main.scale)
         
-        self.ChatVC.appendMessages(messages: [imageMesage, imageMesage2])
+        return [imageMesage, imageMesage2]
 
     }
 }

@@ -30,6 +30,13 @@ public let JN_BOTTOM_SAFE_SPACE = { () -> CGFloat in
     return 0.0
 }()
 
+public let JN_TOP_SAFE_SPACE = { () -> CGFloat in
+    if #available(iOS 11.0, *) {
+        return UIApplication.shared.windows.last?.safeAreaInsets.top ?? 0.0
+    }
+    return 0.0
+}()
+
 public enum JNChatMessageOwns {
     case owner  //自己发送的
     case others //别人发送的
@@ -88,6 +95,9 @@ public class JNChatSetting: NSObject {
     public var imageMessageCornerRadius : CGFloat {
         return self.avatarCornerRadius
     }
+    
+    //input bar
+    public var textInputFont: UIFont = UIFont.systemFont(ofSize: 15)
     
 }
 

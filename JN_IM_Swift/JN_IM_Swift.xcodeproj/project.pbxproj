@@ -20,6 +20,7 @@
 		AB1B8FDE23964A630012783D /* JNChatUserMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1B8FDD23964A630012783D /* JNChatUserMessageCell.swift */; };
 		ABE30FA22397918100452581 /* JNChatBaseMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE30FA12397918100452581 /* JNChatBaseMessage.swift */; };
 		ABE30FA42397A8AB00452581 /* JNChatTextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE30FA32397A8AB00452581 /* JNChatTextMessageCell.swift */; };
+		ABE4B776239F3A1B0059345A /* JNChatInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE4B775239F3A1B0059345A /* JNChatInputBar.swift */; };
 		ABF1B07D239A03BB00A85A59 /* JNChatRevokeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF1B07C239A03BB00A85A59 /* JNChatRevokeMessageCell.swift */; };
 		ABF6810F2398E5D7009D368E /* JNChatStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF6810E2398E5D7009D368E /* JNChatStringExtension.swift */; };
 		ABF6811223990816009D368E /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = ABF6811123990816009D368E /* SDWebImage */; };
@@ -57,6 +58,7 @@
 		AB1B8FDD23964A630012783D /* JNChatUserMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatUserMessageCell.swift; sourceTree = "<group>"; };
 		ABE30FA12397918100452581 /* JNChatBaseMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatBaseMessage.swift; sourceTree = "<group>"; };
 		ABE30FA32397A8AB00452581 /* JNChatTextMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatTextMessageCell.swift; sourceTree = "<group>"; };
+		ABE4B775239F3A1B0059345A /* JNChatInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatInputBar.swift; sourceTree = "<group>"; };
 		ABF1B07C239A03BB00A85A59 /* JNChatRevokeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatRevokeMessageCell.swift; sourceTree = "<group>"; };
 		ABF6810E2398E5D7009D368E /* JNChatStringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatStringExtension.swift; sourceTree = "<group>"; };
 		ABF6811423990B48009D368E /* JNChatUnknowMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatUnknowMessageCell.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 		AB1B8FC3239517620012783D /* IM */ = {
 			isa = PBXGroup;
 			children = (
+				ABE4B774239F39BF0059345A /* InputBar */,
 				ABF6810D2398E5B2009D368E /* Tools */,
 				ABE30FA0239790DC00452581 /* Models */,
 				AB1B8FCE239638EC0012783D /* TableCells */,
@@ -163,6 +166,14 @@
 				ABE30FA12397918100452581 /* JNChatBaseMessage.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		ABE4B774239F39BF0059345A /* InputBar */ = {
+			isa = PBXGroup;
+			children = (
+				ABE4B775239F3A1B0059345A /* JNChatInputBar.swift */,
+			);
+			path = InputBar;
 			sourceTree = "<group>";
 		};
 		ABF6810D2398E5B2009D368E /* Tools */ = {
@@ -272,6 +283,7 @@
 				ABF6811823990F21009D368E /* JNChatImageMessageCell.swift in Sources */,
 				ABF6811A239913A8009D368E /* JNChatViewDelegate.swift in Sources */,
 				ABE30FA42397A8AB00452581 /* JNChatTextMessageCell.swift in Sources */,
+				ABE4B776239F3A1B0059345A /* JNChatInputBar.swift in Sources */,
 				AB1B8FB4239515AB0012783D /* ViewController.swift in Sources */,
 				AB1B8FDA239646620012783D /* JNChatBaseMessageCell.swift in Sources */,
 				AB1B8FC5239517810012783D /* JNChatViewController.swift in Sources */,

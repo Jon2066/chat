@@ -14,7 +14,7 @@ class JNChatBaseMessageCell: UITableViewCell {
 
     var owns: JNChatMessageOwns = .owner
 
-    var messageContentSize: CGSize = .zero
+    var messageContentSize: CGSize = CGSize(width: 100, height: 100)
 
     public var message:JNChatBaseMessage?
     
