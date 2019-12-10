@@ -18,9 +18,6 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
         willSet {
             self.inputBar.delegate = newValue
         }
-        didSet{
-            self.tableView.reloadData()
-        }
     }
     
     public var messageArray:[JNChatBaseMessage] = []
@@ -117,6 +114,7 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
                 cell = tableView.dequeueReusableCell(withIdentifier: JNChatMessageTypeRevoke)
                 if cell == nil {
                     cell = self.revokeCellClass.init(owns: message.owns, reuseIdentifier: JNChatMessageTypeRevoke)
+                    (cell as! JNChatBaseMessageCell).chatController = self
                 }
             }
             else{
@@ -133,12 +131,10 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
                 if cell == nil {
                     if let cl = self.cellClasses[message.messageType]{
                         cell = cl.init(owns: message.owns , reuseIdentifier: rid)
+                        (cell as! JNChatBaseMessageCell).chatController = self
                     }
                 }
             }
-        }
-        if  (cell as! JNChatBaseMessageCell).delegate !== self.delegate {
-            (cell as! JNChatBaseMessageCell).delegate = self.delegate
         }
         return cell!
     }

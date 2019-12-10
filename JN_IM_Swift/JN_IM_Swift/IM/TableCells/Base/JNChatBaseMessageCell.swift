@@ -10,7 +10,7 @@ import UIKit
 
 class JNChatBaseMessageCell: UITableViewCell {
     
-    weak var delegate: JNChatViewDelegate?
+    weak var chatController: JNChatViewController?
 
     var owns: JNChatMessageOwns = .owner
 

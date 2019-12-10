@@ -48,8 +48,8 @@ class JNChatImageMessageCell: JNChatUserMessageCell {
     }
     
     @objc func contentImageViewTap(tap: UITapGestureRecognizer){
-        if self.delegate != nil {
-            self.delegate?.jnChatViewDidClickImage(imageView: self.contentImageView, message: self.message! as! JNChatImageMessage)
+        if self.chatController != nil {
+            self.chatController?.delegate?.jnChatViewDidClickImage(imageView: self.contentImageView, message: self.message! as! JNChatImageMessage)
         }
     }
     
