@@ -170,6 +170,7 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
         tempTable.delegate = self
         tempTable.dataSource = self
         tempTable.separatorStyle = .none
+        tempTable.showsVerticalScrollIndicator = false
         return tempTable
     }()
     

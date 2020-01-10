@@ -58,9 +58,11 @@ class JNChatInputBar: UIView {
         
         self.middleView.addSubview(self.textView)
         
+        let contentHeight = 45
+        
         self.contentView.snp.makeConstraints { (make) in
             make.left.right.top.equalToSuperview()
-            make.height.equalTo(45)
+            make.height.equalTo(contentHeight)
         }
         
         self.line.snp.makeConstraints { (make) in
@@ -69,12 +71,14 @@ class JNChatInputBar: UIView {
         }
         
         self.leftView.snp.makeConstraints { (make) in
-            make.left.top.bottom.equalToSuperview()
+            make.left.bottom.equalToSuperview()
             make.width.equalTo(50)
+            make.height.equalTo(contentHeight)
         }
         self.rightView.snp.makeConstraints { (make) in
-            make.right.top.bottom.equalToSuperview()
+            make.right.bottom.equalToSuperview()
             make.width.equalTo(50)
+            make.height.equalTo(contentHeight)
         }
         self.middleView.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview()
@@ -154,6 +158,7 @@ class JNChatInputBar: UIView {
         temp.layer.borderColor = UIColor.lightGray.cgColor
         temp.layer.cornerRadius = 5
         temp.layer.masksToBounds = true
+        temp.returnKeyType = .send
         return temp
     }()
     
