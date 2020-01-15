@@ -49,6 +49,24 @@ class ViewController: UIViewController,JNChatViewDelegate {
     
     func jnChatViewSendText(text: String) {
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        
+        let textMessage = JNChatTextMessage()
+        textMessage.text = text
+        textMessage.messageId = JNChatTextMessage.createMessageId()
+        textMessage.ownerId = "1"
+        textMessage.targetId = "someone"
+        textMessage.owns = .owner
+        textMessage.avatarUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575628674987&di=e97203f07bfb9bf6fa444aa9c9f1cfcc&imgtype=0&src=http%3A%2F%2Fcdn.duitang.com%2Fuploads%2Fitem%2F201605%2F05%2F20160505174655_JZRxC.jpeg"
+        textMessage.nickname = "myself"
+        textMessage.messageType = JNChatMessageTypeText
+        textMessage.sendTime = dateFormatter.string(from: Date.init())
+        textMessage.showTime = arc4random()%2 == 0
+        textMessage.showNickname = arc4random()%2 == 0
+        self.ChatVC.appendMessages(messages: [textMessage])
+        self.ChatVC.scrollToBottom(animated: true)
     }
     //MARK: - test -
     

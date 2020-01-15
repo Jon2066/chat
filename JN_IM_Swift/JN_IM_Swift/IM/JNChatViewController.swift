@@ -13,7 +13,7 @@ import SnapKit
 private var JNChatMessageTypeRevoke: JNChatMessageType = "JNCHAT_MSG:REVOKE"
 
 class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
-    //MARK: - public property
+    //MARK: - public property -
     weak public var delegate: JNChatViewDelegate? {
         willSet {
             self.inputBar.delegate = newValue
@@ -40,7 +40,7 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
     public func appendMessages(messages:[JNChatBaseMessage]){
         let index = self.messageArray.count - 1
         self.messageArray.append(contentsOf: messages)
-        self.reloadTable(fromIndex: index, count: messages.count)
+        self.reloadTable(fromIndex: index + 1, count: messages.count)
     }
     
     public func scrollToBottom(animated:Bool){
@@ -67,13 +67,13 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     private func setupSubViews(){
+        self.automaticallyAdjustsScrollViewInsets = false
         self.view.backgroundColor = UIColor.white
         self.view.addSubview(self.tableView)
         self.view.addSubview(self.inputBar)
-        
-        self.inputBar.inputBarHeightChange = {(height: CGFloat) in
-            
-        }
+        self.tableView.panGestureRecognizer.addTarget(self, action: #selector(tableViewGestureAct(gesture:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewGestureAct(gesture:)))
+        self.tableView.addGestureRecognizer(tapGesture)
     }
     
     private func addSubConstraints(){
@@ -86,6 +86,14 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
             make.top.left.right.equalTo(0)
         }
         self.view.updateConstraintsIfNeeded()
+        weak var weakSelf = self
+        self.inputBar.inputBarHeightChange = {(height: CGFloat, inputBar: JNChatInputBar) in
+            inputBar.snp.updateConstraints { (make) in
+                make.height.equalTo(height)
+            }
+            weakSelf?.view.layoutIfNeeded()
+            weakSelf?.scrollToBottom(animated: false)
+        }
     }
 
     
@@ -98,6 +106,12 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
         self.tableView.insertRows(at: indexPaths, with: .none)
         self.tableView.endUpdates()
+    }
+    
+    @objc private func tableViewGestureAct(gesture:UIGestureRecognizer){
+        if gesture.isKind(of: UITapGestureRecognizer.self) || gesture.state == .began{
+            self.inputBar.hideKeyboard()
+        }
     }
     
 //MARK:  - table view delegate -
