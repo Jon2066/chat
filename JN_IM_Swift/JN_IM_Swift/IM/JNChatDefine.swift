@@ -81,7 +81,7 @@ public class JNChatSetting: NSObject {
     //text message
     public var textMessageFont: UIFont = UIFont.systemFont(ofSize: 15)
     public var textMessageTextColor: UIColor = .black
-    public var textMessageMaxWidth: CGFloat = 0.618 * UIScreen.main.bounds.size.height
+    public var textMessageMaxWidth: CGFloat = 0.618 * UIScreen.main.bounds.size.width
     public var textMessageMinWidth: CGFloat = 30
     public var textMessageMinHeight: CGFloat = 45
     public var textMessageTextEdge: UIEdgeInsets = UIEdgeInsets(top: 8, left: 18, bottom: 8, right: 15) //按左边给出 右边左右对换
