@@ -16,7 +16,6 @@ private var jnChat_textViewInitHeight: CGFloat = 35.0
 class JNChatInputBar: UIView, UITextViewDelegate {
     deinit {
         NotificationCenter.default.removeObserver(self)
-        self.textView.removeObserver(self, forKeyPath: "contentSize")
     }
     //MARK: - public property -
     public var inputBarHeightChange: JNChatInputBarHeightChange?

@@ -9,7 +9,7 @@
 import UIKit
 
 //MARK: -  display model -
-public class JNChatMessageDisplay: NSObject{
+public class JNChatMessageDisplay {
     public var messageContentSize:CGSize = .zero
     public var showNickname:Bool = false
     public var showTime:Bool = false

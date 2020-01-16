@@ -18,6 +18,8 @@
 		AB1B8FD2239645890012783D /* JNChatDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1B8FD1239645890012783D /* JNChatDefine.swift */; };
 		AB1B8FDA239646620012783D /* JNChatBaseMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1B8FD9239646620012783D /* JNChatBaseMessageCell.swift */; };
 		AB1B8FDE23964A630012783D /* JNChatUserMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1B8FDD23964A630012783D /* JNChatUserMessageCell.swift */; };
+		ABA2E51423D00C4600D805C3 /* JNChatMoreInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA2E51323D00C4600D805C3 /* JNChatMoreInput.swift */; };
+		ABA2E51723D052E900D805C3 /* JNChatAudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA2E51623D052E900D805C3 /* JNChatAudioRecorder.swift */; };
 		ABE30FA22397918100452581 /* JNChatBaseMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE30FA12397918100452581 /* JNChatBaseMessage.swift */; };
 		ABE30FA42397A8AB00452581 /* JNChatTextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE30FA32397A8AB00452581 /* JNChatTextMessageCell.swift */; };
 		ABE4B776239F3A1B0059345A /* JNChatInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE4B775239F3A1B0059345A /* JNChatInputBar.swift */; };
@@ -56,6 +58,8 @@
 		AB1B8FD1239645890012783D /* JNChatDefine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatDefine.swift; sourceTree = "<group>"; };
 		AB1B8FD9239646620012783D /* JNChatBaseMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatBaseMessageCell.swift; sourceTree = "<group>"; };
 		AB1B8FDD23964A630012783D /* JNChatUserMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatUserMessageCell.swift; sourceTree = "<group>"; };
+		ABA2E51323D00C4600D805C3 /* JNChatMoreInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatMoreInput.swift; sourceTree = "<group>"; };
+		ABA2E51623D052E900D805C3 /* JNChatAudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatAudioRecorder.swift; sourceTree = "<group>"; };
 		ABE30FA12397918100452581 /* JNChatBaseMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatBaseMessage.swift; sourceTree = "<group>"; };
 		ABE30FA32397A8AB00452581 /* JNChatTextMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatTextMessageCell.swift; sourceTree = "<group>"; };
 		ABE4B775239F3A1B0059345A /* JNChatInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatInputBar.swift; sourceTree = "<group>"; };
@@ -113,6 +117,7 @@
 		AB1B8FC3239517620012783D /* IM */ = {
 			isa = PBXGroup;
 			children = (
+				ABA2E51523D051C200D805C3 /* AudioTool */,
 				ABE4B774239F39BF0059345A /* InputBar */,
 				ABF6810D2398E5B2009D368E /* Tools */,
 				ABE30FA0239790DC00452581 /* Models */,
@@ -160,6 +165,14 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		ABA2E51523D051C200D805C3 /* AudioTool */ = {
+			isa = PBXGroup;
+			children = (
+				ABA2E51623D052E900D805C3 /* JNChatAudioRecorder.swift */,
+			);
+			path = AudioTool;
+			sourceTree = "<group>";
+		};
 		ABE30FA0239790DC00452581 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				ABE4B775239F3A1B0059345A /* JNChatInputBar.swift */,
+				ABA2E51323D00C4600D805C3 /* JNChatMoreInput.swift */,
 			);
 			path = InputBar;
 			sourceTree = "<group>";
@@ -282,6 +296,8 @@
 				ABF1B07D239A03BB00A85A59 /* JNChatRevokeMessageCell.swift in Sources */,
 				ABF6811823990F21009D368E /* JNChatImageMessageCell.swift in Sources */,
 				ABF6811A239913A8009D368E /* JNChatViewDelegate.swift in Sources */,
+				ABA2E51423D00C4600D805C3 /* JNChatMoreInput.swift in Sources */,
+				ABA2E51723D052E900D805C3 /* JNChatAudioRecorder.swift in Sources */,
 				ABE30FA42397A8AB00452581 /* JNChatTextMessageCell.swift in Sources */,
 				ABE4B776239F3A1B0059345A /* JNChatInputBar.swift in Sources */,
 				AB1B8FB4239515AB0012783D /* ViewController.swift in Sources */,
