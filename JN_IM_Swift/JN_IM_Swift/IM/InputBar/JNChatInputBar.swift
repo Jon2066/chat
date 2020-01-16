@@ -158,20 +158,23 @@ class JNChatInputBar: UIView, UITextViewDelegate {
         if text == "\n" {
             self.delegate?.jnChatViewSendText(text: textView.text)
             textView.text = ""
+            self.updateTextChangeWithTextHeight(height: 0.0)
             return false
         }
         return true
     }
-    
-    
-    
+        
     func textViewDidChange(_ textView: UITextView) {
         let size = textView.sizeThatFits(CGSize(width: textView.bounds.size.width, height:JN_CHAT_SETTING.textInputMaxHeight))
-        guard self.textViewContentHeight != size.height else {
+        self.updateTextChangeWithTextHeight(height: size.height)
+    }
+    
+    private func updateTextChangeWithTextHeight(height: CGFloat){
+        guard self.textViewContentHeight != height else {
             return
         }
-        self.textViewContentHeight = size.height
-        self.textViewHeight = size.height + self.textContainerInset.top + self.textContainerInset.bottom
+        self.textViewContentHeight = height
+        self.textViewHeight = height + self.textContainerInset.top + self.textContainerInset.bottom
         if self.textViewHeight < jnChat_textViewInitHeight{
             self.textViewHeight = jnChat_textViewInitHeight
         }
