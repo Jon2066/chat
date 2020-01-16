@@ -74,7 +74,7 @@ class JNChatAudioRecorder:NSObject, AVAudioRecorderDelegate {
     ///开始录制 设置属性需要在开始之前
     ///filePath 文件路径必须先创建
     public func startRecord(filePath: String, maxRecordTime: TimeInterval){
-        self._filePath = filePath
+        _filePath = filePath
         self.maxRecordTime = maxRecordTime
         self.stopRecord()
         if AVAudioSession.sharedInstance().category == AVAudioSession.Category.playAndRecord {
@@ -86,17 +86,17 @@ class JNChatAudioRecorder:NSObject, AVAudioRecorderDelegate {
             }
         }
         do{
-            try self._recorder = AVAudioRecorder.init(url: NSURL.fileURL(withPath: filePath), settings: self.getAudioRecordSetting())
+            try _recorder = AVAudioRecorder.init(url: NSURL.fileURL(withPath: filePath), settings: self.getAudioRecordSetting())
         }
         catch{
             
         }
-        self._recorder?.isMeteringEnabled = true
-        self._recorder?.delegate = self
+        self.recorder?.isMeteringEnabled = true
+        self.recorder?.delegate = self
 
-        self._recorder?.prepareToRecord()
+        self.recorder?.prepareToRecord()
         
-        self._recorder?.record(forDuration: maxRecordTime)
+        self.recorder?.record(forDuration: maxRecordTime)
         
         if self.updateMeters {
             self.startTimer()

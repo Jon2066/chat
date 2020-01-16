@@ -155,6 +155,9 @@ class JNChatInputBar: UIView, UITextViewDelegate {
     //MARK: - textview delegate -
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
+            if(textView.text == "" || textView.text.trimmingCharacters(in: NSCharacterSet.whitespaces) == ""){
+                return false
+            }
             self.delegate?.jnChatViewSendText(text: textView.text)
             textView.text = ""
             self.updateTextChangeWithTextHeight(height: 0.0)
