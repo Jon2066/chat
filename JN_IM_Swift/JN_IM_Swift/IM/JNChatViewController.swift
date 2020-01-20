@@ -110,7 +110,7 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     @objc private func tableViewGestureAct(gesture:UIGestureRecognizer){
         if gesture.isKind(of: UITapGestureRecognizer.self) || gesture.state == .began{
-            self.inputBar.hideKeyboard()
+            self.inputBar.takeBackInputBar()
         }
     }
     

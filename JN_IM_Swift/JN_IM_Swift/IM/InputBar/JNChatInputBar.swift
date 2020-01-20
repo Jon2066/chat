@@ -11,6 +11,13 @@ import SnapKit
 
 typealias JNChatInputBarHeightChange = (CGFloat, JNChatInputBar)->()
 
+enum JNChatInputStyle {
+    case none
+    case text
+    case voice
+    case more
+}
+
 private var jnChat_textViewInitHeight: CGFloat = 35.0
 
 class JNChatInputBar: UIView, UITextViewDelegate {
@@ -27,23 +34,43 @@ class JNChatInputBar: UIView, UITextViewDelegate {
         if height == 0.0 {
             height = JN_BOTTOM_SAFE_SPACE
         }
-        height += self.contentViewHeight
+        if self.inputStyle == .more {
+            height += self.moreInputView.viewHeight
+        }
+        height += self.toolBarHeight
         return height
     }
     
-    private var contentViewHeight: CGFloat {
-        return (self.textViewHeight + 10)
-    }
-    
     //MARK: - public method -
-    public func hideKeyboard(){
-        self.textView.resignFirstResponder()
+    public func takeBackInputBar(){
+        if self.inputStyle == .text {
+            self.inputStyle = .none
+            self.textView.resignFirstResponder()
+        }
+        else{
+            self.inputStyle = .none
+            self.updateContentHeightAnimated(animated: true)
+        }
+        
     }
     //MARK: - private -
     private var textViewHeight:CGFloat = jnChat_textViewInitHeight
     private var keyboardHeight:CGFloat = 0.0
     private let textContainerInset = UIEdgeInsets(top: floor((jnChat_textViewInitHeight - JN_CHAT_SETTING.textInputFont.lineHeight) / 2.0), left:0, bottom: 0, right: 0)
     private var textViewContentHeight: CGFloat = 0.0
+    
+    private var toolBarHeight: CGFloat {
+        var height: CGFloat = 10.0
+        if self.inputStyle == .voice || self.inputStyle == .none{
+            height += jnChat_textViewInitHeight
+        }
+        else{
+            height += self.textViewHeight
+        }
+        return height
+    }
+    private var inputStyle: JNChatInputStyle = .none
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupView()
@@ -55,23 +82,26 @@ class JNChatInputBar: UIView, UITextViewDelegate {
     }
     
     private func setupView(){
-        self.addSubview(self.contentView)
+        self.addSubview(self.toolBarView)
         self.addSubview(self.line)
-        
-        self.contentView.addSubview(self.leftView)
-        self.contentView.addSubview(self.rightView)
-        self.contentView.addSubview(self.middleView)
-        
+        self.addSubview(self.moreInputView)
+
+        self.toolBarView.addSubview(self.leftView)
+        self.toolBarView.addSubview(self.rightView)
+        self.toolBarView.addSubview(self.middleView)
+        self.moreInputView.isHidden = true
         
         self.leftView.addSubview(self.switchInput)
         
         self.middleView.addSubview(self.textView)
         
-        let contentHeight = self.contentViewHeight;
+        self.rightView.addSubview(self.addInput)
         
-        self.contentView.snp.makeConstraints { (make) in
+        let toolbarHeight = self.toolBarHeight;
+        
+        self.toolBarView.snp.makeConstraints { (make) in
             make.left.right.top.equalToSuperview()
-            make.height.equalTo(contentHeight)
+            make.height.equalTo(self.toolBarHeight)
         }
         
         self.line.snp.makeConstraints { (make) in
@@ -82,12 +112,12 @@ class JNChatInputBar: UIView, UITextViewDelegate {
         self.leftView.snp.makeConstraints { (make) in
             make.left.bottom.equalToSuperview()
             make.width.equalTo(50)
-            make.height.equalTo(contentHeight)
+            make.height.equalTo(toolbarHeight)
         }
         self.rightView.snp.makeConstraints { (make) in
             make.right.bottom.equalToSuperview()
             make.width.equalTo(50)
-            make.height.equalTo(contentHeight)
+            make.height.equalTo(toolbarHeight)
         }
         self.middleView.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview()
@@ -106,6 +136,19 @@ class JNChatInputBar: UIView, UITextViewDelegate {
 //            make.centerY.equalToSuperview()
 //            make.height.equalTo(self.textViewHeight)
         }
+    
+        self.addInput.snp.makeConstraints { (make) in
+            make.centerX.centerY.equalToSuperview()
+            make.width.height.equalTo(35)
+        }
+        
+        self.moreInputView.snp.makeConstraints { (make) in
+            make.left.right.equalTo(0)
+            make.top.equalTo(self.toolBarView.snp.bottom)
+            make.height.equalTo(self.moreInputView.viewHeight)
+        }
+        
+        
         self.layoutIfNeeded()
     
         self.regKeyboardNoti()
@@ -114,12 +157,50 @@ class JNChatInputBar: UIView, UITextViewDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
     }
+    
+    //MARK: - private method -
+    private func updateContentHeightAnimated(animated:Bool){
+        if animated {
+            UIView.animate(withDuration: 0.25, delay: 0.0, options: AnimationOptions.layoutSubviews, animations: {
+                self.toolBarView.snp.updateConstraints { (make) in
+                    make.height.equalTo(self.toolBarHeight)
+                }
+                if (self.inputBarHeightChange != nil) {
+                    self.inputBarHeightChange!(self.inputBarHeight, self)
+                }
+            }, completion: nil)
+        }
+        else{
+            self.toolBarView.snp.updateConstraints { (make) in
+                make.height.equalTo(self.toolBarHeight)
+            }
+            if (self.inputBarHeightChange != nil) {
+                self.inputBarHeightChange!(self.inputBarHeight, self)
+            }
+        }
+
+    }
+    
+    //MARK: - button event -
     @objc func inputAction(sender: UIButton){
         if sender.isSelected {
             sender.isSelected = false
+            self.inputStyle = .text
         }
         else{
             sender.isSelected = true
+            self.inputStyle = .voice
+        }
+    }
+    @objc func moreInputAction(sender: UIButton){
+        let previous = self.inputStyle
+        self.inputStyle = .more
+        self.moreInputView.isHidden = false
+        if previous == .text {
+            self.textView.resignFirstResponder()
+        }
+        else{
+            self.updateContentHeightAnimated(animated: true)
         }
     }
     //MARK: - keyboard -
@@ -130,16 +211,14 @@ class JNChatInputBar: UIView, UITextViewDelegate {
     }
     
 //    @objc func keyboardWillShow(noti:Notification){
-//
+//        self.inputStyle = .text
 //    }
     @objc func keyboardWillHide(noti:Notification){
         if self.keyboardHeight == 0.0 {
             return
         }
         self.keyboardHeight = 0.0;
-        if (self.inputBarHeightChange != nil) {
-            self.inputBarHeightChange!(self.inputBarHeight, self)
-        }
+        self.updateContentHeightAnimated(animated: true)
     }
     @objc func keyboardWillChangeFrame(noti:Notification){
         let rect = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
@@ -147,9 +226,7 @@ class JNChatInputBar: UIView, UITextViewDelegate {
             return
         }
         self.keyboardHeight = rect.size.height
-        if (self.inputBarHeightChange != nil) {
-            self.inputBarHeightChange!(self.inputBarHeight, self)
-        }
+        self.updateContentHeightAnimated(animated: false)
     }
     
     //MARK: - textview delegate -
@@ -165,7 +242,10 @@ class JNChatInputBar: UIView, UITextViewDelegate {
         }
         return true
     }
-        
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        self.inputStyle = .text
+        return true
+    }
     func textViewDidChange(_ textView: UITextView) {
         let size = textView.sizeThatFits(CGSize(width: textView.bounds.size.width, height:JN_CHAT_SETTING.textInputMaxHeight))
         self.updateTextChangeWithTextHeight(height: size.height)
@@ -180,18 +260,11 @@ class JNChatInputBar: UIView, UITextViewDelegate {
         if self.textViewHeight < jnChat_textViewInitHeight{
             self.textViewHeight = jnChat_textViewInitHeight
         }
-        UIView.animate(withDuration: 0.25, delay: 0.0, options: AnimationOptions.layoutSubviews, animations: {
-           self.contentView.snp.updateConstraints { (make) in
-                 make.height.equalTo(self.contentViewHeight)
-          }
-          if (self.inputBarHeightChange != nil) {
-              self.inputBarHeightChange!(self.inputBarHeight, self)
-          }
-        }, completion: nil)
+        self.updateContentHeightAnimated(animated: true)
     }
     
     //MARK: - lazy load -
-    lazy var contentView: UIView = {
+    lazy var toolBarView: UIView = {
         let temp = UIView()
         
         return temp
@@ -219,6 +292,13 @@ class JNChatInputBar: UIView, UITextViewDelegate {
         temp.setImage(UIImage(named: "ToolViewKeyboard"), for: .normal)
         temp.setImage(UIImage(named: "ToolViewInputVoice"), for: .selected)
         temp.addTarget(self, action: #selector(inputAction(sender:)), for: .touchUpInside)
+        return temp
+    }()
+    
+    lazy var addInput: UIButton = {
+        let temp = UIButton()
+        temp.setImage(UIImage(named: "TypeSelectorBtn_Black"), for: .normal)
+        temp.addTarget(self, action: #selector(moreInputAction(sender:)), for: .touchUpInside)
         return temp
     }()
     
@@ -252,6 +332,11 @@ class JNChatInputBar: UIView, UITextViewDelegate {
     lazy var line: UIView = {
         let temp = UIView()
         temp.backgroundColor = .lightGray
+        return temp
+    }()
+    
+    lazy var moreInputView: JNChatMoreInputView = {
+        let temp  = JNChatMoreInputView()
         return temp
     }()
 }
