@@ -99,6 +99,11 @@ public class JNChatSetting: NSObject {
     //input bar
     public var textInputFont: UIFont = UIFont.systemFont(ofSize: 15)
     public var textInputMaxHeight: CGFloat = UIScreen.main.bounds.size.height * 0.5 //文本输出框 最大高度
+    
+    //more input
+    public var moreInputItemTitleFont: UIFont = UIFont.systemFont(ofSize: 15)
+    public var moreInputItemTitleColor: UIColor = UIColor.darkGray
+    
 }
 
 

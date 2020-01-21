@@ -336,7 +336,9 @@ class JNChatInputBar: UIView, UITextViewDelegate {
     }()
     
     lazy var moreInputView: JNChatMoreInputView = {
-        let temp  = JNChatMoreInputView()
+        let temp  = JNChatMoreInputView(frame: .zero) { (type: JNChatMoreInputType) in
+            
+        }
         return temp
     }()
 }
