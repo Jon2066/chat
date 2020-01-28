@@ -47,6 +47,9 @@
 - (void)awakeFromNib {
 
     self.avatarSize         = MIM_AVATAR_SIZE;
+    self.avatarHeightConstraint.constant = MIM_AVATAR_SIZE.height;
+    self.avatarWidthConstraint.constant = MIM_AVATAR_SIZE.width;
+    [self updateConstraintsIfNeeded];
     
 }
 
