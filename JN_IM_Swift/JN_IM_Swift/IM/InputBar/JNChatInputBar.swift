@@ -43,6 +43,9 @@ class JNChatInputBar: UIView, UITextViewDelegate {
     
     //MARK: - public method -
     public func takeBackInputBar(){
+        guard self.inputStyle != .none else {
+            return
+        }
         if self.inputStyle == .text {
             self.inputStyle = .none
             self.textView.resignFirstResponder()
@@ -186,11 +189,14 @@ class JNChatInputBar: UIView, UITextViewDelegate {
         if sender.isSelected {
             sender.isSelected = false
             self.inputStyle = .text
+            self.textView.becomeFirstResponder()
         }
         else{
             sender.isSelected = true
             self.inputStyle = .voice
+            self.textView.resignFirstResponder()
         }
+        self.updateContentHeightAnimated(animated: true)
     }
     @objc func moreInputAction(sender: UIButton){
         let previous = self.inputStyle
