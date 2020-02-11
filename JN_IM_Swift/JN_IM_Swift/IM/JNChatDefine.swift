@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 
-
 //MARK: - message type -
 public typealias JNChatMessageType = String
 public var JNChatMessageTypeUnknow: JNChatMessageType = "JNCHAT_MSG:UNKNOW"
@@ -37,6 +36,10 @@ public let JN_TOP_SAFE_SPACE = { () -> CGFloat in
     return 0.0
 }()
 
+/// cache文件夹
+public let JN_CACHE_DIC_PATH:String =  NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0]
+
+
 public enum JNChatMessageOwns {
     case owner  //自己发送的
     case others //别人发送的
@@ -48,6 +51,11 @@ public enum JNChatMessageStyle {
 }
 
 public class JNChatSetting: NSObject {
+    public override init() {
+        super.init()
+
+        self.createDicAtPath(path: self.voiceFileSavePath)
+    }
     public var topSpace: CGFloat = 8
     public var timeLabelHeight: CGFloat = 16
     public var timeLabelFont: UIFont = UIFont.systemFont(ofSize: 13)
@@ -99,11 +107,29 @@ public class JNChatSetting: NSObject {
     //input bar
     public var textInputFont: UIFont = UIFont.systemFont(ofSize: 15)
     public var textInputMaxHeight: CGFloat = UIScreen.main.bounds.size.height * 0.5 //文本输出框 最大高度
+    public var voiceFileSavePath:String = JN_CACHE_DIC_PATH + "/JNChatVoices" {
+        willSet{
+            self.createDicAtPath(path: newValue)
+        }
+    }
     
     //more input
     public var moreInputItemTitleFont: UIFont = UIFont.systemFont(ofSize: 15)
     public var moreInputItemTitleColor: UIColor = UIColor.darkGray
     
+    public func createDicAtPath(path: String){
+        var directoryExists = ObjCBool.init(false)
+        let exist = FileManager.default.fileExists(atPath: self.voiceFileSavePath, isDirectory:&directoryExists)
+        if exist == false || (exist == true && directoryExists.boolValue == false){
+            do{
+                try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
+            }
+            catch{
+                
+            }
+            
+        }
+    }
 }
 
 

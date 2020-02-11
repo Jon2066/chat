@@ -310,7 +310,7 @@
         if ([self.delegate respondsToSelector:@selector(chatViewStartVoiceInput)]) {
             [self.delegate chatViewStartVoiceInput];
         }
-        [self.recorder startRecordWithMaxRecordTime:MIMMessageMaxRecorderTime];
+        [self.recorder  startRecordWithMaxRecordTime:MIMMessageMaxRecorderTime];
     }
 }
 

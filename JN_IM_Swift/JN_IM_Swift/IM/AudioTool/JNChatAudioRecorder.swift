@@ -42,7 +42,9 @@ class JNChatAudioRecorder:NSObject, AVAudioRecorderDelegate {
     }
     
     /// 当前录制时长
-    public var currentTime: TimeInterval = 0.0
+    public var currentTime: TimeInterval {
+        return self.recorder?.currentTime ?? 0.0
+    }
     
     ///最大录制时长
     public var maxRecordTime: TimeInterval = 60.0

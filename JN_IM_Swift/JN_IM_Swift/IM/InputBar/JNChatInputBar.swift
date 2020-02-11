@@ -96,11 +96,14 @@ class JNChatInputBar: UIView, UITextViewDelegate {
         self.toolBarView.addSubview(self.leftView)
         self.toolBarView.addSubview(self.rightView)
         self.toolBarView.addSubview(self.middleView)
+        
         self.moreInputView.isHidden = true
+        self.voiceInput.isHidden = true
         
         self.leftView.addSubview(self.switchInput)
         
         self.middleView.addSubview(self.textView)
+        self.middleView.addSubview(self.voiceInput)
         
         self.rightView.addSubview(self.addInput)
         
@@ -143,6 +146,12 @@ class JNChatInputBar: UIView, UITextViewDelegate {
 //            make.centerY.equalToSuperview()
 //            make.height.equalTo(self.textViewHeight)
         }
+        
+        self.voiceInput.snp.makeConstraints { (make) in
+            make.left.top.equalTo(5)
+            make.right.bottom.equalTo(-5)
+        }
+
     
         self.addInput.snp.makeConstraints { (make) in
             make.centerX.centerY.equalToSuperview()
@@ -193,11 +202,15 @@ class JNChatInputBar: UIView, UITextViewDelegate {
         if sender.isSelected {
             sender.isSelected = false
             self.inputStyle = .text
+            self.textView.isHidden = false
+            self.voiceInput.isHidden = true
             self.textView.becomeFirstResponder()
         }
         else{
             sender.isSelected = true
             self.inputStyle = .voice
+            self.textView.isHidden = true
+            self.voiceInput.isHidden = false
             self.textView.resignFirstResponder()
         }
         self.updateContentHeightAnimated(animated: true)
@@ -213,6 +226,19 @@ class JNChatInputBar: UIView, UITextViewDelegate {
             self.updateContentHeightAnimated(animated: true)
         }
     }
+    
+    @objc func voiceInputTouchDown(sender: UIButton){
+        sender.setTitle("松开 结束", for: .normal)
+    }
+    
+    @objc func voiceInputTouchUpInside(sender: UIButton){
+        sender.setTitle("按住 说话", for: .normal)
+    }
+    
+    @objc func voiceInputTouchOutside(sender: UIButton){
+        sender.setTitle("按住 说话", for: .normal)
+    }
+    
     //MARK: - keyboard -
     private func regKeyboardNoti(){
 //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -319,8 +345,8 @@ class JNChatInputBar: UIView, UITextViewDelegate {
     
     lazy var switchInput: UIButton = {
         let temp = UIButton()
-        temp.setImage(UIImage(named: "ToolViewKeyboard"), for: .normal)
-        temp.setImage(UIImage(named: "ToolViewInputVoice"), for: .selected)
+        temp.setImage(UIImage(named: "ToolViewKeyboard"), for: .selected)
+        temp.setImage(UIImage(named: "ToolViewInputVoice"), for: .normal)
         temp.addTarget(self, action: #selector(inputAction(sender:)), for: .touchUpInside)
         return temp
     }()
@@ -370,6 +396,22 @@ class JNChatInputBar: UIView, UITextViewDelegate {
         let temp  = JNChatMoreInputView(frame:.zero, itemDidClick: { (type: JNChatMoreInputType) in
             weakSelf?.moreInputAction(type: type)
         })
+        return temp
+    }()
+    
+    lazy var voiceInput: UIButton = {
+        let temp = UIButton(type: UIButton.ButtonType.custom)
+        temp.frame = .zero
+        temp.layer.borderWidth = 0.5
+        temp.layer.borderColor = UIColor.lightGray.cgColor
+        temp.layer.cornerRadius = 5
+        temp.layer.masksToBounds = true
+        temp.setTitle("按住 说话", for: .normal)
+        temp.addTarget(self, action: #selector(voiceInputTouchDown(sender:)), for: .touchDown)
+        temp.addTarget(self, action: #selector(voiceInputTouchUpInside(sender:)), for: .touchUpInside)
+        temp.addTarget(self, action: #selector(voiceInputTouchOutside(sender:)), for: .touchUpOutside)
+        temp.setTitleColor(.black, for: .normal)
+        temp.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         return temp
     }()
 }
