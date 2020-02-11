@@ -190,6 +190,7 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     lazy var inputBar: JNChatInputBar = {
         let temp = JNChatInputBar()
+        temp.rootController =  self
         return temp
     }()
 }

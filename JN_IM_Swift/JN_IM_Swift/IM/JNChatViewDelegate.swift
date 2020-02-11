@@ -14,4 +14,5 @@ protocol JNChatViewDelegate: class {
 
     func jnChatViewSendText(text: String)
     
+    func jnChatViewWillSendImage(image: UIImage)
 }

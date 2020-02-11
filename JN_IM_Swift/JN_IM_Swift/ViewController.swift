@@ -11,6 +11,7 @@ import SnapKit
 
 class ViewController: UIViewController,JNChatViewDelegate {
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -68,6 +69,29 @@ class ViewController: UIViewController,JNChatViewDelegate {
         self.ChatVC.appendMessages(messages: [textMessage])
         self.ChatVC.scrollToBottom(animated: true)
     }
+    
+    func jnChatViewWillSendImage(image: UIImage) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        
+        let imageMessage = JNChatImageMessage()
+        imageMessage.image = image
+        imageMessage.imageSize = image.size
+        imageMessage.messageId = JNChatImageMessage.createMessageId()
+        imageMessage.ownerId = "1"
+        imageMessage.targetId = "someone"
+        imageMessage.owns = .owner
+        imageMessage.avatarUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575628674987&di=e97203f07bfb9bf6fa444aa9c9f1cfcc&imgtype=0&src=http%3A%2F%2Fcdn.duitang.com%2Fuploads%2Fitem%2F201605%2F05%2F20160505174655_JZRxC.jpeg"
+        imageMessage.nickname = "myself"
+        imageMessage.messageType = JNChatMessageTypeImage
+        imageMessage.sendTime = dateFormatter.string(from: Date.init())
+        imageMessage.showTime = arc4random()%2 == 0
+        imageMessage.showNickname = arc4random()%2 == 0
+        self.ChatVC.appendMessages(messages: [imageMessage])
+        self.ChatVC.scrollToBottom(animated: true)
+    }
+    
     //MARK: - test -
     
     func testLoadTextMessage() -> [JNChatBaseMessage]{

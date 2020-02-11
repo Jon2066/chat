@@ -29,6 +29,8 @@ class JNChatInputBar: UIView, UITextViewDelegate {
     
     weak public var delegate: JNChatViewDelegate?
     
+    weak public var rootController: UIViewController?
+    
     public var inputBarHeight: CGFloat {
         var height = self.keyboardHeight
         if height == 0.0 {
@@ -61,6 +63,8 @@ class JNChatInputBar: UIView, UITextViewDelegate {
     private var keyboardHeight:CGFloat = 0.0
     private let textContainerInset = UIEdgeInsets(top: floor((jnChat_textViewInitHeight - JN_CHAT_SETTING.textInputFont.lineHeight) / 2.0), left:0, bottom: 0, right: 0)
     private var textViewContentHeight: CGFloat = 0.0
+    
+    private var imagePicker: JNChatImagePicker?
     
     private var toolBarHeight: CGFloat {
         var height: CGFloat = 10.0
@@ -269,6 +273,26 @@ class JNChatInputBar: UIView, UITextViewDelegate {
         self.updateContentHeightAnimated(animated: true)
     }
     
+    
+    private func moreInputAction(type:JNChatMoreInputType){
+        if self.rootController != nil {
+            weak var weakSelf = self
+            if type == .image {
+                self.imagePicker = JNChatImagePicker(rootController: self.rootController!)
+                self.imagePicker?.showImagePicker(type: .photo, completion: { (image: UIImage) in
+                    weakSelf?.delegate?.jnChatViewWillSendImage(image: image)
+                })
+            }
+            else if type == .carema{
+                self.imagePicker = JNChatImagePicker(rootController: self.rootController!)
+                self.imagePicker?.showImagePicker(type: .camera, completion: { (image: UIImage) in
+                    weakSelf?.delegate?.jnChatViewWillSendImage(image: image)
+                })
+            }
+        }
+
+    }
+    
     //MARK: - lazy load -
     lazy var toolBarView: UIView = {
         let temp = UIView()
@@ -342,9 +366,10 @@ class JNChatInputBar: UIView, UITextViewDelegate {
     }()
     
     lazy var moreInputView: JNChatMoreInputView = {
-        let temp  = JNChatMoreInputView(frame: .zero) { (type: JNChatMoreInputType) in
-            
-        }
+        weak var weakSelf = self
+        let temp  = JNChatMoreInputView(frame:.zero, itemDidClick: { (type: JNChatMoreInputType) in
+            weakSelf?.moreInputAction(type: type)
+        })
         return temp
     }()
 }
