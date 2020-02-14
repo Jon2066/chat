@@ -112,6 +112,7 @@ public class JNChatSetting: NSObject {
             self.createDicAtPath(path: newValue)
         }
     }
+    public var voiceMaxRecordDuration: TimeInterval = 60.0
     
     //more input
     public var moreInputItemTitleFont: UIFont = UIFont.systemFont(ofSize: 15)

@@ -65,6 +65,7 @@ class JNChatInputBar: UIView, UITextViewDelegate {
     private var textViewContentHeight: CGFloat = 0.0
     
     private var imagePicker: JNChatImagePicker?
+    private var audioRecordComplete: Bool = false
     
     private var toolBarHeight: CGFloat {
         var height: CGFloat = 10.0
@@ -229,14 +230,21 @@ class JNChatInputBar: UIView, UITextViewDelegate {
     
     @objc func voiceInputTouchDown(sender: UIButton){
         sender.setTitle("松开 结束", for: .normal)
+        let fileName =  UUID().uuidString
+        let path = JN_CHAT_SETTING.voiceFileSavePath + "/" + fileName + ".aac"
+        self.audioRecorder.startRecord(filePath: path, maxRecordTime: JN_CHAT_SETTING.voiceMaxRecordDuration)
     }
     
     @objc func voiceInputTouchUpInside(sender: UIButton){
         sender.setTitle("按住 说话", for: .normal)
+        self.audioRecordComplete = true
+        self.audioRecorder.stopRecord()
     }
     
     @objc func voiceInputTouchOutside(sender: UIButton){
         sender.setTitle("按住 说话", for: .normal)
+        self.audioRecordComplete = false
+        self.audioRecorder.stopRecord()
     }
     
     //MARK: - keyboard -
@@ -271,7 +279,7 @@ class JNChatInputBar: UIView, UITextViewDelegate {
             if(textView.text == "" || textView.text.trimmingCharacters(in: NSCharacterSet.whitespaces) == ""){
                 return false
             }
-            self.delegate?.jnChatViewSendText(text: textView.text)
+            self.delegate?.jnChatViewWillSendText(text: textView.text)
             textView.text = ""
             self.updateTextChangeWithTextHeight(height: 0.0)
             return false
@@ -412,6 +420,17 @@ class JNChatInputBar: UIView, UITextViewDelegate {
         temp.addTarget(self, action: #selector(voiceInputTouchOutside(sender:)), for: .touchUpOutside)
         temp.setTitleColor(.black, for: .normal)
         temp.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        return temp
+    }()
+    
+    lazy var audioRecorder: JNChatAudioRecorder = {
+        let temp = JNChatAudioRecorder()
+        weak var weakSelf = self
+        temp.recordDidFinish = { (recorder:JNChatAudioRecorder, finish:Bool) in
+            if finish && (weakSelf?.audioRecordComplete ?? false) {
+                weakSelf?.delegate?.jnChatViewWillSendAudio(filePath: recorder.filePath ?? "")
+            }
+        }
         return temp
     }()
 }

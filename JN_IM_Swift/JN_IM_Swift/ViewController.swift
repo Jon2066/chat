@@ -11,7 +11,6 @@ import SnapKit
 
 class ViewController: UIViewController,JNChatViewDelegate {
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -48,7 +47,11 @@ class ViewController: UIViewController,JNChatViewDelegate {
         
     }
     
-    func jnChatViewSendText(text: String) {
+    func jnChatViewWillSendAudio(filePath: String) {
+        
+    }
+    
+    func jnChatViewWillSendText(text: String) {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
