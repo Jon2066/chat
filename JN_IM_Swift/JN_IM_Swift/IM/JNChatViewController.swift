@@ -52,9 +52,12 @@ class JNChatViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     //MARK: - private -
-    private var cellClasses:[JNChatMessageType:JNChatBaseMessageCell.Type] = [JNChatMessageTypeText:JNChatTextMessageCell.self,
-                                                                              JNChatMessageTypeImage:JNChatImageMessageCell.self,
-                                                                              JNChatMessageTypeUnknow:JNChatUnknowMessageCell.self]
+    private var cellClasses:[JNChatMessageType:JNChatBaseMessageCell.Type] =
+        [JNChatMessageTypeText:JNChatTextMessageCell.self,
+         JNChatMessageTypeImage:JNChatImageMessageCell.self,
+         JNChatMessageTypeUnknow:JNChatUnknowMessageCell.self,
+         JNChatMessageTypeAudio:JNChatVoiceMessageCell.self,
+    ]
     
     private var revokeCellClass:JNChatBaseMessageCell.Type = JNChatRevokeMessageCell.self
     

@@ -18,7 +18,9 @@
 		AB1B8FD2239645890012783D /* JNChatDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1B8FD1239645890012783D /* JNChatDefine.swift */; };
 		AB1B8FDA239646620012783D /* JNChatBaseMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1B8FD9239646620012783D /* JNChatBaseMessageCell.swift */; };
 		AB1B8FDE23964A630012783D /* JNChatUserMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1B8FDD23964A630012783D /* JNChatUserMessageCell.swift */; };
+		AB4FD81B23FE8F3200481627 /* JNChatVoiceMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4FD81A23FE8F3200481627 /* JNChatVoiceMessageCell.swift */; };
 		AB6CACD523D6D8CC00856425 /* JNChatMoreInputItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CACD423D6D8CC00856425 /* JNChatMoreInputItemView.swift */; };
+		AB8564FD23F6B5EA003F7218 /* JNChatAudioExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8564FC23F6B5EA003F7218 /* JNChatAudioExtension.swift */; };
 		AB9B3B4A23EC171A0061E92B /* JNChatAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B3B4923EC171A0061E92B /* JNChatAudioPlayer.swift */; };
 		ABA2E51423D00C4600D805C3 /* JNChatMoreInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA2E51323D00C4600D805C3 /* JNChatMoreInput.swift */; };
 		ABA2E51723D052E900D805C3 /* JNChatAudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA2E51623D052E900D805C3 /* JNChatAudioRecorder.swift */; };
@@ -61,7 +63,9 @@
 		AB1B8FD1239645890012783D /* JNChatDefine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatDefine.swift; sourceTree = "<group>"; };
 		AB1B8FD9239646620012783D /* JNChatBaseMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatBaseMessageCell.swift; sourceTree = "<group>"; };
 		AB1B8FDD23964A630012783D /* JNChatUserMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatUserMessageCell.swift; sourceTree = "<group>"; };
+		AB4FD81A23FE8F3200481627 /* JNChatVoiceMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatVoiceMessageCell.swift; sourceTree = "<group>"; };
 		AB6CACD423D6D8CC00856425 /* JNChatMoreInputItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatMoreInputItemView.swift; sourceTree = "<group>"; };
+		AB8564FC23F6B5EA003F7218 /* JNChatAudioExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatAudioExtension.swift; sourceTree = "<group>"; };
 		AB9B3B4923EC171A0061E92B /* JNChatAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatAudioPlayer.swift; sourceTree = "<group>"; };
 		ABA2E51323D00C4600D805C3 /* JNChatMoreInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatMoreInput.swift; sourceTree = "<group>"; };
 		ABA2E51623D052E900D805C3 /* JNChatAudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JNChatAudioRecorder.swift; sourceTree = "<group>"; };
@@ -147,6 +151,7 @@
 		AB1B8FCE239638EC0012783D /* TableCells */ = {
 			isa = PBXGroup;
 			children = (
+				AB4FD81923FE8EF600481627 /* Voice */,
 				ABF6811623990F08009D368E /* Image */,
 				AB1B8FDC239648AF0012783D /* Base */,
 				ABF6811323990B13009D368E /* Custom */,
@@ -172,6 +177,14 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		AB4FD81923FE8EF600481627 /* Voice */ = {
+			isa = PBXGroup;
+			children = (
+				AB4FD81A23FE8F3200481627 /* JNChatVoiceMessageCell.swift */,
+			);
+			path = Voice;
+			sourceTree = "<group>";
+		};
 		AB97FE6D23F244AD004042EE /* ImagePicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +198,7 @@
 			children = (
 				ABA2E51623D052E900D805C3 /* JNChatAudioRecorder.swift */,
 				AB9B3B4923EC171A0061E92B /* JNChatAudioPlayer.swift */,
+				AB8564FC23F6B5EA003F7218 /* JNChatAudioExtension.swift */,
 			);
 			path = AudioTool;
 			sourceTree = "<group>";
@@ -314,6 +328,8 @@
 				ABF6811823990F21009D368E /* JNChatImageMessageCell.swift in Sources */,
 				ABF6811A239913A8009D368E /* JNChatViewDelegate.swift in Sources */,
 				ABA2E51423D00C4600D805C3 /* JNChatMoreInput.swift in Sources */,
+				AB8564FD23F6B5EA003F7218 /* JNChatAudioExtension.swift in Sources */,
+				AB4FD81B23FE8F3200481627 /* JNChatVoiceMessageCell.swift in Sources */,
 				ABA2E51723D052E900D805C3 /* JNChatAudioRecorder.swift in Sources */,
 				ABE30FA42397A8AB00452581 /* JNChatTextMessageCell.swift in Sources */,
 				AB6CACD523D6D8CC00856425 /* JNChatMoreInputItemView.swift in Sources */,

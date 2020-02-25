@@ -163,3 +163,21 @@ public class JNChatImageMessage: JNChatBaseMessage {
         
     }
 }
+
+
+public class JNChatVoiceMessage: JNChatBaseMessage{
+    public var fileUrl: URL?
+    public var duation: TimeInterval = 0.0 {
+        willSet{
+            let ratio = newValue / JN_CHAT_SETTING.voiceMaxRecordDuration
+            let maxWidth = JN_CHAT_SETTING.voiceMessageMaxWidth
+            let minWidth = JN_CHAT_SETTING.voiceMessageMinWidth
+            let height = JN_CHAT_SETTING.voiceMessageHeight
+            var width: CGFloat = CGFloat(ratio) * maxWidth
+            if width < minWidth {
+                width = minWidth
+            }
+            self.messageContentSize = CGSize(width: width, height: height)
+        }
+    }
+}

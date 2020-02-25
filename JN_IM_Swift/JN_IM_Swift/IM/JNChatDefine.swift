@@ -113,6 +113,10 @@ public class JNChatSetting: NSObject {
         }
     }
     public var voiceMaxRecordDuration: TimeInterval = 60.0
+    public var voiceMessageMaxWidth: CGFloat = 0.618 * UIScreen.main.bounds.size.width
+    public var voiceMessageMinWidth: CGFloat = 75
+    public var voiceMessageHeight: CGFloat = 45
+
     
     //more input
     public var moreInputItemTitleFont: UIFont = UIFont.systemFont(ofSize: 15)

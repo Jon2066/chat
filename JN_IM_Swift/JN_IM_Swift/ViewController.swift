@@ -48,7 +48,25 @@ class ViewController: UIViewController,JNChatViewDelegate {
     }
     
     func jnChatViewWillSendAudio(filePath: String) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
+        
+        let voiceMessage = JNChatVoiceMessage()
+        voiceMessage.fileUrl = URL(fileURLWithPath: filePath)
+        voiceMessage.duation = filePath.jn_getLocalAudioFileDuration()
+        voiceMessage.messageId = JNChatTextMessage.createMessageId()
+        voiceMessage.ownerId = "1"
+        voiceMessage.targetId = "someone"
+        voiceMessage.owns = .owner
+        voiceMessage.avatarUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575628674987&di=e97203f07bfb9bf6fa444aa9c9f1cfcc&imgtype=0&src=http%3A%2F%2Fcdn.duitang.com%2Fuploads%2Fitem%2F201605%2F05%2F20160505174655_JZRxC.jpeg"
+        voiceMessage.nickname = "myself"
+        voiceMessage.messageType = JNChatMessageTypeAudio
+        voiceMessage.sendTime = dateFormatter.string(from: Date.init())
+        voiceMessage.showTime = arc4random()%2 == 0
+        voiceMessage.showNickname = arc4random()%2 == 0
+        self.ChatVC.appendMessages(messages: [voiceMessage])
+        self.ChatVC.scrollToBottom(animated: true)
     }
     
     func jnChatViewWillSendText(text: String) {
